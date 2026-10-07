@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Muallim — o'qituvchilar uchun raqamli platforma</title>
+  <meta name="description" content="Muallim — o'qituvchilar uchun malaka oshirish, metodik materiallar, testlar va sertifikatlar jamlangan yagona raqamli platforma.">
+  <meta name="theme-color" content="#1F6FEB">
+  <meta property="og:title" content="Muallim — o'qituvchilar uchun raqamli platforma">
+  <meta property="og:description" content="Malaka oshirish, metodik materiallar, testlar va sertifikatlar — barchasi bir joyda.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    // JS borligini belgilash va mavzuni sahifa chizilishidan oldin qo'llash (miltillashning oldini oladi)
+    document.documentElement.classList.add('js');
+    try {
+      var t = localStorage.getItem('muallim-theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  </script>
+  <script src="assets/js/main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Asosiy mazmunga o'tish</a>
+
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="Muallim — bosh sahifa">
+        <img src="assets/img/logo.svg" alt="" width="36" height="36">
+        <span>Muallim</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false">
+        <span class="visually-hidden">Menyuni ochish</span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Asosiy menyu">
+        <ul class="nav-links">
+          <li><a href="#imkoniyatlar">Imkoniyatlar</a></li>
+          <li><a href="#qanday-ishlaydi">Qanday ishlaydi</a></li>
+          <li><a href="#kimlar-uchun">Kimlar uchun</a></li>
+          <li><a href="#savollar">Savollar</a></li>
+        </ul>
+        <div class="nav-actions">
+          <button class="theme-toggle" type="button" aria-label="Tungi rejimni almashtirish">
+            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
+          </button>
+          <a class="btn btn-ghost" href="login.html">Kirish</a>
+          <a class="btn btn-primary" href="register.html">Ro'yxatdan o'tish</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <p class="eyebrow">O'qituvchilar uchun raqamli platforma</p>
+          <h1>Kasbiy o'sish uchun kerakli hamma narsa — <span class="accent">bir joyda</span></h1>
+          <p class="lead">
+            Muallim — malaka oshirish kurslari, metodik materiallar, testlar va sertifikatlarni
+            jamlagan platforma. Istalgan vaqtda, istalgan qurilmadan o'rganing.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-lg" href="register.html">Bepul boshlash</a>
+            <a class="btn btn-outline btn-lg" href="login.html">Hisobim bor — kirish</a>
+          </div>
+          <ul class="hero-points">
+            <li>Onlayn va o'z tezligingizda</li>
+            <li>Telefon va kompyuterda ishlaydi</li>
+            <li>O'zbek tilida</li>
+          </ul>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="mock-card mock-main">
+            <div class="mock-head">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+            <div class="mock-body">
+              <p class="mock-title">Mening kurslarim</p>
+              <div class="mock-course">
+                <span class="mock-icon c1"></span>
+                <div class="mock-lines">
+                  <span class="mock-label">Zamonaviy dars metodikasi</span>
+                  <span class="progress"><span style="width:72%"></span></span>
+                </div>
+              </div>
+              <div class="mock-course">
+                <span class="mock-icon c2"></span>
+                <div class="mock-lines">
+                  <span class="mock-label">Raqamli savodxonlik</span>
+                  <span class="progress"><span style="width:45%"></span></span>
+                </div>
+              </div>
+              <div class="mock-course">
+                <span class="mock-icon c3"></span>
+                <div class="mock-lines">
+                  <span class="mock-label">Baholash strategiyalari</span>
+                  <span class="progress"><span style="width:90%"></span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mock-card mock-badge">
+            <svg viewBox="0 0 24 24"><path d="M12 2l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 16.8 6.2 19.9l1.1-6.5L2.6 8.8l6.5-.9z"/></svg>
+            <div>
+              <strong>Sertifikat tayyor</strong>
+              <span>Kurs muvaffaqiyatli yakunlandi</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Imkoniyatlar -->
+    <section class="section" id="imkoniyatlar" aria-labelledby="imk-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Imkoniyatlar</p>
+          <h2 id="imk-title">Platformada nimalar bor?</h2>
+          <p>O'qituvchining kundalik ishi va kasbiy rivoji uchun zarur vositalar.</p>
+        </header>
+
+        <ul class="feature-grid">
+          <li class="feature">
+            <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M3 6.5 12 3l9 3.5-9 3.5z"/><path d="M6 8.2V14c0 1.7 2.7 3 6 3s6-1.3 6-3V8.2"/><path d="M21 6.5V12"/></svg></span>
+            <h3>Malaka oshirish kurslari</h3>
+            <p>Videodarslar, topshiriqlar va amaliy mashg'ulotlar bilan tuzilgan onlayn kurslar.</p>
+          </li>
+          <li class="feature">
+            <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M14 3v5h5M8 12h8M8 16h8"/></svg></span>
+            <h3>Metodik materiallar</h3>
+            <p>Dars ishlanmalari, taqdimotlar va tarqatma materiallar kutubxonasi.</p>
+          </li>
+          <li class="feature">
+            <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M9 11l2 2 4-4"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg></span>
+            <h3>Testlar va sinovlar</h3>
+            <p>Bilimingizni tekshiring, attestatsiyaga tayyorlaning va natijalarni kuzating.</p>
+          </li>
+          <li class="feature">
+            <span class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M8.5 13 7 21l5-2.5L17 21l-1.5-8"/></svg></span>
+            <h3>Sertifikatlar</h3>
+            <p>Kursni yakunlagach, elektron sertifikatni yuklab oling yoki havola orqali ulashing.</p>
+          </li>
+          <li class="feature">
+            <span class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><circle cx="17" cy="9" r="2.5"/><path d="M16.5 14c2.8 0 5 1.8 5 5"/></svg></span>
+            <h3>Hamkasblar hamjamiyati</h3>
+            <p>Tajriba almashing, savol bering va boshqa o'qituvchilar bilan hamkorlik qiling.</p>
+          </li>
+          <li class="feature">
+            <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
+            <h3>Shaxsiy kabinet</h3>
+            <p>O'rganish tarixi, yutuqlar va keyingi qadamlar — barchasi bitta sahifada.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Qanday ishlaydi -->
+    <section class="section section-alt" id="qanday-ishlaydi" aria-labelledby="qi-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Qanday ishlaydi</p>
+          <h2 id="qi-title">Uch qadamda boshlang</h2>
+        </header>
+
+        <ol class="steps">
+          <li class="step">
+            <span class="step-num">1</span>
+            <h3>Ro'yxatdan o'ting</h3>
+            <p>Telefon raqamingiz yoki elektron pochtangiz orqali bir daqiqada hisob oching.</p>
+          </li>
+          <li class="step">
+            <span class="step-num">2</span>
+            <h3>Yo'nalish tanlang</h3>
+            <p>Faningiz va ehtiyojingizga mos kurs yoki materiallarni toping.</p>
+          </li>
+          <li class="step">
+            <span class="step-num">3</span>
+            <h3>O'rganing va sertifikat oling</h3>
+            <p>O'z tezligingizda o'qing, testlarni topshiring va natijangizni tasdiqlang.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Kimlar uchun -->
+    <section class="section" id="kimlar-uchun" aria-labelledby="ku-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Kimlar uchun</p>
+          <h2 id="ku-title">Ta'lim jarayonining har bir ishtirokchisi uchun</h2>
+        </header>
+
+        <ul class="audience-grid">
+          <li class="audience">
+            <h3>O'qituvchilar</h3>
+            <p>Malakangizni oshiring, tayyor materiallardan foydalaning va darslaringizni boyiting.</p>
+            <a class="link-arrow" href="register.html">O'qituvchi sifatida boshlash</a>
+          </li>
+          <li class="audience">
+            <h3>Maktab rahbarlari</h3>
+            <p>Jamoangizning o'qish jarayoni va natijalarini bir joydan kuzatib boring.</p>
+            <a class="link-arrow" href="register.html">Rahbar sifatida boshlash</a>
+          </li>
+          <li class="audience">
+            <h3>Metodistlar</h3>
+            <p>Kurslar va metodik materiallar yarating, ularni keng auditoriyaga yetkazing.</p>
+            <a class="link-arrow" href="register.html">Metodist sifatida boshlash</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Savollar -->
+    <section class="section section-alt" id="savollar" aria-labelledby="sv-title">
+      <div class="container narrow">
+        <header class="section-head">
+          <p class="eyebrow">Savollar</p>
+          <h2 id="sv-title">Ko'p beriladigan savollar</h2>
+        </header>
+
+        <div class="faq">
+          <details>
+            <summary>Platformadan foydalanish pullikmi?</summary>
+            <p>Ro'yxatdan o'tish va asosiy materiallar bepul. Ayrim kurslarning shartlari kurs sahifasida ko'rsatiladi.</p>
+          </details>
+          <details>
+            <summary>Ro'yxatdan o'tish uchun nima kerak?</summary>
+            <p>Faqat telefon raqami yoki elektron pochta manzili. Tasdiqlash kodi kiritilgach, hisobingiz faollashadi.</p>
+          </details>
+          <details>
+            <summary>Telefondan foydalansa bo'ladimi?</summary>
+            <p>Ha. Platforma telefon, planshet va kompyuterda brauzer orqali ishlaydi — alohida dastur o'rnatish shart emas.</p>
+          </details>
+          <details>
+            <summary>Parolimni unutdim. Nima qilaman?</summary>
+            <p>Kirish sahifasidagi «Parolni unutdingizmi?» havolasini bosing va tiklash bo'yicha ko'rsatmalarga amal qiling.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Yakuniy chaqiriq -->
+    <section class="cta">
+      <div class="container cta-inner">
+        <div>
+          <h2>Bugunoq boshlang</h2>
+          <p>Hisob ochish bir daqiqa vaqt oladi.</p>
+        </div>
+        <div class="cta-actions">
+          <a class="btn btn-light btn-lg" href="register.html">Ro'yxatdan o'tish</a>
+          <a class="btn btn-on-dark btn-lg" href="login.html">Kirish</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a class="brand" href="#top">
+          <img src="assets/img/logo.svg" alt="" width="32" height="32">
+          <span>Muallim</span>
+        </a>
+        <p>O'qituvchilar uchun raqamli platforma.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Pastki menyu">
+        <h2 class="footer-title">Platforma</h2>
+        <ul>
+          <li><a href="#imkoniyatlar">Imkoniyatlar</a></li>
+          <li><a href="#qanday-ishlaydi">Qanday ishlaydi</a></li>
+          <li><a href="#savollar">Savollar</a></li>
+        </ul>
+      </nav>
+      <nav class="footer-nav" aria-label="Hujjatlar">
+        <h2 class="footer-title">Hujjatlar</h2>
+        <ul>
+          <li><a href="#">Foydalanish shartlari</a></li>
+          <li><a href="#">Maxfiylik siyosati</a></li>
+        </ul>
+      </nav>
+      <div class="footer-nav">
+        <h2 class="footer-title">Aloqa</h2>
+        <ul>
+          <li><a href="mailto:info@emuallim.com.uz">info@emuallim.com.uz</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© <span data-year>2026</span> Muallim. Barcha huquqlar himoyalangan.</p>
+    </div>
+  </footer>
+</body>
+</html>
