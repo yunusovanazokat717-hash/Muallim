@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>So'z tarjimasi — ovoz va sharh bilan</title>
+<style>
+  :root { --bg:#0b1324; --card:#101c33; --text:#dbe4f3; --muted:#7f8ea8; --accent:#2dd4bf; --nav-h:72px; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:system-ui, sans-serif;
+         padding:16px 16px calc(var(--nav-h) + env(safe-area-inset-bottom) + 24px); }
+  .card { background:var(--card); border:1px solid #1d2b47; border-radius:20px; padding:24px 20px; }
+  .label { color:var(--muted); font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; margin:0 0 16px; }
+  .arabic { direction:rtl; font-size:1.9rem; line-height:2.4; margin:0; }
+
+  /* ---- So'z: tugma sifatida (bosiladigan, fokuslanadigan) ---- */
+  .w {
+    all: unset;
+    cursor: pointer;                 /* iOS Safari'da bosishni yoqish uchun ham kerak */
+    border-bottom: 2px dotted color-mix(in srgb, var(--accent) 55%, transparent);
+    padding: 0 1px;
+    border-radius: 4px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .nw { white-space: nowrap; }   /* so'z va tinish belgisi bir qatorda qolsin */
+  .w:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .w.is-active { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+
+  /* ---- Tarjima oynasi ---- */
+  .tr-pop {
+    position: fixed;
+    z-index: 1000;                   /* pastki menyu (50) va maskot (60) dan YUQORI */
+    width: min(340px, calc(100vw - 24px));
+    max-height: calc(100dvh - var(--nav-h) - 40px);
+    overflow-y: auto;
+    padding: 16px 18px 18px;
+    background: #f8fafc; color: #0f172a;
+    border-radius: 16px;
+    box-shadow: 0 12px 32px rgba(0,0,0,.45);
+    line-height: 1.45;
+  }
+  .tr-pop[hidden] { display: none; }
+
+  .tr-head { display: flex; align-items: center; gap: 12px; }
+  .tr-play {
+    flex: none; display: grid; place-items: center;
+    width: 44px; height: 44px; border: 0; border-radius: 50%;
+    background: #0f766e; color: #fff; cursor: pointer;
+    touch-action: manipulation;
+  }
+  .tr-play svg { width: 20px; height: 20px; fill: currentColor; }
+  .tr-play.is-playing { animation: pulse 1s ease-in-out infinite; }
+  .tr-play:disabled { background: #94a3b8; cursor: not-allowed; animation: none; }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 8px rgba(15,118,110,.18); } }
+
+  .tr-word { flex: 1; text-align: right; direction: rtl; font-size: 1.7rem; font-weight: 600; line-height: 1.3; }
+  .tr-close { flex: none; width: 36px; height: 36px; border: 0; border-radius: 50%; background: #e2e8f0; color: #334155;
+              font-size: 1.2rem; line-height: 1; cursor: pointer; }
+
+  .tr-translit { margin: 6px 0 0; color: #0f766e; font-weight: 600; }
+  .tr-translit::before { content: "Talaffuzi: "; color: #64748b; font-weight: 400; }
+  .tr-uz { margin: 4px 0 0; font-size: 1.15rem; font-weight: 700; }
+  .tr-note { margin: 10px 0 0; padding-top: 10px; border-top: 1px solid #e2e8f0; color: #334155; font-size: .95rem; }
+  .tr-msg { margin: 8px 0 0; color: #b45309; font-size: .85rem; }
+  .tr-msg:empty { display: none; }
+
+  /* Telefonda — pastki menyu USTIDA turuvchi "bottom sheet" */
+  @media (max-width: 640px), (hover: none) {
+    .tr-pop {
+      left: 12px !important; right: 12px; top: auto !important; width: auto;
+      bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 12px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) { .tr-play.is-playing { animation: none; } }
+
+  /* Saytdagiga o'xshash pastki menyu va maskot */
+  .bottom-nav { position: fixed; left:0; right:0; bottom:0; z-index:50; height:calc(var(--nav-h) + env(safe-area-inset-bottom));
+                background:#131c2e; display:flex; justify-content:space-around; align-items:center; color:var(--muted); font-size:.8rem; }
+  .mascot { position: fixed; right:16px; bottom:calc(var(--nav-h) + 16px); z-index:60; width:64px; height:64px; border-radius:50%; background:#e2e8f0; }
+</style>
+</head>
+<body>
+  <section class="card">
+    <p class="label">Arabcha matn</p>
+    <p class="arabic">
+      <button class="w" type="button" data-id="haza">هَذَا</button>
+      <span class="nw"><button class="w" type="button" data-id="kitab">كِتَابٌ</button>.</span>
+      <button class="w" type="button" data-id="hazihi">هَذِهِ</button>
+      <span class="nw"><button class="w" type="button" data-id="mistara">مِسْطَرَةٌ</button>.</span>
+      <button class="w" type="button" data-id="ayna">أَيْنَ</button>
+      <span class="nw"><button class="w" type="button" data-id="sabbura">السَّبُّورَةُ</button>؟</span>
+      <button class="w" type="button" data-id="ayna">أَيْنَ</button>
+      <span class="nw"><button class="w" type="button" data-id="mihbara">الْمِحْبَرَةُ</button>؟</span>
+      <button class="w" type="button" data-id="xuz">خُذِ</button>
+      <span class="nw"><button class="w" type="button" data-id="qalam">الْقَلَمَ</button>.</span>
+    </p>
+  </section>
+
+  <div class="tr-pop" id="tr-pop" role="dialog" aria-label="So'z tarjimasi" hidden>
+    <div class="tr-head">
+      <button class="tr-play" type="button" aria-label="Talaffuzini eshitish">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>
+      </button>
+      <span class="tr-word" lang="ar"></span>
+      <button class="tr-close" type="button" aria-label="Yopish">×</button>
+    </div>
+    <p class="tr-translit"></p>
+    <p class="tr-uz"></p>
+    <p class="tr-note"></p>
+    <p class="tr-msg" role="status"></p>
+  </div>
+
+  <div class="mascot" aria-hidden="true"></div>
+  <nav class="bottom-nav"><span>Bosh sahifa</span><span>Katalog</span><span>Kurslarim</span><span>Chat</span><span>Profil</span></nav>
+
+<script>
+// Lug'at: saytda bu ma'lumot bazadan/API'dan keladi.
+// audio — ixtiyoriy: yozib olingan talaffuz fayli bo'lsa, o'shani ijro etadi (sifati eng yaxshi).
+var LUGAT = {
+  haza:    { tl: 'hāzā', uz: 'bu', izoh: "Ko'rsatish olmoshi. Muzakkar (erkak jinsidagi) narsaga ishlatiladi: هَذَا كِتَابٌ — «Bu kitob». ذ harfi tishlar orasidan, ingliz tilidagi «this» so'zidagi «th» kabi aytiladi." },
+  kitab:   { tl: 'kitābun', uz: 'kitob', izoh: "Muzakkar ot. Oxiridagi «-un» (tanvin) so'zning noaniq ekanini bildiradi. Ko'pligi: كُتُبٌ (kutubun)." },
+  hazihi:  { tl: 'hāzihi', uz: 'bu', izoh: "Ko'rsatish olmoshi. Muannas (ayol jinsidagi) narsaga ishlatiladi: هَذِهِ مِسْطَرَةٌ — «Bu chizg'ich»." },
+  mistara: { tl: 'misṭaratun', uz: "chizg'ich", izoh: "Muannas ot: oxiridagi ة (ta marbuta) ayol jinsi belgisi. ط — qalin «t». Ko'pligi: مَسَاطِرُ (masāṭiru)." },
+  ayna:    { tl: 'ayna', uz: 'qayerda?', izoh: "Joy haqidagi so'roq so'zi: أَيْنَ الْقَلَمُ؟ — «Qalam qayerda?»." },
+  sabbura: { tl: 'as-sabbūratu', uz: 'doska', izoh: "«al-» — aniqlik artikli. س «quyosh harfi» bo'lgani uchun «l» o'qilmaydi, uning o'rniga س ikkilanadi: as-sabbūratu." },
+  mihbara: { tl: 'al-miḥbaratu', uz: 'siyohdon', izoh: "م «oy harfi», shuning uchun «al-» dagi «l» aniq o'qiladi. ح — bo'g'izdan chiqadigan yumshoq «h». Muannas ot." },
+  xuz:     { tl: 'xuzi', uz: 'ol!', izoh: "Buyruq fe'li, أَخَذَ (axaza — «oldi») fe'lidan. Asli خُذْ (xuz), lekin keyingi so'z «al-» bilan boshlangani uchun oxiri «-i» bilan ulanadi." },
+  qalam:   { tl: 'al-qalama', uz: 'qalamni', izoh: "Oxiridagi «-a» — tushum kelishigi: so'z خُذِ fe'lining to'ldiruvchisi («qalamni ol»). ق — chuqur, bo'g'izdan aytiladigan «q»." }
+};
+
+(function () {
+  var pop = document.getElementById('tr-pop');
+  var $ = function (s) { return pop.querySelector(s); };
+  var playBtn = $('.tr-play'), msg = $('.tr-msg');
+  var active = null, audio = null;
+  var MOBILE = '(max-width: 640px), (hover: none)';
+
+  // ---------- Ovoz ----------
+  var tts = window.speechSynthesis;
+  var arVoice = null;
+  function pickVoice() {
+    if (!tts) return;
+    var vs = tts.getVoices();
+    arVoice = vs.find(function (v) { return /^ar(-|_|$)/i.test(v.lang); }) || null;
+  }
+  if (tts) { pickVoice(); tts.addEventListener && tts.addEventListener('voiceschanged', pickVoice); }
+
+  function stop() {
+    if (audio) { audio.pause(); audio = null; }
+    if (tts) tts.cancel();
+    playBtn.classList.remove('is-playing');
+  }
+
+  function speak(text, entry) {
+    stop();
+    msg.textContent = '';
+
+    // 1) Yozib olingan fayl bo'lsa — o'shani ijro etish
+    if (entry && entry.audio) {
+      audio = new Audio(entry.audio);
+      playBtn.classList.add('is-playing');
+      audio.onended = audio.onerror = function () { playBtn.classList.remove('is-playing'); };
+      audio.play().catch(function () { playBtn.classList.remove('is-playing'); });
+      return;
+    }
+
+    // 2) Aks holda — brauzerning arabcha ovozi (Web Speech API)
+    if (!tts || typeof SpeechSynthesisUtterance === 'undefined') {
+      msg.textContent = "Bu brauzer ovozli o'qishni qo'llamaydi.";
+      return;
+    }
+    pickVoice();
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = 'ar-SA';
+    if (arVoice) u.voice = arVoice;
+    u.rate = 0.75;                  // o'rganuvchilar uchun sekinroq
+    u.onstart = function () { playBtn.classList.add('is-playing'); };
+    u.onend = u.onerror = function () { playBtn.classList.remove('is-playing'); };
+    tts.speak(u);
+    if (!arVoice && tts.getVoices().length) {
+      msg.textContent = "Qurilmada arabcha ovoz topilmadi. Telefon sozlamalarida (Matnni nutqqa aylantirish) arab tilini o'rnating.";
+    }
+  }
+
+  // ---------- Oyna ----------
+  function close() {
+    stop();
+    pop.hidden = true;
+    if (active) active.classList.remove('is-active');
+    active = null;
+  }
+
+  function open(word) {
+    if (active === word) { close(); return; }
+    if (active) active.classList.remove('is-active');
+    active = word;
+    word.classList.add('is-active');
+
+    var e = LUGAT[word.dataset.id] || {};
+    var text = word.textContent.trim();
+    $('.tr-word').textContent = text;
+    $('.tr-translit').textContent = e.tl || '';
+    $('.tr-uz').textContent = e.uz || "Tarjima topilmadi";
+    $('.tr-note').textContent = e.izoh || '';
+    $('.tr-translit').hidden = !e.tl;
+    $('.tr-note').hidden = !e.izoh;
+    pop.hidden = false;
+
+    if (!matchMedia(MOBILE).matches) {
+      // Kompyuterda — so'z ostida, ekran chetidan chiqmasin
+      var r = word.getBoundingClientRect(), pw = pop.offsetWidth, ph = pop.offsetHeight;
+      var left = Math.min(Math.max(12, r.left + r.width / 2 - pw / 2), innerWidth - pw - 12);
+      var top = r.bottom + 8;
+      if (top + ph > innerHeight - 12) top = Math.max(12, r.top - ph - 8);
+      pop.style.left = left + 'px';
+      pop.style.top = top + 'px';
+    }
+
+    // Bosish — foydalanuvchi harakati, shuning uchun ovoz darhol chiqadi
+    speak(text, e);
+  }
+
+  document.addEventListener('click', function (ev) {
+    var word = ev.target.closest('.w');
+    if (word) { open(word); return; }
+    if (ev.target.closest('.tr-play')) { if (active) speak(active.textContent.trim(), LUGAT[active.dataset.id]); return; }
+    if (ev.target.closest('.tr-close')) { var w = active; close(); if (w) w.focus(); return; }
+    if (!pop.contains(ev.target)) close();
+  });
+  document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && active) { var w = active; close(); w.focus(); } });
+  addEventListener('scroll', function () { if (active && !matchMedia(MOBILE).matches) close(); }, { passive: true });
+  // Telefonda manzil satri yashirinishi ham 'resize' beradi — u yerda yopmaymiz
+  addEventListener('resize', function () { if (active && !matchMedia(MOBILE).matches) close(); });
+})();
+</script>
+</body>
+</html>

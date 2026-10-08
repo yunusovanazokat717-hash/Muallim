@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Muallim AI</title>
+<style>
+  /* Bir ustunli chat: sarlavha, xabarlar lentasi, pastda yozish paneli. Saytning qorong'i ko'rinishiga bog'langan. */
+  :root {
+    --bg: #0b1324;
+    --panel: #111c31;
+    --bubble-ai: #15233b;
+    --bubble-me: #1f6feb;
+    --line: #1f2e4a;
+    --text: #e3eaf6;
+    --muted: #8796b0;
+    --accent: #2dd4bf;
+    --accent-ink: #062a26;
+    --warn: #fbbf24;
+    --danger: #f87171;
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-ar: "Noto Naskh Arabic", "Geeza Pro", "Traditional Arabic", serif;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+  }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* ---------- Sarlavha ---------- */
+  .top {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px;
+    padding-top: calc(12px + env(safe-area-inset-top, 0px));
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+  }
+  .avatar { width: 44px; height: 44px; flex: none; border-radius: 50%; background: #f1f5f9; display: grid; place-items: center; overflow: hidden; }
+  .avatar svg { width: 44px; height: 44px; }
+  .who { flex: 1; min-width: 0; }
+  .who h1 { margin: 0; font-size: 1.05rem; line-height: 1.2; }
+  .who p { margin: 2px 0 0; color: var(--muted); font-size: .82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .who p.is-live { color: var(--accent); }
+
+  .auto {
+    display: inline-flex; align-items: center; gap: 6px;
+    min-height: 40px; padding: 0 12px;
+    border: 1px solid var(--line); border-radius: 999px;
+    background: transparent; color: var(--muted); font-size: .85rem; cursor: pointer;
+  }
+  .auto svg { width: 18px; height: 18px; fill: currentColor; }
+  .auto[aria-pressed="true"] { border-color: color-mix(in srgb, var(--accent) 60%, transparent); color: var(--accent); }
+  .auto .off { display: none; }
+  .auto[aria-pressed="false"] .on { display: none; }
+  .auto[aria-pressed="false"] .off { display: block; }
+
+  /* ---------- Xabarlar ---------- */
+  .log {
+    flex: 1; min-height: 0;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex; flex-direction: column; gap: 14px;
+    overscroll-behavior: contain;
+  }
+  .msg { display: flex; gap: 8px; max-width: 46rem; width: 100%; }
+  .msg.me { align-self: flex-end; justify-content: flex-end; }
+  .bubble {
+    min-width: 0;
+    max-width: min(85%, 36rem);
+    padding: 10px 14px;
+    border-radius: 18px;
+    background: var(--bubble-ai);
+    border: 1px solid var(--line);
+    overflow-wrap: anywhere;
+  }
+  .msg.ai .bubble { border-top-left-radius: 6px; }
+  .msg.me .bubble { background: var(--bubble-me); border-color: transparent; color: #fff; border-top-right-radius: 6px; }
+  .bubble p { margin: 0; }
+  .bubble p + p { margin-top: 8px; }
+  .bubble .ar { font-family: var(--font-ar); font-size: 1.3em; line-height: 1.7; }
+  .bubble.is-typing { color: var(--muted); }
+
+  .speak {
+    align-self: flex-end;
+    flex: none;
+    width: 40px; height: 40px;
+    display: grid; place-items: center;
+    border: 1px solid var(--line); border-radius: 50%;
+    background: var(--panel); color: var(--accent);
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  .speak svg { width: 18px; height: 18px; fill: currentColor; }
+  .speak .stop { display: none; }
+  .speak.is-playing { background: var(--accent); color: var(--accent-ink); border-color: transparent; animation: pulse 1.2s ease-in-out infinite; }
+  .speak.is-playing .play { display: none; }
+  .speak.is-playing .stop { display: block; }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--accent) 22%, transparent); } }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; padding-left: 4px; }
+  .chip {
+    min-height: 36px; padding: 6px 12px;
+    border: 1px solid var(--line); border-radius: 999px;
+    background: transparent; color: var(--text); font-size: .88rem; cursor: pointer; text-align: start;
+  }
+  .chip:hover { border-color: var(--accent); }
+
+  .note { margin: 0; padding: 0 16px 8px; color: var(--warn); font-size: .82rem; }
+  .note:empty { display: none; }
+  .note.is-error { color: var(--danger); }
+
+  /* ---------- Yozish paneli ---------- */
+  .composer {
+    display: flex; align-items: flex-end; gap: 8px;
+    padding: 10px 12px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    background: var(--panel);
+    border-top: 1px solid var(--line);
+  }
+  .composer textarea {
+    flex: 1; min-width: 0;
+    max-height: 8.5rem; min-height: 44px;
+    padding: 10px 14px;
+    resize: none;
+    border: 1px solid var(--line); border-radius: 22px;
+    background: var(--bg); color: var(--text);
+    font: inherit; line-height: 1.4;
+  }
+  .composer textarea::placeholder { color: var(--muted); }
+  .round {
+    flex: none; width: 44px; height: 44px;
+    display: grid; place-items: center;
+    border: 0; border-radius: 50%; cursor: pointer;
+    touch-action: manipulation;
+  }
+  .round svg { width: 20px; height: 20px; fill: currentColor; }
+  .mic { background: var(--bubble-ai); color: var(--text); border: 1px solid var(--line); }
+  .mic.is-listening { background: var(--danger); color: #fff; border-color: transparent; animation: pulse-red 1.2s ease-in-out infinite; }
+  @keyframes pulse-red { 50% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--danger) 25%, transparent); } }
+  .send { background: var(--accent); color: var(--accent-ink); }
+  .send:disabled { opacity: .45; cursor: not-allowed; }
+
+  .visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .speak.is-playing, .mic.is-listening { animation: none; }
+  }
+</style>
+</head>
+<body>
+  <header class="top">
+    <span class="avatar" aria-hidden="true">
+      <svg viewBox="0 0 44 44">
+        <path d="M9 19c0-8 6-13 13-13s13 5 13 13z" fill="#1e293b"/>
+        <path d="M11 16h22M13 12h18" stroke="#e2e8f0" stroke-width="1.4" stroke-dasharray="2 2"/>
+        <circle cx="17" cy="24" r="1.8" fill="#0f172a"/><circle cx="27" cy="24" r="1.8" fill="#0f172a"/>
+        <path d="M12 29c2 9 18 9 20 0-3 2-6 3-10 3s-7-1-10-3z" fill="#cbd5e1"/>
+        <path d="M18 30c2 1.4 6 1.4 8 0" stroke="#0f172a" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <div class="who">
+      <h1>Muallim AI</h1>
+      <p id="state">Ovozli yordamchi</p>
+    </div>
+    <button class="auto" id="auto" type="button" aria-pressed="true" title="Javoblarni avtomatik ovozli o'qish">
+      <svg class="on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>
+      <svg class="off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.6 0L15 10.6l1.4 1.4-1.4 1.4 1.6 1.6 1.4-1.4 1.4 1.4 1.6-1.6-1.4-1.4 1.4-1.4L20 9l-1.4 1.4z"/></svg>
+      <span id="auto-label">Ovoz yoqilgan</span>
+    </button>
+  </header>
+
+  <main class="log" id="log" aria-live="polite"></main>
+
+  <p class="note" id="note" role="status"></p>
+
+  <form class="composer" id="composer" autocomplete="off">
+    <label class="visually-hidden" for="input">Savolingiz</label>
+    <textarea id="input" rows="1" placeholder="Savol yozing yoki ayting…"></textarea>
+    <button class="round mic" id="mic" type="button" aria-label="Ovoz bilan yozish" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.9V21h2v-3.1a7 7 0 0 0 6-6.9h-2z"/></svg>
+    </button>
+    <button class="round send" id="send" type="submit" aria-label="Yuborish" disabled>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.4 20.4 21 12 3.4 3.6 3.4 10l12.6 2-12.6 2z"/></svg>
+    </button>
+  </form>
+
+  <script src="../assets/js/muallim-ovoz.js"></script>
+  <script>
+  (function () {
+    'use strict';
+    var Ovoz = window.MuallimOvoz;
+    var log = document.getElementById('log');
+    var form = document.getElementById('composer');
+    var input = document.getElementById('input');
+    var sendBtn = document.getElementById('send');
+    var micBtn = document.getElementById('mic');
+    var autoBtn = document.getElementById('auto');
+    var autoLabel = document.getElementById('auto-label');
+    var stateEl = document.getElementById('state');
+    var note = document.getElementById('note');
+
+    var history = [];          // [{role, content}] — AI'ga yuboriladigan suhbat
+    var busy = false;
+    var playingBtn = null;
+    var listening = null;
+
+    // ---------- Sozlama: avtomatik ovoz ----------
+    var autoSpeak = true;
+    try { autoSpeak = localStorage.getItem('muallim-ai-ovoz') !== 'off'; } catch (e) {}
+    function renderAuto() {
+      autoBtn.setAttribute('aria-pressed', String(autoSpeak));
+      autoLabel.textContent = autoSpeak ? 'Ovoz yoqilgan' : "Ovoz o'chirilgan";
+    }
+    renderAuto();
+    autoBtn.addEventListener('click', function () {
+      Ovoz.unlock();
+      autoSpeak = !autoSpeak;
+      if (!autoSpeak) stopSpeaking();
+      try { localStorage.setItem('muallim-ai-ovoz', autoSpeak ? 'on' : 'off'); } catch (e) {}
+      renderAuto();
+    });
+
+    // ---------- Xabarlarni chizish ----------
+    var AR_RUN = /([؀-ۿݐ-ݿﭐ-﷿ﹰ-﻿]+(?:[\s،؛؟.,!:-]*[؀-ۿݐ-ݿﭐ-﷿ﹰ-﻿]+)*)/g;
+    function esc(s) { return s.replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+    function format(text) {
+      return text.trim().split(/\n{2,}/).map(function (para) {
+        var h = esc(para)
+          .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\n/g, '<br>')
+          .replace(AR_RUN, '<span class="ar" lang="ar" dir="rtl">$1</span>');
+        return '<p>' + h + '</p>';
+      }).join('');
+    }
+
+    var ICON_PLAY = '<svg class="play" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>';
+    var ICON_STOP = '<svg class="stop" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>';
+
+    function addMessage(role, text) {
+      var row = document.createElement('div');
+      row.className = 'msg ' + (role === 'user' ? 'me' : 'ai');
+      var bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      bubble.innerHTML = format(text);
+      row.appendChild(bubble);
+      if (role !== 'user') {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'speak';
+        btn.setAttribute('aria-label', 'Javobni tinglash');
+        btn.innerHTML = ICON_PLAY + ICON_STOP;
+        btn.addEventListener('click', function () {
+          Ovoz.unlock();
+          if (playingBtn === btn) { stopSpeaking(); return; }
+          speakFor(btn, row.dataset.text);
+        });
+        row.appendChild(btn);
+      }
+      row.dataset.text = text;
+      log.appendChild(row);
+      scrollDown();
+      return { row: row, bubble: bubble };
+    }
+
+    function scrollDown() { log.scrollTop = log.scrollHeight; }
+
+    function setNote(text, isError) {
+      note.textContent = text || '';
+      note.classList.toggle('is-error', !!isError);
+    }
+
+    // ---------- Ovozli o'qish ----------
+    function stopSpeaking() {
+      Ovoz.stop();
+      if (playingBtn) {
+        playingBtn.classList.remove('is-playing');
+        playingBtn.setAttribute('aria-label', 'Javobni tinglash');
+      }
+      playingBtn = null;
+      setState();
+    }
+
+    function speakFor(btn, text) {
+      stopSpeaking();
+      playingBtn = btn;
+      btn.classList.add('is-playing');
+      btn.setAttribute('aria-label', "O'qishni to'xtatish");
+      setState('Gapiryapti…');
+      var ok = Ovoz.speak(text, {
+        onEnd: function () { if (playingBtn === btn) stopSpeaking(); },
+        onError: function (code, msg) { setNote(msg, true); }
+      });
+      if (!ok) stopSpeaking();
+      voiceHint();
+    }
+
+    function setState(text) {
+      stateEl.textContent = text || 'Ovozli yordamchi';
+      stateEl.classList.toggle('is-live', !!text);
+    }
+
+    // Qurilmada kerakli ovoz yo'q bo'lsa — bir marta ogohlantirish
+    var hinted = false;
+    function voiceHint() {
+      if (hinted) return;
+      var s = Ovoz.status();
+      if (!s.tts) { setNote("Bu brauzer javoblarni ovozli o'qiy olmaydi.", true); hinted = true; return; }
+      if (!s.voicesLoaded) return;
+      hinted = true;
+      var parts = [];
+      if (!s.uzbek) parts.push(s.uzbekFallback
+        ? "o'zbekcha ovoz yo'q, " + (s.uzbekFallback.indexOf('tr') === 0 ? 'turkcha' : 'boshqa') + " ovoz ishlatilmoqda"
+        : "o'zbekcha ovoz yo'q");
+      if (!s.arabic) parts.push("arabcha ovoz yo'q");
+      if (parts.length) setNote('Qurilmada ' + parts.join(', ') + ". Telefon sozlamalaridagi «Matnni nutqqa aylantirish» bo'limida til paketini o'rnatsangiz, talaffuz yaxshilanadi.");
+    }
+
+    // ---------- AI javobi ----------
+    var SYSTEM = [
+      "Sen «Muallim AI» — Muallim platformasida o'zbek tilida so'zlashuvchilarga arab tilini o'rgatadigan mehribon ustozsan.",
+      "Faqat o'zbek tilida (lotin yozuvida) javob ber. Arabcha so'z va iboralarni albatta harakatlari bilan yoz, yoniga o'qilishini va tarjimasini qo'sh.",
+      "Javoblar qisqa bo'lsin: 2–5 gap, chunki ular ovoz chiqarib o'qiladi. Jadval, kod, sarlavha va emoji ishlatma.",
+      "Bilmagan narsangni to'qima, aniq bo'lmasa shuni ayt."
+    ].join(' ');
+
+    var samplePromise = (window.claude && window.claude.use) ? window.claude.use('sample') : Promise.resolve(null);
+
+    function demoReply(q) {
+      return "Hozir namuna rejimidaman: AI serveriga ulanmaganman, lekin ovoz ishlayapti. Masalan, هَذَا كِتَابٌ (hāzā kitābun) — «Bu kitob» degani. "
+        + "Saytda bu javob o'rniga Muallim AI'ning haqiqiy javobi chiqadi va xuddi shunday ovozli o'qiladi.";
+    }
+
+    async function ask(question) {
+      if (busy || !question.trim()) return;
+      busy = true;
+      sendBtn.disabled = true;
+      stopSpeaking();
+      document.querySelectorAll('.chips').forEach(function (c) { c.remove(); });
+
+      addMessage('user', question.trim());
+      history.push({ role: 'user', content: question.trim() });
+
+      var view = addMessage('assistant', '…');
+      view.bubble.classList.add('is-typing');
+      setState('Yozmoqda…');
+
+      var answer = '';
+      try {
+        var sample = await samplePromise;
+        if (sample) {
+          // Ko'rsatma birinchi savol bilan birga yuboriladi; suhbat oxiri doim o'quvchi savoli
+          var turns = history.map(function (t, i) {
+            return i === 0 ? { role: 'user', content: SYSTEM + "\n\nO'quvchining savoli: " + t.content } : t;
+          });
+          var res = await sample(turns, {
+            cache: false,
+            onText: function (p) {
+              view.bubble.classList.remove('is-typing');
+              view.bubble.innerHTML = format(p.text);
+              scrollDown();
+            }
+          });
+          answer = (res && res.text) || '';
+        } else {
+          await new Promise(function (r) { setTimeout(r, 500); });
+          answer = demoReply(question);
+        }
+      } catch (err) {
+        answer = err && err.code === 'rate_limited'
+          ? "Hozir so'rovlar ko'p. Bir daqiqadan keyin qayta yozing."
+          : "Javob olishda xatolik bo'ldi. Qaytadan urinib ko'ring.";
+      }
+
+      view.bubble.classList.remove('is-typing');
+      view.bubble.innerHTML = format(answer);
+      view.row.dataset.text = answer;
+      history.push({ role: 'assistant', content: answer });
+      scrollDown();
+      setState();
+      busy = false;
+      sendBtn.disabled = !input.value.trim();
+
+      if (autoSpeak) speakFor(view.row.querySelector('.speak'), answer);
+    }
+
+    // ---------- Yozish paneli ----------
+    function autosize() {
+      input.style.height = 'auto';
+      input.style.height = Math.min(input.scrollHeight, 136) + 'px';
+      sendBtn.disabled = busy || !input.value.trim();
+    }
+    input.addEventListener('input', autosize);
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && !e.shiftKey && !e.isComposing && matchMedia('(hover: hover)').matches) {
+        e.preventDefault();
+        form.requestSubmit();
+      }
+    });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      Ovoz.unlock();
+      if (listening) { listening.stop(); }
+      var q = input.value;
+      input.value = '';
+      autosize();
+      ask(q);
+    });
+
+    // ---------- Ovoz bilan yozish ----------
+    function setListening(on) {
+      micBtn.classList.toggle('is-listening', on);
+      micBtn.setAttribute('aria-pressed', String(on));
+      micBtn.setAttribute('aria-label', on ? "Tinglashni to'xtatish" : 'Ovoz bilan yozish');
+      setState(on ? 'Tinglayapman… gapiring' : '');
+    }
+    if (!Ovoz.status().stt) {
+      micBtn.title = "Bu brauzer ovoz bilan yozishni qo'llamaydi";
+    }
+    micBtn.addEventListener('click', function () {
+      Ovoz.unlock();
+      if (listening) { listening.stop(); return; }
+      stopSpeaking();
+      setNote('');
+      var before = input.value ? input.value.replace(/\s*$/, ' ') : '';
+      setListening(true);
+      listening = Ovoz.listen({
+        lang: 'uz-UZ',
+        onInterim: function (t) { input.value = before + t; autosize(); },
+        onResult: function (t) {
+          input.value = before + t;
+          autosize();
+          if (!busy) form.requestSubmit();   // gapirib bo'lgach — savol avtomatik yuboriladi
+        },
+        onError: function (code, msg) { setNote(msg, true); },
+        onEnd: function () { listening = null; setListening(false); }
+      });
+    });
+
+    // ---------- Boshlang'ich holat ----------
+    addMessage('assistant',
+      "Assalomu alaykum! Men Muallim AI — arab tilini o'rganishda yordamchingizman. "
+      + "Savolingizni yozing yoki mikrofonni bosib ayting, javobimni ovoz chiqarib o'qib beraman. "
+      + "Masalan: السَّلَامُ عَلَيْكُمْ (as-salāmu ʿalaykum) — «Sizga tinchlik bo'lsin».");
+    history.length = 0; // salomlashuv AI suhbatiga kirmaydi
+
+    var chips = document.createElement('div');
+    chips.className = 'chips';
+    [
+      "هَذَا كِتَابٌ nimani anglatadi?",
+      "Quyosh harflari nima?",
+      "Arabcha raqamlarni 1 dan 5 gacha ayt"
+    ].forEach(function (q) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'chip';
+      b.textContent = q;
+      b.addEventListener('click', function () { Ovoz.unlock(); ask(q); });
+      chips.appendChild(b);
+    });
+    log.appendChild(chips);
+  })();
+  </script>
+</body>
+</html>
