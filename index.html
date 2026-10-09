@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Muallim — arab tilini noldan tushunib o'rganing</title>
-  <meta name="description" content="Muallim — arab tilini noldan, o'zbek tilida tushunib o'rganish platformasi: interaktiv o'qish matnlari, so'z tarjimasi va talaffuzi, kino-darslar va ovozli Muallim AI ustoz.">
+  <meta name="description" content="Muallim — arab tilini noldan, o'zbek tilida tushunib o'rganish platformasi: interaktiv o'qish matnlari, so'z tarjimasi va talaffuzi, arabcha subtitrli kinolar va ovozli Muallim AI ustoz.">
   <meta name="theme-color" content="#0a1222">
   <meta property="og:title" content="Muallim — arab tilini noldan tushunib o'rganing">
   <meta property="og:description" content="So'zni bosing — tarjimasi va talaffuzi chiqadi. Ustoz doskada tushuntiradi, Muallim AI savollaringizga ovoz bilan javob beradi.">
@@ -51,7 +51,7 @@
         <ul class="nav-links">
           <li><a href="#sinab-koring">Sinab ko'ring</a></li>
           <li><a href="#imkoniyatlar">Imkoniyatlar</a></li>
-          <li><a href="#kino-dars">Kino-dars</a></li>
+          <li><a href="#kino-bolim">Kino</a></li>
           <li><a href="#usul">Qanday o'rganamiz</a></li>
           <li><a href="#savollar">Savollar</a></li>
         </ul>
@@ -199,8 +199,8 @@
         <ul class="feature-grid">
           <li class="feature reveal tilt">
             <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H4zM8 20h8M12 16v4"/><path d="M8 9h5M8 12h8"/></svg></span>
-            <h3>Kino-dars</h3>
-            <p>Ustoz mavzuni doskaga yozib, ovoz chiqarib tushuntiradi. Subtitr, qadamlar va tezlikni boshqarish bor.</p>
+            <h3>Muallim Kino</h3>
+            <p>Kinoni arabcha subtitr va tarjima bilan ko'ring. Bilmagan so'zlar o'zi lug'atga yig'iladi, keyin dars va quiz.</p>
           </li>
           <li class="feature reveal tilt">
             <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M9 11h.01M12 11h.01M15 11h.01"/></svg></span>
@@ -231,42 +231,30 @@
       </div>
     </section>
 
-    <!-- ============ KINO-DARS ============ -->
-    <section class="section kino" id="kino-dars" aria-labelledby="kino-title">
+    <!-- ============ MUALLIM KINO ============ -->
+    <section class="section kino" id="kino-bolim" aria-labelledby="kino-title">
       <div class="container kino-inner">
         <div class="kino-text reveal">
-          <p class="eyebrow"><i class="star8" aria-hidden="true"></i>Kino-dars</p>
-          <h2 id="kino-title">Ustoz mavzuni doskada, ovoz chiqarib tushuntiradi</h2>
-          <p>Har bir mavzu qadamlarga bo'lingan: ustoz gapiradi, doskaga misollar yoziladi, pastda subtitr chiqadi.
-            Tushunmagan joyni qayta eshitasiz, tezlikni o'zgartirasiz yoki «Soddaroq tushuntir» deysiz.</p>
+          <p class="eyebrow"><i class="star8" aria-hidden="true"></i>Muallim Kino</p>
+          <h2 id="kino-title">Kino ko'ring — notanish so'zlar o'zi lug'atga yig'iladi</h2>
+          <p>Kino arabcha subtitr va o'zbekcha tarjima bilan ko'rsatiladi. Istalgan so'zni bosib, ma'nosini va talaffuzini bilasiz.
+            Kino tugagach — undagi so'z, gap va iboralar bo'yicha kichik dars va quiz.</p>
           <ul class="ticks">
-            <li>Ovoz + subtitr + doska — bir vaqtda</li>
-            <li>Har bir misolni bosib, alohida tinglash</li>
-            <li>Savolingizga Muallim AI yangi dars tuzib beradi</li>
+            <li>Arabcha subtitr + o'zbekcha tarjima</li>
+            <li>Siz bilmagan so'zlar avtomatik «Kinodan lug'at»ga</li>
+            <li>Kinodan dars: so'zlar, gaplar, iboralar</li>
+            <li>Quiz: 8 savol, 5 xil turdagi topshiriq</li>
           </ul>
+          <a class="btn btn-primary btn-lg btn-shine" href="kino.html">Kinoni ko'rish</a>
         </div>
 
-        <div class="kino-frame reveal">
-          <div class="kino-screen" id="kino">
-            <div class="kino-board">
-              <p class="kino-topic"><span lang="ar" dir="rtl">حُرُوفُ الْجَرِّ</span> · Jarr harflari</p>
-              <p class="kino-step" id="kino-step"></p>
-              <ul class="kino-lines" id="kino-lines"></ul>
-            </div>
-            <div class="kino-tutor">
-              <img class="ustoz-img ustoz-sm" id="kino-ustoz" data-mood="tabassum" src="assets/img/ustoz/tabassum.png" alt="" width="230" height="156" loading="lazy">
-              <p class="kino-sub" id="kino-sub" aria-live="polite"></p>
-            </div>
-            <div class="kino-bar">
-              <button class="kino-play" id="kino-play" type="button" aria-pressed="false" aria-label="Ovoz bilan tinglash">
-                <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
-                <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="4.5" width="4" height="15" rx="1.2"/><rect x="14" y="4.5" width="4" height="15" rx="1.2"/></svg>
-              </button>
-              <div class="kino-segs" id="kino-segs"></div>
-              <span class="kino-count" id="kino-count">1 / 3</span>
-            </div>
-          </div>
-        </div>
+        <a class="kino-preview reveal" href="kino.html" aria-label="«Sinfda birinchi kun» kinosini ko'rish">
+          <img src="assets/img/kino-kadr.jpg" alt="Kinodan kadr: ustoz va Ali sinfda, pastda arabcha subtitr va o'zbekcha tarjima" width="1065" height="774" loading="lazy">
+          <span class="kp-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span>
+          <span class="kp-chip c1" aria-hidden="true"><b lang="ar" dir="rtl">أَهْلًا</b>xush kelibsiz</span>
+          <span class="kp-chip c2" aria-hidden="true"><b lang="ar" dir="rtl">عَلِيٌّ</b>Ali</span>
+          <span class="kp-chip c3" aria-hidden="true"><b lang="ar" dir="rtl">مَا</b>nima?</span>
+        </a>
       </div>
     </section>
 
@@ -300,7 +288,7 @@
             <span class="path-num">3</span>
             <div>
               <h3>Tushuning</h3>
-              <p>Tarjima, rasmli lug'at va kino-dars qoidani misollar bilan ochib beradi.</p>
+              <p>Tarjima, rasmli lug'at va ustozning doskadagi tushuntirishi qoidani misollar bilan ochib beradi.</p>
               <p class="path-uz">«Bu — kitob»</p>
             </div>
           </li>
@@ -335,7 +323,7 @@
           </li>
           <li class="audience reveal tilt">
             <h3>O'qituvchilar</h3>
-            <p>Darsda kino-dars va interaktiv matnlarni ko'rsatish, o'quvchilarga uyga vazifa sifatida berish uchun.</p>
+            <p>Darsda kino va interaktiv matnlarni ko'rsatish, o'quvchilarga uyga vazifa sifatida berish uchun.</p>
           </li>
         </ul>
       </div>
@@ -419,7 +407,7 @@
         <ul>
           <li><a href="#sinab-koring">Sinab ko'ring</a></li>
           <li><a href="#imkoniyatlar">Imkoniyatlar</a></li>
-          <li><a href="#kino-dars">Kino-dars</a></li>
+          <li><a href="kino.html">Muallim Kino</a></li>
           <li><a href="#usul">Qanday o'rganamiz</a></li>
           <li><a href="#savollar">Savollar</a></li>
         </ul>

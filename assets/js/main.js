@@ -96,117 +96,6 @@
   }
 
   // =====================================================================
-  //  KINO-DARS namoyishi: 3 qadam; o'zi aylanadi, ▶ bosilsa ovoz bilan
-  // =====================================================================
-  var KINO = [
-    {
-      title: '1. Jarr harfi nima?',
-      lines: [['فِي الْبَيْتِ', 'fil-bayti', 'uyda'], ['مِنَ الْبَيْتِ', 'minal-bayti', 'uydan']],
-      say: "Jarr harfi ismdan oldin keladi va o'zbekchadagi «-da», «-dan», «-ga» qo'shimchalari vazifasini bajaradi. Masalan, فِي الْبَيْتِ — «uyda»."
-    },
-    {
-      title: '2. Asosiy qoida: kasra',
-      lines: [['الْبَيْتُ', 'al-baytu', 'uy'], ['فِي الْبَيْتِ', 'fil-bayti', 'uyda']],
-      say: "Jarr harfidan keyingi ismning oxiri kasra bilan o'qiladi: الْبَيْتُ — al-baytu, lekin فِي الْبَيْتِ — fil-bayti."
-    },
-    {
-      title: '3. Misol: uydan maktabga',
-      lines: [['مِنَ الْبَيْتِ إِلَى الْمَدْرَسَةِ', 'minal-bayti ilal-madrasati', 'uydan maktabga']],
-      say: "Ikkita jarr harfi bir jumlada: مِنْ — «-dan», إِلَى — «-ga». مِنَ الْبَيْتِ إِلَى الْمَدْرَسَةِ — «uydan maktabga»."
-    }
-  ];
-
-  function initKino() {
-    var box = document.getElementById('kino');
-    if (!box) return;
-    var stepEl = document.getElementById('kino-step');
-    var linesEl = document.getElementById('kino-lines');
-    var sub = document.getElementById('kino-sub');
-    var segs = document.getElementById('kino-segs');
-    var count = document.getElementById('kino-count');
-    var play = document.getElementById('kino-play');
-    var u = Ustoz(document.getElementById('kino-ustoz'));
-    var idx = 0, timer = null, playing = false, visible = false, run = 0;
-
-    KINO.forEach(function (_, i) {
-      var b = document.createElement('button');
-      b.type = 'button'; b.className = 'kino-seg';
-      b.setAttribute('aria-label', (i + 1) + '-qadam');
-      b.innerHTML = '<i></i>';
-      b.addEventListener('click', function () { show(i, playing); });
-      segs.appendChild(b);
-    });
-
-    function esc(s) { return s.replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; }); }
-    function arWrap(s) { return esc(s).replace(/([؀-ۿ]+(?:\s[؀-ۿ]+)*)/g, '<span lang="ar" dir="rtl">$1</span>'); }
-
-    function show(i, withVoice) {
-      run++;
-      var my = run;
-      clearTimeout(timer);
-      var O = Ovoz(); if (O) O.stop();
-      u.talk(false);
-      idx = i;
-      var st = KINO[i];
-      stepEl.textContent = st.title;
-      linesEl.innerHTML = st.lines.map(function (l, k) {
-        return '<li style="--k:' + k + '"><span class="kl-ar" lang="ar" dir="rtl">' + esc(l[0]) + '</span><span class="kl-tl">' + esc(l[1]) + '</span><span class="kl-uz">' + esc(l[2]) + '</span></li>';
-      }).join('');
-      sub.innerHTML = arWrap(st.say);
-      box.classList.remove('is-anim'); void box.offsetWidth; box.classList.add('is-anim');
-      Array.prototype.forEach.call(segs.children, function (s, k) {
-        s.classList.toggle('done', k < i);
-        s.classList.toggle('now', k === i);
-      });
-      count.textContent = (i + 1) + ' / ' + KINO.length;
-      u.mood('korsatadi', 1400);   // doskaga ishora qiladi — qatorlar yozilayotganda
-
-      var next = function () { if (my === run) show((i + 1) % KINO.length, playing); };
-      if (withVoice && O) {
-        O.unlock();
-        var ok = O.speak(st.say, {
-          onStart: function () { if (my === run) u.talk(true); },
-          onEnd: function () {
-            if (my !== run) return;
-            u.talk(false);
-            if (i + 1 < KINO.length) timer = setTimeout(next, 900);
-            else { stop(); u.mood('kuladi', 1600); }
-          }
-        });
-        if (!ok) stop();
-      } else if (!reduceMotion && visible && !playing) {
-        timer = setTimeout(next, 6500);
-      }
-    }
-
-    function stop() {
-      playing = false;
-      play.setAttribute('aria-pressed', 'false');
-      play.setAttribute('aria-label', 'Ovoz bilan tinglash');
-      u.talk(false);
-      var O = Ovoz(); if (O) O.stop();
-    }
-
-    play.addEventListener('click', function () {
-      if (playing) { stop(); run++; clearTimeout(timer); return; }
-      playing = true;
-      play.setAttribute('aria-pressed', 'true');
-      play.setAttribute('aria-label', "To'xtatish");
-      show(idx, true);
-    });
-
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (en) {
-        visible = en[0].isIntersecting;
-        if (visible && !playing) show(idx, false);
-        else if (!visible) { clearTimeout(timer); if (playing) { stop(); run++; } }
-      }, { threshold: 0.35 }).observe(box);
-    }
-    show(0, false);
-    u.idle();
-  }
-
-  // =====================================================================
   //  HERO: ustoz salomlashadi, ko'pikka yozadi; so'z bosilsa talaffuz
   // =====================================================================
   function initHero() {
@@ -458,8 +347,6 @@
         if (active) place();
       });
     }
-
-    initKino();
 
     var year = document.querySelector('[data-year]');
     if (year) year.textContent = String(new Date().getFullYear());

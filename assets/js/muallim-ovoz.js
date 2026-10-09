@@ -128,7 +128,7 @@
     return out;
   }
 
-  // opts: { rate, onStart, onPiece(index, piece), onEnd, onError }
+  // opts: { rate, pitch, onStart, onPiece(index, piece), onEnd, onError }
   // Qaytaradi: o'qiladigan bo'laklar ro'yxati (pieces bilan bir xil) yoki false
   function speak(text, opts) {
     opts = opts || {};
@@ -145,6 +145,7 @@
       u.lang = v ? v.lang : DEFAULT_LANG[p.kind];
       if (v) u.voice = v;
       u.rate = (p.kind === 'ar' ? 0.8 : 1) * (opts.rate || 1);
+      if (opts.pitch) u.pitch = opts.pitch;   // personajlar ovozini farqlash uchun
       return u;
     });
     if (!queue.length) return false;

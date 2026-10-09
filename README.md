@@ -7,6 +7,7 @@ Muallim platformasi uchun namuna sahifalar va ovoz kutubxonasi.
 | Fayl | Nima |
 | --- | --- |
 | `index.html` | Login'dan oldingi kirish (landing) sahifasi: doska va ustoz animatsiyasi, «Birinchi darsdan parcha» demo |
+| `kino.html`, `assets/js/kino.js` | **Muallim Kino**: kino arabcha subtitr + o'zbekcha tarjima bilan; notanish so'zlar o'zi lug'atga yig'iladi; kinodan dars (so'zlar, gaplar, iboralar) va 8 savollik quiz |
 | `login.html` | Kirish: telefon (+998 niqobi) yoki email, parolni ko'rsatish, xatolar o'zbekcha |
 | `register.html` | Ro'yxatdan o'tish: ma'lumotlar → SMS kod (6 katak, qayta yuborish taymeri) → daraja va maqsad → tabrik |
 | `parol-tiklash.html` | Parolni tiklash: telefon → kod va yangi parol → tayyor |
@@ -19,6 +20,22 @@ Muallim platformasi uchun namuna sahifalar va ovoz kutubxonasi.
 | `demo/muallim-ai.html` | Muallim AI chati: javoblarni ovoz chiqarib o'qish va savolni ovoz bilan aytish |
 | `ai/muallim-ai-prompt.md` | Batafsil dars uchun ko'rsatma (system prompt) va javob vaqtini qisqartirish bo'yicha tavsiyalar |
 | `assets/js/muallim-ovoz.js` | Ovoz kutubxonasi — saytga ulash uchun |
+
+## Muallim Kino: o'z filmingizni ulash
+
+`assets/js/kino.js` dagi `FILM` obyekti — ssenariy va subtitrlar. Har bir replika:
+
+```js
+{ who: 'ustoz', shot: 'wide', t: 'مَا|ma اسْمُكَ|ismuka ؟', uz: 'Isming nima?', note: 'qisqa grammatik izoh' }
+```
+
+`t` — arabcha matn, har bir so'z `so'z|lug'at_id` ko'rinishida (lug'at — `DICT`), tinish belgisi alohida.
+Foydalanuvchi bilmagan so'zlar (`biladi` ro'yxatida yo'qlari) kino davomida o'zi «Kinodan lug'at»ga qo'shiladi,
+dars va quiz shu ro'yxatdan tuziladi.
+
+Hozirgi «Sinfda birinchi kun» — animatsion namuna (sahna, kamera, ovoz brauzerdan). Haqiqiy film uchun
+`FILM.video` ga video manzilini va replikalarga `start`/`end` (soniya) qo'shib, pleyer vaqtini `<video>` dan
+olish kerak — bu qism hali yozilmagan. Filmlardan foydalanish uchun mualliflik huquqi litsenziyasi kerak.
 
 ## Ustoz personaji
 

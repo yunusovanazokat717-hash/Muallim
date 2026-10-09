@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Muallim Kino — kino ko'rib arab tilini o'rganing</title>
+  <meta name="description" content="Kinoni arabcha subtitr va o'zbekcha tarjima bilan ko'ring. Notanish so'zlar o'zi lug'atga yig'iladi, keyin kinodagi so'z, gap va iboralar bo'yicha kichik dars va quiz.">
+  <meta name="theme-color" content="#0a1222">
+  <meta property="og:title" content="Muallim Kino — kino ko'rib arab tilini o'rganing">
+  <meta property="og:image" content="assets/img/og-image.png">
+  <link rel="icon" href="assets/img/favicon-64.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Caveat:wght@500;700&family=Onest:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    document.documentElement.classList.add('js');
+    try { var t = localStorage.getItem('muallim-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+  <script src="assets/js/muallim-ovoz.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/kino.js" defer></script>
+</head>
+<body class="kino-page">
+  <a class="skip-link" href="#main">Asosiy mazmunga o'tish</a>
+
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Muallim — bosh sahifa">
+        <span class="brand-mark"><img src="assets/img/ustoz/logo.png" alt="" width="44" height="44"></span>
+        <span class="brand-word">Muallim<small lang="ar" dir="rtl">مُعَلِّم</small></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false">
+        <span class="visually-hidden">Menyuni ochish</span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Asosiy menyu">
+        <ul class="nav-links">
+          <li><a href="index.html">Bosh sahifa</a></li>
+          <li><a href="#film">Kino</a></li>
+          <li><a href="#dars">Dars</a></li>
+          <li><a href="#quiz">Quiz</a></li>
+        </ul>
+        <div class="nav-actions">
+          <button class="theme-toggle" type="button" aria-label="Yorug' yoki tungi rejim">
+            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
+          </button>
+          <a class="btn btn-ghost" href="login.html">Kirish</a>
+          <a class="btn btn-primary btn-shine" href="register.html">Bepul boshlash</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="film-intro">
+      <div class="container">
+        <p class="eyebrow"><i class="star8" aria-hidden="true"></i>Muallim Kino</p>
+        <h1>Kino ko'ring — arab tilini o'rganing</h1>
+        <p class="lead">Kino arabcha subtitr va o'zbekcha tarjima bilan ko'rsatiladi. Siz bilmagan so'zlar
+          <b>o'zi lug'atga yig'iladi</b>. Kino tugagach — shu so'z, gap va iboralar bo'yicha kichik dars va quiz.</p>
+      </div>
+    </section>
+
+    <!-- ============ KINO ============ -->
+    <section class="film" id="film" aria-label="Kino">
+      <div class="container film-layout">
+        <div class="film-player">
+          <div class="film-frame">
+            <div class="film-screen" id="film-screen">
+              <div class="film-scene" id="film-scene" aria-hidden="true">
+                <div class="film-cam" id="film-cam" data-shot="wide">
+                  <div class="sc-wall"></div>
+                  <div class="sc-band"></div>
+                  <div class="sc-window"><span class="sc-sun"></span></div>
+                  <div class="sc-board">
+                    <span class="sc-board-title" lang="ar" dir="rtl">اَلدَّرْسُ الْأَوَّلُ</span>
+                    <span class="sc-board-text" id="film-board-text" lang="ar" dir="rtl"></span>
+                  </div>
+                  <div class="sc-floor"></div>
+                  <div class="sc-desk">
+                    <span class="sc-obj sc-book" data-obj="kitab"><i></i></span>
+                    <span class="sc-obj sc-ruler" data-obj="mistara"><i></i></span>
+                    <span class="sc-obj sc-pen" data-obj="qalam"><i></i></span>
+                  </div>
+                  <img class="sc-ustoz ustoz-img" id="film-ustoz" data-mood="tabassum" src="assets/img/ustoz/tabassum.png" alt="" width="230" height="156">
+                  <svg class="sc-ali" id="film-ali" viewBox="0 0 200 230">
+                    <path d="M28 230c4-46 34-70 72-70s68 24 72 70z" fill="#2c7a7b" stroke="#111" stroke-width="3"/>
+                    <path d="M76 162l24 26 24-26" fill="#f8f4ea" stroke="#111" stroke-width="3" stroke-linejoin="round"/>
+                    <g class="ali-head">
+                      <ellipse cx="34" cy="96" rx="11" ry="15" fill="#fff" stroke="#111" stroke-width="3"/>
+                      <circle cx="100" cy="92" r="62" fill="#fff" stroke="#111" stroke-width="3"/>
+                      <path d="M40 80c-2-38 28-56 60-56s58 14 62 46c-14-10-30-16-46-14-6-10-14-14-22-12 4 6 2 10-2 12-16-6-34-2-52 24z" fill="#1c1c1c"/>
+                      <g class="ali-eyes"><ellipse cx="78" cy="96" rx="5.5" ry="7" fill="#111"/><ellipse cx="114" cy="96" rx="5.5" ry="7" fill="#111"/></g>
+                      <path d="M68 82q10-6 20 0M104 82q10-6 20 0" stroke="#111" stroke-width="3" fill="none" stroke-linecap="round"/>
+                      <path d="M96 104q-4 8 3 10" stroke="#111" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                      <path class="ali-smile" d="M80 124q16 12 32 0" stroke="#111" stroke-width="3" fill="none" stroke-linecap="round"/>
+                      <ellipse class="ali-mouth" cx="96" cy="126" rx="10" ry="7" fill="#7a1f1f" stroke="#111" stroke-width="3"/>
+                    </g>
+                  </svg>
+                </div>
+              </div>
+
+              <div class="film-title" id="film-title">
+                <p class="ft-brand"><i class="star8" aria-hidden="true"></i>Muallim Kino</p>
+                <p class="ft-ar" lang="ar" dir="rtl">اَلْيَوْمُ الْأَوَّلُ فِي الْفَصْلِ</p>
+                <p class="ft-uz">«Sinfda birinchi kun»</p>
+                <button class="ft-play" id="film-title-play" type="button" aria-label="Kinoni boshlash">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+                </button>
+                <p class="ft-hint">Animatsion namuna-kino · 14 sahna · ~1 daqiqa</p>
+              </div>
+
+              <div class="film-end" id="film-end" hidden>
+                <p class="fe-ar" lang="ar" dir="rtl">اَلنِّهَايَةُ</p>
+                <p class="fe-uz">Tamom</p>
+                <p class="fe-sum">Kinodan <b id="film-end-n">0</b> ta yangi so'z lug'atingizga qo'shildi.</p>
+                <div class="fe-actions">
+                  <button class="btn btn-primary btn-lg btn-shine" id="film-end-lesson" type="button">Darsga o'tish</button>
+                  <button class="btn btn-on-dark btn-lg" id="film-replay" type="button">Qayta ko'rish</button>
+                </div>
+              </div>
+
+              <div class="film-count" id="film-count-badge" aria-live="polite">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2zM4 19a2 2 0 0 1 2-2h12"/></svg>
+                <span>Lug'at</span><b id="film-count">0</b>
+              </div>
+            </div>
+
+            <div class="film-subs" id="film-subs" data-mode="both">
+              <p class="sub-ar" id="film-sub-ar" lang="ar" dir="rtl"></p>
+              <p class="sub-uz" id="film-sub-uz">▶ ni bosing — kino boshlanadi. Subtitrdagi istalgan so'zni bosing.</p>
+
+              <div class="film-wcard" id="film-wcard" role="dialog" aria-label="So'z" hidden>
+                <div class="wc-head">
+                  <button class="wc-play" type="button" aria-label="Talaffuzini eshitish">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>
+                  </button>
+                  <span class="wc-ar" lang="ar" dir="rtl"></span>
+                  <button class="wc-close" type="button" aria-label="Yopish">×</button>
+                </div>
+                <p class="wc-tl"></p>
+                <p class="wc-uz"></p>
+                <p class="wc-izoh"></p>
+                <div class="wc-actions">
+                  <button class="wc-add" type="button" aria-pressed="false">Lug'atga qo'shish</button>
+                  <button class="wc-know" type="button" aria-pressed="false">Bilaman</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="film-controls">
+              <button class="fc-btn fc-play" id="film-play" type="button" aria-pressed="false" aria-label="Ko'rish">
+                <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+                <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="4.5" width="4" height="15" rx="1.2"/><rect x="14" y="4.5" width="4" height="15" rx="1.2"/></svg>
+              </button>
+              <button class="fc-btn" id="film-prev" type="button" aria-label="Oldingi sahna">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 5l-8 7 8 7M6 5v14"/></svg>
+              </button>
+              <button class="fc-btn" id="film-next" type="button" aria-label="Keyingi sahna">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5l8 7-8 7M18 5v14"/></svg>
+              </button>
+              <div class="film-pbar" id="film-pbar"></div>
+              <span class="film-time" id="film-time">0 / 14</span>
+              <div class="fc-group">
+                <button class="fc-btn fc-sound" id="film-sound" type="button" aria-pressed="false" aria-label="Ovozni o'chirish">
+                  <svg class="i-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h4l5 4v-13l-5 4zM16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/></svg>
+                  <svg class="i-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h4l5 4v-13l-5 4zM17 10l4 4M21 10l-4 4"/></svg>
+                </button>
+                <button class="fc-btn fc-text" id="film-subs-mode" type="button" aria-label="Subtitr rejimi">AR + UZ</button>
+                <button class="fc-btn fc-text fc-harakat" id="film-harakat" type="button" aria-pressed="true" aria-label="Harakatlarni ko'rsatish">ـَ ـِ ـُ</button>
+                <button class="fc-btn fc-text" id="film-speed" type="button" aria-label="Tezlik">1×</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="film-lugat" aria-labelledby="lugat-title">
+          <div class="fl-head">
+            <h2 id="lugat-title">Kinodan lug'at</h2>
+            <span class="fl-n" aria-hidden="true"><i class="star8"></i></span>
+          </div>
+          <p class="fl-hint">Siz bilmagan so'zlar kino davomida o'zi qo'shiladi. Subtitrdagi so'zni bosib, o'zingiz ham qo'shishingiz yoki «Bilaman» deb belgilashingiz mumkin.</p>
+          <ul class="fl-list" id="film-lugat"></ul>
+          <p class="fl-empty" id="film-lugat-empty">Kino boshlanishi bilan bu yerda yangi so'zlar paydo bo'ladi.</p>
+          <button class="btn btn-primary btn-block" id="film-to-lesson" type="button" disabled>Darsga o'tish</button>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ DARS ============ -->
+    <section class="section section-alt film-lesson is-locked" id="dars" aria-labelledby="dars-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow"><i class="star8" aria-hidden="true"></i>Kinodan dars</p>
+          <h2 id="dars-title">So'zlar, gaplar va iboralar</h2>
+          <div class="naqsh-divider" aria-hidden="true"><span></span><i class="star8"></i><span></span></div>
+        </header>
+
+        <div class="ls-wrap">
+          <div class="ls-lock" id="dars-lock">
+            <p>Dars kino tugagach ochiladi — kinoda uchragan so'zlar asosida tuziladi.</p>
+            <button class="btn btn-outline" id="lesson-unlock" type="button">Hozir ochish</button>
+          </div>
+          <div class="ls-content">
+            <div class="ls-tabs" role="tablist" aria-label="Dars bo'limlari">
+              <button class="ls-tab" role="tab" aria-selected="true" aria-controls="ls-p-soz" type="button">So'zlar <b id="tab-soz-n">0</b></button>
+              <button class="ls-tab" role="tab" aria-selected="false" aria-controls="ls-p-gap" type="button">Gaplar</button>
+              <button class="ls-tab" role="tab" aria-selected="false" aria-controls="ls-p-ibora" type="button">Iboralar</button>
+            </div>
+            <div class="ls-panel" id="ls-p-soz" role="tabpanel"><ul class="ls-grid" id="ls-soz"></ul></div>
+            <div class="ls-panel" id="ls-p-gap" role="tabpanel" hidden><ul class="ls-rows" id="ls-gap"></ul></div>
+            <div class="ls-panel" id="ls-p-ibora" role="tabpanel" hidden><ul class="ls-rows" id="ls-ibora"></ul></div>
+            <div class="ls-cta"><button class="btn btn-primary btn-lg btn-shine" id="quiz-start" type="button">Quizni boshlash</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ QUIZ ============ -->
+    <section class="section film-quiz is-locked" id="quiz" aria-labelledby="quiz-title">
+      <div class="container narrow">
+        <header class="section-head">
+          <p class="eyebrow"><i class="star8" aria-hidden="true"></i>Quiz</p>
+          <h2 id="quiz-title">Kinodan nimani o'rgandingiz?</h2>
+          <div class="naqsh-divider" aria-hidden="true"><span></span><i class="star8"></i><span></span></div>
+        </header>
+        <div class="quiz-card">
+          <img class="ustoz-img quiz-ustoz" id="quiz-ustoz" data-mood="tabassum" src="assets/img/ustoz/tabassum.png" alt="" width="230" height="156" loading="lazy">
+          <div class="quiz-gate">
+            <p>8 ta savol: so'z ma'nosi, arabchasini topish, tinglab tanlash, gapni to'ldirish va gap tuzish.</p>
+            <button class="btn btn-primary btn-lg" id="quiz-gate" type="button">Quizni boshlash</button>
+          </div>
+          <div class="quiz-box" id="quiz-box" hidden>
+            <div class="q-progress"><span class="q-num" id="q-num">1 / 8</span><div class="q-track"><i id="q-bar"></i></div></div>
+            <p class="q-prompt" id="q-prompt"></p>
+            <div class="q-body" id="q-body"></div>
+            <p class="q-feedback" id="q-feedback" role="status"></p>
+            <button class="btn btn-primary btn-block" id="q-next" type="button" hidden>Keyingi savol</button>
+          </div>
+          <div class="quiz-result" id="quiz-result" hidden>
+            <div class="qr-stars" aria-hidden="true"><i class="qr-star"></i><i class="qr-star"></i><i class="qr-star"></i></div>
+            <p class="qr-score" id="qr-score"></p>
+            <p class="qr-text" id="qr-text"></p>
+            <div class="qr-actions">
+              <button class="btn btn-primary" id="qr-retry" type="button">Xatolarni takrorlash</button>
+              <button class="btn btn-outline" id="qr-again" type="button">Yangi quiz</button>
+              <a class="btn btn-ghost" href="#film">Kinoni qayta ko'rish</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="hoshiya" aria-hidden="true"></div>
+    <div class="container footer-bottom">
+      <p>© <span data-year>2026</span> Muallim · Namuna-kino animatsion: haqiqiy filmlar litsenziya bilan ulanadi.</p>
+    </div>
+  </footer>
+</body>
+</html>
