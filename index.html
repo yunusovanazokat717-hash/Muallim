@@ -2,23 +2,27 @@
 <html lang="uz">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Muallim — o'qituvchilar uchun raqamli platforma</title>
-  <meta name="description" content="Muallim — o'qituvchilar uchun malaka oshirish, metodik materiallar, testlar va sertifikatlar jamlangan yagona raqamli platforma.">
-  <meta name="theme-color" content="#1F6FEB">
-  <meta property="og:title" content="Muallim — o'qituvchilar uchun raqamli platforma">
-  <meta property="og:description" content="Malaka oshirish, metodik materiallar, testlar va sertifikatlar — barchasi bir joyda.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Muallim — arab tilini o'zbek tilida o'rganing</title>
+  <meta name="description" content="Muallim — arab tilini noldan, o'zbek tilida o'rganish platformasi: interaktiv o'qish matnlari, so'z tarjimasi va talaffuzi, kino-darslar va ovozli Muallim AI ustoz.">
+  <meta name="theme-color" content="#0b1324">
+  <meta property="og:title" content="Muallim — arab tilini o'zbek tilida o'rganing">
+  <meta property="og:description" content="So'zni bosing — tarjimasi va talaffuzi chiqadi. Ustoz doskada tushuntiradi, Muallim AI savollaringizga ovoz bilan javob beradi.">
   <meta property="og:type" content="website">
   <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Caveat:wght@500;700&family=Onest:wght@400;500;600;700;800&display=swap">
   <link rel="stylesheet" href="assets/css/style.css">
   <script>
-    // JS borligini belgilash va mavzuni sahifa chizilishidan oldin qo'llash (miltillashning oldini oladi)
+    // JS borligini va saqlangan mavzuni sahifa chizilishidan oldin qo'llash (miltillamasin)
     document.documentElement.classList.add('js');
     try {
       var t = localStorage.getItem('muallim-theme');
       if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
     } catch (e) {}
   </script>
+  <script src="assets/js/muallim-ovoz.js" defer></script>
   <script src="assets/js/main.js" defer></script>
 </head>
 <body>
@@ -38,224 +42,300 @@
 
       <nav class="site-nav" id="site-nav" aria-label="Asosiy menyu">
         <ul class="nav-links">
+          <li><a href="#sinab-koring">Sinab ko'ring</a></li>
           <li><a href="#imkoniyatlar">Imkoniyatlar</a></li>
-          <li><a href="#qanday-ishlaydi">Qanday ishlaydi</a></li>
-          <li><a href="#kimlar-uchun">Kimlar uchun</a></li>
+          <li><a href="#usul">Qanday o'rganamiz</a></li>
           <li><a href="#savollar">Savollar</a></li>
         </ul>
         <div class="nav-actions">
-          <button class="theme-toggle" type="button" aria-label="Tungi rejimni almashtirish">
+          <button class="theme-toggle" type="button" aria-label="Yorug' yoki tungi rejim">
             <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
             <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
           </button>
           <a class="btn btn-ghost" href="login.html">Kirish</a>
-          <a class="btn btn-primary" href="register.html">Ro'yxatdan o'tish</a>
+          <a class="btn btn-primary" href="register.html">Bepul boshlash</a>
         </div>
       </nav>
     </div>
   </header>
 
   <main id="main">
-    <!-- Hero -->
+    <!-- ============ HERO ============ -->
     <section class="hero">
+      <div class="letters" aria-hidden="true">
+        <span style="--x:6%;--d:0s;--s:26s">ا</span><span style="--x:18%;--d:-6s;--s:31s">ب</span>
+        <span style="--x:31%;--d:-12s;--s:24s">ت</span><span style="--x:47%;--d:-3s;--s:29s">ج</span>
+        <span style="--x:62%;--d:-15s;--s:27s">د</span><span style="--x:74%;--d:-9s;--s:33s">ر</span>
+        <span style="--x:86%;--d:-19s;--s:25s">س</span><span style="--x:94%;--d:-5s;--s:30s">ع</span>
+      </div>
+
       <div class="container hero-inner">
         <div class="hero-text">
-          <p class="eyebrow">O'qituvchilar uchun raqamli platforma</p>
-          <h1>Kasbiy o'sish uchun kerakli hamma narsa — <span class="accent">bir joyda</span></h1>
+          <p class="eyebrow">Arab tili — o'zbek tilida</p>
+          <h1>Arabchani <span class="hl">tushunib</span> o'qishni noldan o'rganing</h1>
           <p class="lead">
-            Muallim — malaka oshirish kurslari, metodik materiallar, testlar va sertifikatlarni
-            jamlagan platforma. Istalgan vaqtda, istalgan qurilmadan o'rganing.
+            Har bir so'zni bosing — tarjimasi, talaffuzi va qisqa sharhi chiqadi.
+            Ustoz doskada ovoz chiqarib tushuntiradi, savollaringizga esa Muallim AI javob beradi.
           </p>
           <div class="hero-actions">
             <a class="btn btn-primary btn-lg" href="register.html">Bepul boshlash</a>
-            <a class="btn btn-outline btn-lg" href="login.html">Hisobim bor — kirish</a>
+            <a class="btn btn-outline btn-lg" href="#sinab-koring">Darsni sinab ko'rish</a>
           </div>
-          <ul class="hero-points">
-            <li>Onlayn va o'z tezligingizda</li>
-            <li>Telefon va kompyuterda ishlaydi</li>
-            <li>O'zbek tilida</li>
-          </ul>
+          <p class="hero-login">Hisobingiz bormi? <a href="login.html">Kirish</a></p>
         </div>
 
-        <div class="hero-visual" aria-hidden="true">
-          <div class="mock-card mock-main">
-            <div class="mock-head">
-              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <!-- Sahna: ustoz doskaga yozadi -->
+        <div class="hero-stage">
+          <div class="board">
+            <p class="board-label">1-dars</p>
+            <div class="board-row r1">
+              <p class="board-ar" lang="ar" dir="rtl">
+                <button class="hw" type="button" data-tr="bu" data-tl="hāzā">هَذَا</button>
+                <button class="hw" type="button" data-tr="kitob" data-tl="kitābun">كِتَابٌ</button>
+              </p>
+              <p class="board-tl">hāzā kitābun</p>
+              <p class="board-uz">Bu — kitob.</p>
             </div>
-            <div class="mock-body">
-              <p class="mock-title">Mening kurslarim</p>
-              <div class="mock-course">
-                <span class="mock-icon c1"></span>
-                <div class="mock-lines">
-                  <span class="mock-label">Zamonaviy dars metodikasi</span>
-                  <span class="progress"><span style="width:72%"></span></span>
-                </div>
-              </div>
-              <div class="mock-course">
-                <span class="mock-icon c2"></span>
-                <div class="mock-lines">
-                  <span class="mock-label">Raqamli savodxonlik</span>
-                  <span class="progress"><span style="width:45%"></span></span>
-                </div>
-              </div>
-              <div class="mock-course">
-                <span class="mock-icon c3"></span>
-                <div class="mock-lines">
-                  <span class="mock-label">Baholash strategiyalari</span>
-                  <span class="progress"><span style="width:90%"></span></span>
-                </div>
-              </div>
+            <div class="board-row r2">
+              <p class="board-ar" lang="ar" dir="rtl">
+                <button class="hw" type="button" data-tr="bu (ayol jinsi)" data-tl="hāzihi">هَذِهِ</button>
+                <button class="hw" type="button" data-tr="chizg'ich" data-tl="misṭaratun">مِسْطَرَةٌ</button>
+              </p>
+              <p class="board-tl">hāzihi misṭaratun</p>
+              <p class="board-uz">Bu — chizg'ich.</p>
             </div>
+            <svg class="chalk-line" viewBox="0 0 300 20" aria-hidden="true"><path d="M6 12c40-8 90-9 140-4s100 6 148-3"/></svg>
           </div>
-          <div class="mock-card mock-badge">
-            <svg viewBox="0 0 24 24"><path d="M12 2l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 16.8 6.2 19.9l1.1-6.5L2.6 8.8l6.5-.9z"/></svg>
-            <div>
-              <strong>Sertifikat tayyor</strong>
-              <span>Kurs muvaffaqiyatli yakunlandi</span>
-            </div>
+
+          <div class="ustoz-row">
+            <svg class="ustoz" viewBox="0 0 96 96" aria-hidden="true">
+              <g class="ustoz-head">
+                <circle cx="48" cy="50" r="38" fill="#f1f5f9" stroke="#1c2433" stroke-width="2.4"/>
+                <path d="M19 40c0-18 13-28 29-28s29 10 29 28z" fill="#1c2433"/>
+                <path d="M24 32h48M28 24h40M34 17h28" stroke="#f1f5f9" stroke-width="2" stroke-dasharray="4 3"/>
+                <path d="M19 40h58" stroke="#1c2433" stroke-width="3.5"/>
+                <g class="ustoz-eyes">
+                  <ellipse cx="36" cy="52" rx="3.8" ry="4.8" fill="#1c2433"/>
+                  <ellipse cx="60" cy="52" rx="3.8" ry="4.8" fill="#1c2433"/>
+                </g>
+                <path d="M28 45q7-4 14 0M54 45q7-4 14 0" stroke="#1c2433" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+                <path d="M20 58c1 18 12 29 28 29s27-11 28-29c-6 6-16 9-28 9s-22-3-28-9z" fill="#e2e8f0" stroke="#1c2433" stroke-width="2"/>
+                <path d="M32 61q16 8 32 0" stroke="#1c2433" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+                <ellipse class="ustoz-mouth" cx="48" cy="68" rx="6" ry="3.4" fill="#1c2433"/>
+              </g>
+            </svg>
+            <p class="bubble" id="hero-bubble" aria-live="polite">Assalomu alaykum! Doskadagi so'zni bosing — talaffuzini eshitasiz.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Imkoniyatlar -->
+    <!-- ============ SINAB KO'RING ============ -->
+    <section class="section try" id="sinab-koring" aria-labelledby="try-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow">Ro'yxatdan o'tmasdan sinab ko'ring</p>
+          <h2 id="try-title">Birinchi darsdan parcha</h2>
+          <p>Istalgan so'zni bosing. Harakatlarni yashirib, o'zingizni sinab ham ko'rishingiz mumkin.</p>
+        </header>
+
+        <div class="reader reveal" id="reader">
+          <div class="reader-head">
+            <span class="reader-label">Arabcha matn</span>
+            <button class="harakat" id="harakat" type="button" aria-pressed="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              Harakat
+            </button>
+          </div>
+          <p class="reader-text" lang="ar" dir="rtl">
+            <span class="nw"><button class="w" type="button" data-id="haza">هَذَا</button> <button class="w" type="button" data-id="kitab">كِتَابٌ</button>.</span>
+            <span class="nw"><button class="w" type="button" data-id="hazihi">هَذِهِ</button> <button class="w" type="button" data-id="mistara">مِسْطَرَةٌ</button>.</span>
+            <span class="nw"><button class="w" type="button" data-id="ayna">أَيْنَ</button> <button class="w" type="button" data-id="sabbura">السَّبُّورَةُ</button>؟</span>
+            <span class="nw"><button class="w" type="button" data-id="xuz">خُذِ</button> <button class="w" type="button" data-id="qalam">الْقَلَمَ</button>.</span>
+            <span class="nw"><button class="w" type="button" data-id="hati">هَاتِ</button> <button class="w" type="button" data-id="kurrasa">الْكُرَّاسَةَ</button>.</span>
+          </p>
+          <div class="reader-tr">
+            <span class="reader-label">O'zbekcha tarjima</span>
+            <p>Bu kitob. Bu chizg'ich. Doska qayerda? Qalamni ol. Daftarni ber.</p>
+          </div>
+
+          <div class="pop" id="pop" role="dialog" aria-label="So'z tarjimasi" hidden>
+            <div class="pop-head">
+              <button class="pop-play" type="button" aria-label="Talaffuzini eshitish">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>
+              </button>
+              <span class="pop-word" lang="ar" dir="rtl"></span>
+              <button class="pop-close" type="button" aria-label="Yopish">×</button>
+            </div>
+            <p class="pop-tl"></p>
+            <p class="pop-uz"></p>
+            <p class="pop-note"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ IMKONIYATLAR ============ -->
     <section class="section" id="imkoniyatlar" aria-labelledby="imk-title">
       <div class="container">
-        <header class="section-head">
+        <header class="section-head reveal">
           <p class="eyebrow">Imkoniyatlar</p>
-          <h2 id="imk-title">Platformada nimalar bor?</h2>
-          <p>O'qituvchining kundalik ishi va kasbiy rivoji uchun zarur vositalar.</p>
+          <h2 id="imk-title">Darsda sizga nimalar yordam beradi</h2>
         </header>
 
         <ul class="feature-grid">
-          <li class="feature">
-            <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M3 6.5 12 3l9 3.5-9 3.5z"/><path d="M6 8.2V14c0 1.7 2.7 3 6 3s6-1.3 6-3V8.2"/><path d="M21 6.5V12"/></svg></span>
-            <h3>Malaka oshirish kurslari</h3>
-            <p>Videodarslar, topshiriqlar va amaliy mashg'ulotlar bilan tuzilgan onlayn kurslar.</p>
+          <li class="feature reveal">
+            <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H4zM8 20h8M12 16v4"/><path d="M8 9h5M8 12h8"/></svg></span>
+            <h3>Kino-dars</h3>
+            <p>Ustoz mavzuni doskaga yozib, ovoz chiqarib tushuntiradi. Subtitr, qadamlar va tezlikni boshqarish bor.</p>
           </li>
-          <li class="feature">
-            <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M14 3v5h5M8 12h8M8 16h8"/></svg></span>
-            <h3>Metodik materiallar</h3>
-            <p>Dars ishlanmalari, taqdimotlar va tarqatma materiallar kutubxonasi.</p>
+          <li class="feature reveal">
+            <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M9 11h.01M12 11h.01M15 11h.01"/></svg></span>
+            <h3>Muallim AI</h3>
+            <p>Tushunmagan joyingizni so'rang — yozib yoki ovoz bilan. Javobni batafsil, misollar bilan oladi.</p>
           </li>
-          <li class="feature">
-            <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M9 11l2 2 4-4"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg></span>
-            <h3>Testlar va sinovlar</h3>
-            <p>Bilimingizni tekshiring, attestatsiyaga tayyorlaning va natijalarni kuzating.</p>
+          <li class="feature reveal">
+            <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M4 19V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2zM4 19a2 2 0 0 1 2-2h12"/><path d="M9 8h5"/></svg></span>
+            <h3>Interaktiv o'qish</h3>
+            <p>Har bir so'zni bosing: tarjimasi, o'qilishi va qisqa grammatik sharhi chiqadi.</p>
           </li>
-          <li class="feature">
-            <span class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M8.5 13 7 21l5-2.5L17 21l-1.5-8"/></svg></span>
-            <h3>Sertifikatlar</h3>
-            <p>Kursni yakunlagach, elektron sertifikatni yuklab oling yoki havola orqali ulashing.</p>
+          <li class="feature reveal">
+            <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/></svg></span>
+            <h3>Talaffuz</h3>
+            <p>So'z va jumlalarni ovozda eshiting. Arabcha qism arabcha, izoh esa o'zbekcha o'qiladi.</p>
           </li>
-          <li class="feature">
-            <span class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><circle cx="17" cy="9" r="2.5"/><path d="M16.5 14c2.8 0 5 1.8 5 5"/></svg></span>
-            <h3>Hamkasblar hamjamiyati</h3>
-            <p>Tajriba almashing, savol bering va boshqa o'qituvchilar bilan hamkorlik qiling.</p>
+          <li class="feature reveal">
+            <span class="feature-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m3 16 5-5 4 4 3-3 6 6"/><circle cx="15.5" cy="8.5" r="1.5"/></svg></span>
+            <h3>Rasmli lug'at</h3>
+            <p>Yangi so'zlar rasm bilan beriladi — qalam, doska, daftar — va tezroq yodda qoladi.</p>
           </li>
-          <li class="feature">
-            <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
-            <h3>Shaxsiy kabinet</h3>
-            <p>O'rganish tarixi, yutuqlar va keyingi qadamlar — barchasi bitta sahifada.</p>
+          <li class="feature reveal">
+            <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+            <h3>Harakatsiz o'qish mashqi</h3>
+            <p>«Harakat» tugmasi bilan unlilarni yashiring va matnni harakatsiz o'qishga o'rganing.</p>
           </li>
         </ul>
       </div>
     </section>
 
-    <!-- Qanday ishlaydi -->
-    <section class="section section-alt" id="qanday-ishlaydi" aria-labelledby="qi-title">
+    <!-- ============ QANDAY O'RGANAMIZ ============ -->
+    <section class="section section-alt" id="usul" aria-labelledby="usul-title">
       <div class="container">
-        <header class="section-head">
-          <p class="eyebrow">Qanday ishlaydi</p>
-          <h2 id="qi-title">Uch qadamda boshlang</h2>
+        <header class="section-head reveal">
+          <p class="eyebrow">Qanday o'rganamiz</p>
+          <h2 id="usul-title">Har bir dars to'rt bosqichdan iborat</h2>
         </header>
 
-        <ol class="steps">
-          <li class="step">
-            <span class="step-num">1</span>
-            <h3>Ro'yxatdan o'ting</h3>
-            <p>Telefon raqamingiz yoki elektron pochtangiz orqali bir daqiqada hisob oching.</p>
+        <ol class="path">
+          <li class="path-step reveal">
+            <span class="path-num">1</span>
+            <div>
+              <h3>O'qing</h3>
+              <p>Harakatli arabcha matnni o'qiysiz. Notanish so'zni bosib, darhol tarjimasini ko'rasiz.</p>
+              <p class="path-ar" lang="ar" dir="rtl">هَذَا كِتَابٌ</p>
+            </div>
           </li>
-          <li class="step">
-            <span class="step-num">2</span>
-            <h3>Yo'nalish tanlang</h3>
-            <p>Faningiz va ehtiyojingizga mos kurs yoki materiallarni toping.</p>
+          <li class="path-step reveal">
+            <span class="path-num">2</span>
+            <div>
+              <h3>Tinglang</h3>
+              <p>Har bir so'z va jumlaning talaffuzini eshitib, ovoz chiqarib takrorlaysiz.</p>
+              <p class="path-tl">hāzā kitābun</p>
+            </div>
           </li>
-          <li class="step">
-            <span class="step-num">3</span>
-            <h3>O'rganing va sertifikat oling</h3>
-            <p>O'z tezligingizda o'qing, testlarni topshiring va natijangizni tasdiqlang.</p>
+          <li class="path-step reveal">
+            <span class="path-num">3</span>
+            <div>
+              <h3>Tushuning</h3>
+              <p>Tarjima, rasmli lug'at va kino-dars qoidani misollar bilan ochib beradi.</p>
+              <p class="path-uz">«Bu — kitob»</p>
+            </div>
+          </li>
+          <li class="path-step reveal">
+            <span class="path-num">4</span>
+            <div>
+              <h3>So'rang</h3>
+              <p>Savol tug'ilsa, Muallim AI'ga yozing yoki ayting — u batafsil tushuntiradi.</p>
+              <p class="path-q">«<span lang="ar" dir="rtl">هَذَا</span> va <span lang="ar" dir="rtl">هَذِهِ</span> ning farqi nima?»</p>
+            </div>
           </li>
         </ol>
       </div>
     </section>
 
-    <!-- Kimlar uchun -->
+    <!-- ============ KIMLAR UCHUN ============ -->
     <section class="section" id="kimlar-uchun" aria-labelledby="ku-title">
       <div class="container">
-        <header class="section-head">
+        <header class="section-head reveal">
           <p class="eyebrow">Kimlar uchun</p>
-          <h2 id="ku-title">Ta'lim jarayonining har bir ishtirokchisi uchun</h2>
+          <h2 id="ku-title">Arab tilini o'rganmoqchi bo'lgan har bir kishi uchun</h2>
         </header>
-
         <ul class="audience-grid">
-          <li class="audience">
+          <li class="audience reveal">
+            <h3>Noldan boshlovchilar</h3>
+            <p>Alifbo va harakatlardan boshlab, oddiy jumlalarni tushunib o'qishgacha bosqichma-bosqich.</p>
+          </li>
+          <li class="audience reveal">
+            <h3>Mustaqil o'rganuvchilar</h3>
+            <p>O'z tezligingizda, telefoningizdan. Tushunmagan joyni ustoz va Muallim AI qayta tushuntiradi.</p>
+          </li>
+          <li class="audience reveal">
             <h3>O'qituvchilar</h3>
-            <p>Malakangizni oshiring, tayyor materiallardan foydalaning va darslaringizni boyiting.</p>
-            <a class="link-arrow" href="register.html">O'qituvchi sifatida boshlash</a>
-          </li>
-          <li class="audience">
-            <h3>Maktab rahbarlari</h3>
-            <p>Jamoangizning o'qish jarayoni va natijalarini bir joydan kuzatib boring.</p>
-            <a class="link-arrow" href="register.html">Rahbar sifatida boshlash</a>
-          </li>
-          <li class="audience">
-            <h3>Metodistlar</h3>
-            <p>Kurslar va metodik materiallar yarating, ularni keng auditoriyaga yetkazing.</p>
-            <a class="link-arrow" href="register.html">Metodist sifatida boshlash</a>
+            <p>Darsda kino-dars va interaktiv matnlarni ko'rsatish, o'quvchilarga uyga vazifa sifatida berish uchun.</p>
           </li>
         </ul>
       </div>
     </section>
 
-    <!-- Savollar -->
+    <!-- ============ SAVOLLAR ============ -->
     <section class="section section-alt" id="savollar" aria-labelledby="sv-title">
       <div class="container narrow">
-        <header class="section-head">
+        <header class="section-head reveal">
           <p class="eyebrow">Savollar</p>
           <h2 id="sv-title">Ko'p beriladigan savollar</h2>
         </header>
-
-        <div class="faq">
+        <div class="faq reveal">
           <details>
-            <summary>Platformadan foydalanish pullikmi?</summary>
-            <p>Ro'yxatdan o'tish va asosiy materiallar bepul. Ayrim kurslarning shartlari kurs sahifasida ko'rsatiladi.</p>
-          </details>
-          <details>
-            <summary>Ro'yxatdan o'tish uchun nima kerak?</summary>
-            <p>Faqat telefon raqami yoki elektron pochta manzili. Tasdiqlash kodi kiritilgach, hisobingiz faollashadi.</p>
+            <summary>Arab alifbosini umuman bilmayman. Boshlay olamanmi?</summary>
+            <p>Ha. Matnlar harakatlari bilan beriladi, har bir so'zning o'qilishi lotin harflarida va ovozda ko'rsatiladi.</p>
           </details>
           <details>
             <summary>Telefondan foydalansa bo'ladimi?</summary>
-            <p>Ha. Platforma telefon, planshet va kompyuterda brauzer orqali ishlaydi — alohida dastur o'rnatish shart emas.</p>
+            <p>Ha. Platforma telefon, planshet va kompyuterda brauzer orqali ishlaydi.</p>
           </details>
           <details>
-            <summary>Parolimni unutdim. Nima qilaman?</summary>
-            <p>Kirish sahifasidagi «Parolni unutdingizmi?» havolasini bosing va tiklash bo'yicha ko'rsatmalarga amal qiling.</p>
+            <summary>Talaffuz ovozi chiqmayapti. Nima qilay?</summary>
+            <p>Telefon ovozi yoqilganini tekshiring. Ovoz brauzerning nutq funksiyasi orqali chiqadi: telefon sozlamalaridagi «Matnni nutqqa aylantirish» bo'limida arab tili paketini o'rnatsangiz, talaffuz yaxshilanadi.</p>
+          </details>
+          <details>
+            <summary>Muallim AI nima?</summary>
+            <p>Bu — darsga oid savollaringizga javob beradigan ovozli yordamchi. Savolni yozasiz yoki mikrofon orqali aytasiz, u mavzuni doskada misollar bilan tushuntiradi.</p>
+          </details>
+          <details>
+            <summary>Platformadan foydalanish pullikmi?</summary>
+            <p>Ro'yxatdan o'tish bepul. Kurslar va tariflar haqidagi to'liq ma'lumot ro'yxatdan o'tgach ko'rsatiladi.</p>
           </details>
         </div>
       </div>
     </section>
 
-    <!-- Yakuniy chaqiriq -->
+    <!-- ============ YAKUNIY CHAQIRIQ ============ -->
     <section class="cta">
-      <div class="container cta-inner">
-        <div>
-          <h2>Bugunoq boshlang</h2>
-          <p>Hisob ochish bir daqiqa vaqt oladi.</p>
+      <div class="container cta-inner reveal">
+        <svg class="cta-ustoz" viewBox="0 0 96 96" aria-hidden="true">
+          <circle cx="48" cy="50" r="38" fill="#f1f5f9" stroke="#1c2433" stroke-width="2.4"/>
+          <path d="M19 40c0-18 13-28 29-28s29 10 29 28z" fill="#1c2433"/>
+          <path d="M24 32h48M28 24h40M34 17h28" stroke="#f1f5f9" stroke-width="2" stroke-dasharray="4 3"/>
+          <ellipse cx="36" cy="52" rx="3.8" ry="4.8" fill="#1c2433"/><ellipse cx="60" cy="52" rx="3.8" ry="4.8" fill="#1c2433"/>
+          <path d="M20 58c1 18 12 29 28 29s27-11 28-29c-6 6-16 9-28 9s-22-3-28-9z" fill="#e2e8f0" stroke="#1c2433" stroke-width="2"/>
+          <path d="M34 63q14 9 28 0" stroke="#1c2433" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+        </svg>
+        <div class="cta-text">
+          <h2>Birinchi darsni bugun boshlang</h2>
+          <p class="cta-ar"><span lang="ar" dir="rtl">هَيَّا نَتَعَلَّمْ</span> — «Keling, o'rganamiz!»</p>
         </div>
         <div class="cta-actions">
-          <a class="btn btn-light btn-lg" href="register.html">Ro'yxatdan o'tish</a>
+          <a class="btn btn-light btn-lg" href="register.html">Bepul boshlash</a>
           <a class="btn btn-on-dark btn-lg" href="login.html">Kirish</a>
         </div>
       </div>
@@ -269,13 +349,14 @@
           <img src="assets/img/logo.svg" alt="" width="32" height="32">
           <span>Muallim</span>
         </a>
-        <p>O'qituvchilar uchun raqamli platforma.</p>
+        <p>Arab tilini o'zbek tilida o'rganish platformasi.</p>
       </div>
       <nav class="footer-nav" aria-label="Pastki menyu">
         <h2 class="footer-title">Platforma</h2>
         <ul>
+          <li><a href="#sinab-koring">Sinab ko'ring</a></li>
           <li><a href="#imkoniyatlar">Imkoniyatlar</a></li>
-          <li><a href="#qanday-ishlaydi">Qanday ishlaydi</a></li>
+          <li><a href="#usul">Qanday o'rganamiz</a></li>
           <li><a href="#savollar">Savollar</a></li>
         </ul>
       </nav>
@@ -287,14 +368,12 @@
         </ul>
       </nav>
       <div class="footer-nav">
-        <h2 class="footer-title">Aloqa</h2>
-        <ul>
-          <li><a href="mailto:info@emuallim.com.uz">info@emuallim.com.uz</a></li>
-        </ul>
+        <h2 class="footer-title">Yordam</h2>
+        <p class="footer-help">Savolingiz bo'lsa, ro'yxatdan o'tgach Chat bo'limiga yozing yoki Muallim AI'dan so'rang.</p>
       </div>
     </div>
     <div class="container footer-bottom">
-      <p>© <span data-year>2026</span> Muallim. Barcha huquqlar himoyalangan.</p>
+      <p>© <span data-year>2026</span> Muallim</p>
     </div>
   </footer>
 </body>

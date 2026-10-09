@@ -6,7 +6,8 @@ Muallim platformasi uchun namuna sahifalar va ovoz kutubxonasi.
 
 | Fayl | Nima |
 | --- | --- |
-| `index.html` | Login'dan oldingi kirish (landing) sahifasi namunasi |
+| `index.html` | Login'dan oldingi kirish (landing) sahifasi: doska va ustoz animatsiyasi, «Birinchi darsdan parcha» demo |
+| `docs/kirish-sahifasi-tahlili.md` | Kirish sahifasi tahlili: kamchiliklar, qo'shilgan animatsiyalar, sizdan kerakli ma'lumotlar |
 | `demo/soz-tarjimasi.html` | O'qish matni: so'z bosilganda ovozli talaffuz, tarjima va qisqa sharh (telefonda ham ishlaydi) |
 | `demo/kino-dars.html` | **Kino-dars**: doska + ovozli ustoz + subtitr + qadamlar pleyeri; AI darsni oqim bilan yozadi, 1-qadam darhol boshlanadi |
 | `demo/muallim-ai.html` | Muallim AI chati: javoblarni ovoz chiqarib o'qish va savolni ovoz bilan aytish |
