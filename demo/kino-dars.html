@@ -1,0 +1,1030 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Muallim kino-dars</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Caveat:wght@500;700&display=swap">
+<style>
+  /* Kino-dars: yuqorida katakli doska (sahna), ostida ustoz va subtitr, pastda pleyer va savol paneli, eng pastda darsning to'liq matni. */
+  :root {
+    --page: #f4f1e8;
+    --paper: #fbf8f0;
+    --grid: #e6e0cf;
+    --surface: #ffffff;
+    --line: #e2e5ec;
+    --ink: #1c2433;
+    --ink-soft: #5c6577;
+    --chalk: #1e4fd8;          /* doskadagi arabcha yozuv */
+    --primary: #2563eb;
+    --primary-ink: #ffffff;
+    --primary-soft: #e8efff;
+    --bubble: #262e3e;
+    --bubble-text: #d5dbe7;
+    --bubble-now: #fcd34d;
+    --ok: #15803d;
+    --warn: #b45309;
+    --danger: #dc2626;
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-ar: "Amiri", "Noto Naskh Arabic", "Geeza Pro", "Traditional Arabic", serif;
+    --font-hand: "Caveat", "Segoe Print", "Comic Sans MS", cursive;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+  .ar { font-family: var(--font-ar); }
+  .wrap { max-width: 760px; margin: 0 auto; }
+
+  /* ---------- Sarlavha ---------- */
+  .top {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 16px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+  }
+  .top .avatar { width: 46px; height: 46px; flex: none; }
+  .who { flex: 1; min-width: 0; }
+  .who h1 { margin: 0; font-size: 1.15rem; line-height: 1.2; }
+  .who p { margin: 2px 0 0; color: var(--ink-soft); font-size: .88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .icon-btn {
+    flex: none; width: 44px; height: 44px;
+    display: grid; place-items: center;
+    border: 1px solid var(--line); border-radius: 12px;
+    background: var(--surface); color: var(--ink); cursor: pointer;
+    touch-action: manipulation;
+  }
+  .icon-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ---------- Sahna: doska ---------- */
+  .stage { background: var(--paper); }
+  .doska {
+    position: relative;
+    min-height: 300px;
+    padding: 22px 18px 26px;
+    background-color: var(--paper);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 28px 28px;
+    background-position: -1px -1px;
+  }
+  .doska-head { text-align: center; }
+  .doska-ar { margin: 0; color: var(--chalk); font-family: var(--font-ar); font-size: 1.9rem; font-weight: 700; line-height: 1.5; }
+  .doska-uz { margin: 0; font-family: var(--font-hand); font-size: 1.35rem; color: var(--ink); }
+  .doska-step {
+    margin: 14px 0 6px;
+    font-family: var(--font-hand); font-size: 1.3rem; font-weight: 700; color: var(--ink);
+    text-wrap: balance;
+  }
+  .doska-step .num { color: var(--chalk); }
+  .doska-lines { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+
+  .ln { font-family: var(--font-hand); font-size: 1.3rem; line-height: 1.3; color: var(--ink); }
+  .ln.ex {
+    display: grid; gap: 0 12px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+  }
+  .ln-ar {
+    grid-column: 1 / -1;
+    justify-self: end;
+    all: unset;
+    grid-column: 1 / -1;
+    justify-self: end;
+    direction: rtl;
+    font-family: var(--font-ar); font-size: 1.75rem; line-height: 1.6; color: var(--chalk);
+    cursor: pointer;
+    border-bottom: 2px dotted color-mix(in srgb, var(--chalk) 40%, transparent);
+    touch-action: manipulation;
+  }
+  .ln-ar:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; border-radius: 4px; }
+  .ln-tl { color: var(--ink-soft); font-size: 1.15rem; min-width: 0; overflow-wrap: anywhere; }
+  .ln-uz { color: var(--ink); text-align: end; min-width: 0; overflow-wrap: anywhere; }
+  .ln.rule {
+    padding: 4px 10px;
+    border-left: 3px solid var(--chalk);
+    background: color-mix(in srgb, var(--paper) 70%, var(--primary-soft));
+    border-radius: 0 8px 8px 0;
+  }
+  .ln.rule .ar { font-size: 1.3em; color: var(--chalk); }
+
+  /* Yozilish effekti: qatorlar ustoz gapirayotganda birin-ketin chiqadi */
+  .doska.is-live .ln { opacity: 0; transform: translateY(6px); }
+  .doska.is-live .ln.shown { opacity: 1; transform: none; transition: opacity .45s ease, transform .45s ease; }
+  .doska-wait { margin: 18px 0 0; text-align: center; font-family: var(--font-hand); font-size: 1.35rem; color: var(--ink-soft); }
+  .doska-wait::after { content: "…"; animation: dots 1.2s steps(4) infinite; display: inline-block; width: 1em; text-align: left; }
+  @keyframes dots { 0% { clip-path: inset(0 100% 0 0); } 100% { clip-path: inset(0 0 0 0); } }
+
+  .fs-btn { position: absolute; top: 12px; right: 12px; width: 40px; height: 40px; border-radius: 10px; }
+
+  /* ---------- Ustoz va subtitr ---------- */
+  .tutor { display: flex; align-items: flex-end; gap: 10px; padding: 0 14px 14px; background: var(--paper); }
+  .mascot { width: 72px; height: 72px; flex: none; }
+  .mascot .mouth { transform-origin: 50% 40%; transform-box: fill-box; }
+  .mascot.is-talking .mouth { animation: talk .28s ease-in-out infinite alternate; }
+  .mascot.is-talking .head { animation: bob 1.4s ease-in-out infinite; transform-origin: 50% 100%; transform-box: fill-box; }
+  @keyframes talk { from { transform: scaleY(.35); } to { transform: scaleY(1.15); } }
+  @keyframes bob { 50% { transform: rotate(-2.5deg); } }
+
+  .bubble {
+    flex: 1; min-width: 0;
+    margin: 0;
+    padding: 14px 16px;
+    border-radius: 18px 18px 18px 6px;
+    background: var(--bubble); color: var(--bubble-text);
+    font-size: 1.02rem; line-height: 1.55;
+    max-height: 13.5rem; overflow-y: auto;
+  }
+  .bubble .pc { transition: color .2s; }
+  .bubble .pc.now { color: var(--bubble-now); }
+  .bubble .pc.ar { font-size: 1.2em; }
+  .bubble.is-thinking { color: var(--bubble-text); font-style: italic; }
+
+  /* ---------- Pleyer ---------- */
+  .deck {
+    margin: 0 12px;
+    padding: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    box-shadow: 0 8px 24px rgba(28, 36, 51, .06);
+    display: grid; gap: 14px;
+  }
+  .prog { display: flex; align-items: center; gap: 10px; }
+  .segs { flex: 1; display: flex; gap: 6px; min-width: 0; }
+  .seg {
+    flex: 1; height: 8px; min-width: 0;
+    border: 0; padding: 0; border-radius: 99px;
+    background: var(--line); cursor: pointer; position: relative; overflow: hidden;
+  }
+  .seg > i { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--primary); border-radius: inherit; transition: width .3s; }
+  .seg.done > i { width: 100%; }
+  .seg.pending { cursor: default; animation: pend 1.2s ease-in-out infinite; }
+  @keyframes pend { 50% { opacity: .45; } }
+  .count { flex: none; color: var(--ink-soft); font-size: .92rem; font-variant-numeric: tabular-nums; }
+
+  .ctrls { display: grid; grid-template-columns: 1fr 1fr 1.8fr 1fr 1fr 1fr; gap: 8px; }
+  .ctrl {
+    min-height: 52px;
+    display: grid; place-items: center;
+    border: 1px solid var(--line); border-radius: 14px;
+    background: var(--surface); color: var(--ink); cursor: pointer;
+    font-weight: 700; font-size: .95rem;
+    touch-action: manipulation;
+  }
+  .ctrl svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .ctrl:disabled { opacity: .4; cursor: not-allowed; }
+  .ctrl.play { background: var(--primary); color: var(--primary-ink); border-color: transparent; box-shadow: 0 4px 0 color-mix(in srgb, var(--primary) 60%, #000); }
+  .ctrl.play svg { width: 28px; height: 28px; fill: currentColor; stroke: none; }
+  .ctrl.play .i-pause { display: none; }
+  .ctrl.play[aria-pressed="true"] .i-play { display: none; }
+  .ctrl.play[aria-pressed="true"] .i-pause { display: block; }
+  .ctrl.mute .i-off { display: none; }
+  .ctrl.mute[aria-pressed="true"] .i-on { display: none; }
+  .ctrl.mute[aria-pressed="true"] .i-off { display: block; }
+  .ctrl.mute[aria-pressed="true"] { color: var(--danger); }
+
+  .ask { display: flex; gap: 8px; align-items: flex-end; }
+  .ask textarea {
+    flex: 1; min-width: 0;
+    min-height: 52px; max-height: 8rem;
+    padding: 13px 16px;
+    resize: none;
+    border: 1px solid var(--line); border-radius: 16px;
+    background: #f6f7fb; color: var(--ink);
+    font: inherit;
+  }
+  .ask textarea::placeholder { color: var(--ink-soft); }
+  .round {
+    flex: none; width: 52px; height: 52px;
+    display: grid; place-items: center;
+    border: 0; border-radius: 16px; cursor: pointer;
+    touch-action: manipulation;
+  }
+  .round svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .mic { background: var(--primary-soft); color: var(--primary); }
+  .mic.is-listening { background: var(--danger); color: #fff; animation: ring 1.2s ease-in-out infinite; }
+  @keyframes ring { 50% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--danger) 22%, transparent); } }
+  .send { background: var(--primary); color: var(--primary-ink); }
+  .send:disabled { background: color-mix(in srgb, var(--primary) 40%, #fff); cursor: not-allowed; }
+
+  /* ---------- Tezkor so'rovlar va holat ---------- */
+  .quick { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 12px 4px; }
+  .chip {
+    min-height: 42px; padding: 8px 16px;
+    border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--line));
+    border-radius: 999px;
+    background: var(--primary-soft); color: var(--primary);
+    font-size: .95rem; font-weight: 600; cursor: pointer;
+    touch-action: manipulation;
+  }
+  .chip:disabled { opacity: .5; cursor: not-allowed; }
+  .chip.ghost { background: var(--surface); color: var(--ink); border-color: var(--line); font-weight: 500; }
+
+  .note { margin: 8px 16px 0; color: var(--ink-soft); font-size: .9rem; }
+  .note:empty { display: none; }
+  .note.is-warn { color: var(--warn); }
+  .note.is-error { color: var(--danger); }
+  .note.is-ok { color: var(--ok); }
+
+  /* ---------- Darsning to'liq matni ---------- */
+  .script { margin: 16px 12px 28px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; }
+  .script > summary { padding: 14px 16px; font-weight: 700; cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+  .script > summary::-webkit-details-marker { display: none; }
+  .script > summary::after { content: "+"; color: var(--primary); font-size: 1.3rem; line-height: 1; }
+  .script[open] > summary::after { content: "−"; }
+  .script ol { margin: 0; padding: 0 16px 16px; list-style: none; display: grid; gap: 10px; }
+  .script li > button {
+    all: unset; box-sizing: border-box; display: block; width: 100%;
+    padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); cursor: pointer;
+  }
+  .script li > button:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+  .script li.is-current > button { border-color: var(--primary); background: var(--primary-soft); }
+  .script h3 { margin: 0 0 4px; font-size: 1rem; }
+  .script p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
+  .script .ar { font-size: 1.2em; color: var(--chalk); }
+
+  .visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* To'liq ekran (kino) rejimi */
+  .stage:fullscreen { overflow-y: auto; display: flex; flex-direction: column; justify-content: center; }
+  .stage:fullscreen .doska { flex: 1; }
+
+  @media (min-width: 640px) {
+    .doska { padding: 28px 32px 32px; min-height: 340px; }
+    .doska-ar { font-size: 2.3rem; }
+    .deck { margin: 0 16px; }
+  }
+  @media (max-width: 380px) {
+    .ctrls { gap: 6px; }
+    .ctrl { min-height: 46px; border-radius: 12px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mascot.is-talking .mouth, .mascot.is-talking .head, .mic.is-listening, .seg.pending, .doska-wait::after { animation: none; }
+    .doska.is-live .ln { transform: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <svg class="avatar" viewBox="0 0 72 72" aria-hidden="true"><use href="#ustoz"/></svg>
+    <div class="who">
+      <h1>Muallim AI</h1>
+      <p id="topic-line">Kino-dars</p>
+    </div>
+  </header>
+
+  <section class="stage" id="stage" aria-label="Dars sahnasi">
+    <div class="doska" id="doska">
+      <div class="doska-head">
+        <h2 class="doska-ar" id="d-ar" lang="ar" dir="rtl"></h2>
+        <p class="doska-uz" id="d-uz"></p>
+      </div>
+      <p class="doska-step" id="d-step"></p>
+      <ol class="doska-lines" id="d-lines"></ol>
+      <p class="doska-wait" id="d-wait" hidden>Ustoz doskaga yozmoqda</p>
+      <button class="icon-btn fs-btn" id="fs" type="button" aria-label="To'liq ekran" hidden>
+        <svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-7 7M10 20H4v-6M4 20l7-7"/></svg>
+      </button>
+    </div>
+    <div class="tutor">
+      <svg class="mascot" id="mascot" viewBox="0 0 72 72" aria-hidden="true">
+      <g class="head">
+        <circle cx="36" cy="38" r="30" fill="#f1f5f9" stroke="#1c2433" stroke-width="2"/>
+        <path d="M14 30c0-14 10-21 22-21s22 7 22 21z" fill="#1c2433"/>
+        <path d="M18 24h36M21 18h30M26 13h20" stroke="#f1f5f9" stroke-width="1.6" stroke-dasharray="3 2.5"/>
+        <path d="M14 30h44" stroke="#1c2433" stroke-width="3"/>
+        <ellipse cx="27" cy="39" rx="3" ry="3.8" fill="#1c2433"/>
+        <ellipse cx="45" cy="39" rx="3" ry="3.8" fill="#1c2433"/>
+        <path d="M21 33.5q6-3 11 0M40 33.5q5-3 11 0" stroke="#1c2433" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M15 44c1 14 9 22 21 22s20-8 21-22c-5 5-12 7-21 7s-16-2-21-7z" fill="#e2e8f0" stroke="#1c2433" stroke-width="1.6"/>
+        <path d="M24 46q12 6 24 0" stroke="#1c2433" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <ellipse class="mouth" cx="36" cy="51" rx="5" ry="3" fill="#1c2433"/>
+      </g>
+      </svg>
+      <p class="bubble" id="bubble" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section class="deck" aria-label="Pleyer">
+    <div class="prog">
+      <div class="segs" id="segs"></div>
+      <span class="count" id="count">1 / 1</span>
+    </div>
+    <div class="ctrls">
+      <button class="ctrl" id="b-list" type="button" aria-label="Qadamlar ro'yxati">
+        <svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg>
+      </button>
+      <button class="ctrl" id="b-replay" type="button" aria-label="Qadamni qayta eshitish">
+        <svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.3-5.6M4 4v4h4"/></svg>
+      </button>
+      <button class="ctrl play" id="b-play" type="button" aria-pressed="false" aria-label="Darsni boshlash">
+        <svg class="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>
+        <svg class="i-pause" viewBox="0 0 24 24"><rect x="6" y="4.5" width="4" height="15" rx="1.2"/><rect x="14" y="4.5" width="4" height="15" rx="1.2"/></svg>
+      </button>
+      <button class="ctrl" id="b-next" type="button" aria-label="Keyingi qadam">
+        <svg viewBox="0 0 24 24"><path d="M6 5l8 7-8 7M18 5v14"/></svg>
+      </button>
+      <button class="ctrl mute" id="b-mute" type="button" aria-pressed="false" aria-label="Ovozni o'chirish">
+        <svg class="i-on" viewBox="0 0 24 24"><path d="M4 9.5v5h4l5 4v-13l-5 4zM16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/></svg>
+        <svg class="i-off" viewBox="0 0 24 24"><path d="M4 9.5v5h4l5 4v-13l-5 4zM17 10l4 4M21 10l-4 4"/></svg>
+      </button>
+      <button class="ctrl" id="b-speed" type="button" aria-label="O'qish tezligi">1×</button>
+    </div>
+    <form class="ask" id="ask" autocomplete="off">
+      <label class="visually-hidden" for="q">Savolingiz</label>
+      <textarea id="q" rows="1" placeholder="Yana so'rang…"></textarea>
+      <button class="round mic" id="b-mic" type="button" aria-pressed="false" aria-label="Ovoz bilan so'rash">
+        <svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+      </button>
+      <button class="round send" id="b-send" type="submit" aria-label="Yuborish" disabled>
+        <svg viewBox="0 0 24 24"><path d="M21 3 10.5 13.5M21 3l-6.5 18-4-7.5L3 9.5z"/></svg>
+      </button>
+    </form>
+  </section>
+
+  <div class="quick" id="quick">
+    <button class="chip" type="button" data-mode="sodda">Soddaroq tushuntir</button>
+    <button class="chip" type="button" data-mode="batafsil">Batafsilroq tushuntir</button>
+    <button class="chip" type="button" data-mode="misol">Ko'proq misol</button>
+    <button class="chip" type="button" data-mode="mashq">Mashq ber</button>
+  </div>
+  <div class="quick" id="topics" aria-label="Boshqa mavzular">
+    <button class="chip ghost" type="button" data-topic="Quyosh va oy harflari">Quyosh va oy harflari</button>
+    <button class="chip ghost" type="button" data-topic="Ko'rsatish olmoshlari: هَذَا va هَذِهِ">Ko'rsatish olmoshlari</button>
+    <button class="chip ghost" type="button" data-topic="Muzakkar va muannas (erkak va ayol jinsi)">Muzakkar va muannas</button>
+  </div>
+  <p class="note" id="note" role="status"></p>
+
+  <details class="script" id="script">
+    <summary>Darsning to'liq matni</summary>
+    <ol id="script-list"></ol>
+  </details>
+</div>
+
+<!-- Ustoz (maskot) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="ustoz">
+      <g class="head">
+        <circle cx="36" cy="38" r="30" fill="#f1f5f9" stroke="#1c2433" stroke-width="2"/>
+        <path d="M14 30c0-14 10-21 22-21s22 7 22 21z" fill="#1c2433"/>
+        <path d="M18 24h36M21 18h30M26 13h20" stroke="#f1f5f9" stroke-width="1.6" stroke-dasharray="3 2.5"/>
+        <path d="M14 30h44" stroke="#1c2433" stroke-width="3"/>
+        <ellipse cx="27" cy="39" rx="3" ry="3.8" fill="#1c2433"/>
+        <ellipse cx="45" cy="39" rx="3" ry="3.8" fill="#1c2433"/>
+        <path d="M21 33.5q6-3 11 0M40 33.5q5-3 11 0" stroke="#1c2433" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M15 44c1 14 9 22 21 22s20-8 21-22c-5 5-12 7-21 7s-16-2-21-7z" fill="#e2e8f0" stroke="#1c2433" stroke-width="1.6"/>
+        <path d="M24 46q12 6 24 0" stroke="#1c2433" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <ellipse class="mouth" cx="36" cy="51" rx="5" ry="3" fill="#1c2433"/>
+      </g>
+    </g>
+  </defs>
+</svg>
+
+<script src="../assets/js/muallim-ovoz.js"></script>
+<script>
+(function () {
+  'use strict';
+  var Ovoz = window.MuallimOvoz;
+  var $ = function (id) { return document.getElementById(id); };
+
+  // =====================================================================
+  //  1. Ko'rsatma (system prompt) — ai/muallim-ai-prompt.md bilan bir xil
+  // =====================================================================
+  var SYSTEM = [
+    "Sen «Muallim AI» — o'zbek tilida so'zlashuvchilarga arab tilini o'rgatadigan tajribali, mehribon ustozsan. Darsni doskaga yozib, ovoz chiqarib tushuntirgandek olib borasan.",
+    "",
+    "VAZIFA: o'quvchining savoli bo'yicha TO'LIQ va BATAFSIL dars tuz. Mavzuni yuzaki emas, chuqur va tushunarli och: bu nima, nima uchun kerak, qanday tuziladi, qanday ishlatiladi, misollar, ko'p uchraydigan xatolar va mashq. Qisqa, umumiy gaplar bilan cheklanma.",
+    "",
+    "DARS TUZILISHI — 6 dan 8 tagacha qadam:",
+    "1. Kirish: mavzu nima, nima uchun kerak, o'zbek tilidagi o'xshashi bilan solishtir.",
+    "2. Asosiy qoida: aniq ta'rif va tuzilishi.",
+    "3–5. Qoidaning har bir qismini alohida qadamda tushuntir; har biriga kamida 2 ta misol.",
+    "6. Ko'p uchraydigan xatolar: noto'g'ri va to'g'ri shakli yonma-yon.",
+    "7. Mashq: 2–3 ta savol va ularning javoblari.",
+    "8. Xulosa: eng muhim 3–4 fikr.",
+    "",
+    "HAR BIR QADAMDA:",
+    "- AYTISH: ustoz ovoz chiqarib aytadigan tushuntirish — 4–7 gap, sodda va jonli o'zbek tilida (lotin yozuvida). Har bir yangi atamani izohla. Arabcha so'zlarni albatta harakatlari bilan yoz.",
+    "- DOSKA: doskaga yoziladigan 2–5 qator — misollar va qisqa qoidalar.",
+    "",
+    "MISOL QATORI: arabcha (harakatlari bilan) | o'qilishi (lotin harflarida) | o'zbekcha tarjimasi.",
+    "TO'G'RILIK: faqat aniq bilgan qoidalaringni yoz, harakat va grammatikani tekshir. Bilmasang — shuni ayt, to'qima.",
+    "",
+    "FORMAT (qat'iy; markdown, emoji va boshqa izoh yozma):",
+    "MAVZU: <arabcha nom harakat bilan> | <o'zbekcha nom>",
+    "### <1-qadam sarlavhasi>",
+    "AYTISH: <tushuntirish>",
+    "DOSKA:",
+    "- <arabcha> | <o'qilishi> | <tarjimasi>",
+    "- QOIDA: <qisqa qoida>",
+    "### <2-qadam sarlavhasi>",
+    "AYTISH: ...",
+    "DOSKA:",
+    "- ..."
+  ].join('\n');
+
+  var MODES = {
+    sodda: function (t) { return "Hozirgi mavzu: " + t + ". Shu mavzuni ancha soddaroq qilib qayta tushuntir: kundalik hayotdan olingan misollar, qisqa gaplar, har bir atamani oddiy so'z bilan izohla. Baribir kamida 6 qadam bo'lsin."; },
+    batafsil: function (t) { return "Hozirgi mavzu: " + t + ". Shu mavzuni yanada batafsil va chuqurroq tushuntir: qo'shimcha qoidalar, istisnolar, nozik holatlar va ko'proq misollar bilan, 8 qadamda."; },
+    misol: function (t) { return "Hozirgi mavzu: " + t + ". Shu mavzuni asosan misollar orqali qayta tushuntir: har bir qadamda 4–5 ta yangi misol (avvalgilarini takrorlama) va har birini qisqa izohla."; },
+    mashq: function (t) { return "Hozirgi mavzu: " + t + ". Shu mavzu bo'yicha mashq darsi tuz: har bir qadamda 1–2 ta topshiriq. AYTISH da avval topshiriqni ayt, so'ng to'g'ri javobini va nima uchun shunday ekanini tushuntir. DOSKA da topshiriq va javobni yoz."; }
+  };
+
+  // =====================================================================
+  //  2. Namuna dars (AI'siz ham darhol ishlaydi) — xuddi AI formatida
+  // =====================================================================
+  var NAMUNA = [
+    "MAVZU: حُرُوفُ الْجَرِّ | Jarr harflari",
+    "### Kirish: jarr harflari nima?",
+    "AYTISH: Bugun jarr harflarini o'rganamiz. Arabchada ular حُرُوفُ الْجَرِّ deyiladi. Bu ismdan oldin keladigan kichik so'zlar bo'lib, o'zbek tilidagi «-da», «-dan», «-ga» qo'shimchalari hamda «bilan», «uchun», «haqida» ko'makchilari vazifasini bajaradi. Farqi shundaki, o'zbek tilida qo'shimcha so'zning oxiriga qo'shiladi, arab tilida esa jarr harfi so'zdan oldin keladi. Masalan, «uyda» arabchada فِي الْبَيْتِ (fil-bayti) bo'ladi: avval فِي — «ichida», keyin الْبَيْتِ — «uy».",
+    "DOSKA:",
+    "- QOIDA: jarr harfi + ism = o'zbekchadagi qo'shimchali so'z",
+    "- فِي الْبَيْتِ | fil-bayti | uyda",
+    "- مِنَ الْبَيْتِ | minal-bayti | uydan",
+    "### Asosiy qoida: jarrdan keyin kasra",
+    "AYTISH: Endi eng muhim qoida. Jarr harfidan keyin kelgan ism majrur bo'ladi, ya'ni uning oxiri kasra bilan, «i» tovushi bilan o'qiladi. Masalan, الْبَيْتُ (al-baytu) — «uy». فِي dan keyin u فِي الْبَيْتِ (fil-bayti) bo'ladi: oxiridagi «u» «i» ga aylandi. Agar so'z noaniq bo'lsa, oxiridagi ikki zamma ikki kasraga aylanadi: بَيْتٌ (baytun) — «bir uy», فِي بَيْتٍ (fī baytin) — «bir uyda». Shuni yodda tuting: jarr harfi o'zidan keyingi ismning oxirini o'zgartiradi.",
+    "DOSKA:",
+    "- الْبَيْتُ | al-baytu | uy (oddiy holat)",
+    "- فِي الْبَيْتِ | fil-bayti | uyda (majrur — kasra)",
+    "- فِي بَيْتٍ | fī baytin | bir uyda (tanvinli kasra)",
+    "- QOIDA: jarr harfidan keyingi ism majrur bo'ladi — oxiri kasra (ـِ yoki ـٍ)",
+    "### مِنْ va إِلَى: «-dan» va «-ga»",
+    "AYTISH: Birinchi juftlik. مِنْ (min) — «-dan» degani, harakat qayerdan boshlanganini bildiradi. إِلَى (ilā) — «-ga», «tomon» degani, harakat qayerga yo'nalganini bildiradi. Ikkalasi ko'pincha birga keladi: مِنَ الْبَيْتِ إِلَى الْمَدْرَسَةِ (minal-bayti ilal-madrasati) — «uydan maktabga». E'tibor bering: مِنْ dan keyin «al-» kelsa, ikki sukun uchrashmasligi uchun nun fatha oladi va «mina» deb o'qiladi.",
+    "DOSKA:",
+    "- مِنَ الْبَيْتِ | minal-bayti | uydan",
+    "- إِلَى الْمَدْرَسَةِ | ilal-madrasati | maktabga",
+    "- مِنَ الْبَيْتِ إِلَى الْمَدْرَسَةِ | minal-bayti ilal-madrasati | uydan maktabga",
+    "### فِي، عَلَى va عَنْ",
+    "AYTISH: Keyingi uchta harf. فِي (fī) — «ichida», «-da» degani: فِي الْفَصْلِ (fil-faṣli) — «sinfda». عَلَى (ʿalā) — «ustida» degani: عَلَى الْمَكْتَبِ (ʿalal-maktabi) — «stol ustida». عَنْ (ʿan) — «haqida» yoki «-dan uzoqlashib» degani: عَنِ الدَّرْسِ (ʿanid-darsi) — «dars haqida». عَنْ dan keyin «al-» kelsa, nun kasra oladi va «ʿani» deb o'qiladi.",
+    "DOSKA:",
+    "- فِي الْفَصْلِ | fil-faṣli | sinfda",
+    "- عَلَى الْمَكْتَبِ | ʿalal-maktabi | stol ustida",
+    "- عَنِ الدَّرْسِ | ʿanid-darsi | dars haqida",
+    "### Bir harfli jarr harflari: بِـ، لِـ، كَـ",
+    "AYTISH: Ba'zi jarr harflari bitta harfdan iborat va keyingi so'zga qo'shib yoziladi. بِـ (bi) — «bilan», «vositasida»: بِالْقَلَمِ (bil-qalami) — «qalam bilan». لِـ (li) — «uchun» yoki «-niki»: لِلطَّالِبِ (liṭ-ṭālibi) — «talaba uchun». كَـ (ka) — «kabi», «-dek»: كَالْأَسَدِ (kal-asadi) — «sherdek». لِـ dan keyin «al-» kelsa, alif yozilmaydi va ikkita lom yonma-yon keladi: لِلطَّالِبِ.",
+    "DOSKA:",
+    "- بِالْقَلَمِ | bil-qalami | qalam bilan",
+    "- لِلطَّالِبِ | liṭ-ṭālibi | talaba uchun",
+    "- كَالْأَسَدِ | kal-asadi | sherdek",
+    "### Ko'p uchraydigan xatolar",
+    "AYTISH: Endi o'quvchilar ko'p qiladigan xatolarni ko'rib chiqamiz. Birinchi xato: jarrdan keyin ismni zamma bilan o'qish. فِي الْبَيْتُ deyish noto'g'ri, to'g'risi — فِي الْبَيْتِ. Ikkinchi xato: مِنْ ni «al-» oldidan «min» deb o'qish. To'g'risi — «mina»: مِنَ الْمَسْجِدِ (minal-masjidi). Uchinchi xato: لِـ va «al-» ni alif bilan yozish. To'g'risi — لِلْبَيْتِ (lil-bayti), ya'ni «uy uchun».",
+    "DOSKA:",
+    "- فِي الْبَيْتِ | fil-bayti | to'g'ri (فِي الْبَيْتُ emas)",
+    "- مِنَ الْمَسْجِدِ | minal-masjidi | to'g'ri («min al-» emas)",
+    "- لِلْبَيْتِ | lil-bayti | to'g'ri (alif yozilmaydi)",
+    "### Mashq",
+    "AYTISH: Endi mashq qilamiz. Gapni o'zingiz arabchaga o'girib ko'ring, keyin javobni tekshiring. Birinchisi: «Kitob stol ustida». Javob: الْكِتَابُ عَلَى الْمَكْتَبِ (al-kitābu ʿalal-maktabi). Ikkinchisi: «Men maktabdan uyga bordim». Javob: ذَهَبْتُ مِنَ الْمَدْرَسَةِ إِلَى الْبَيْتِ (dhahabtu minal-madrasati ilal-bayti). Ko'rib turganingizdek, har bir jarr harfidan keyingi so'z kasra bilan tugadi.",
+    "DOSKA:",
+    "- الْكِتَابُ عَلَى الْمَكْتَبِ | al-kitābu ʿalal-maktabi | Kitob stol ustida",
+    "- ذَهَبْتُ مِنَ الْمَدْرَسَةِ إِلَى الْبَيْتِ | dhahabtu minal-madrasati ilal-bayti | Men maktabdan uyga bordim",
+    "### Xulosa",
+    "AYTISH: Xulosa qilamiz. Birinchidan, jarr harfi ismdan oldin keladi va o'zbekchadagi qo'shimcha yoki ko'makchi vazifasini bajaradi. Ikkinchidan, undan keyingi ism majrur bo'ladi — oxiri kasra bilan o'qiladi. Uchinchidan, eng ko'p ishlatiladiganlari: مِنْ، إِلَى، فِي، عَلَى، عَنْ، بِـ، لِـ va كَـ. To'rtinchidan, مِنْ va عَنْ «al-» oldidan «mina» va «ʿani» bo'ladi. Endi o'zingiz gap tuzib ko'ring yoki pastda savol bering.",
+    "DOSKA:",
+    "- مِنْ · إِلَى · فِي · عَلَى · عَنْ | min · ilā · fī · ʿalā · ʿan | -dan · -ga · -da · ustida · haqida",
+    "- بِـ · لِـ · كَـ | bi · li · ka | bilan · uchun · kabi",
+    "- QOIDA: jarr harfi + ism → ism oxiri kasra"
+  ].join('\n');
+
+  // =====================================================================
+  //  3. Javobni qadamlarga ajratish (oqim davomida ham ishlaydi)
+  // =====================================================================
+  function parseLesson(text) {
+    var L = { ar: '', uz: '', steps: [] }, cur = null, mode = null;
+    String(text || '').split('\n').forEach(function (raw) {
+      var line = raw.replace(/\*\*/g, '').trim(), m;
+      if (!line) return;
+      if ((m = line.match(/^MAVZU\s*:\s*(.*)$/i))) {
+        var parts = m[1].split('|');
+        L.ar = (parts[0] || '').trim(); L.uz = (parts[1] || '').trim();
+        return;
+      }
+      if ((m = line.match(/^#{2,}\s*(.*)$/))) {
+        cur = { title: m[1].replace(/^\d+\s*[-.)]?\s*(qadam)?\s*[:.\-–—]?\s*/i, '').trim(), say: '', board: [] };
+        L.steps.push(cur); mode = null;
+        return;
+      }
+      if (!cur) return;
+      if ((m = line.match(/^AYTISH\s*:\s*(.*)$/i))) { cur.say = m[1]; mode = 'say'; return; }
+      if (/^DOSKA\s*:?\s*$/i.test(line)) { mode = 'board'; return; }
+      if (mode === 'board' || /^[-•]\s+/.test(line)) {
+        mode = 'board';
+        var l = line.replace(/^[-•]\s*/, '');
+        if ((m = l.match(/^QOIDA\s*:\s*(.*)$/i))) cur.board.push({ type: 'rule', text: m[1] });
+        else if (l.indexOf('|') > -1) {
+          var p = l.split('|').map(function (x) { return x.trim(); });
+          cur.board.push({ type: 'ex', ar: p[0], tl: p[1] || '', uz: p.slice(2).join(' | ') });
+        } else cur.board.push({ type: 'rule', text: l });
+        return;
+      }
+      if (mode === 'say') cur.say += ' ' + line;
+    });
+    return L;
+  }
+
+  // =====================================================================
+  //  4. Holat
+  // =====================================================================
+  var S = {
+    lesson: parseLesson(NAMUNA),
+    idx: 0,
+    playing: false,
+    muted: false,
+    rate: 1,
+    generating: false,
+    waitFor: -1,       // shu qadam tayyor bo'lishini kutyapmiz (oqim paytida)
+    run: 0,            // eskirgan ovoz/taymer chaqiruvlarini e'tiborsiz qoldirish uchun
+    timers: [],
+    pieces: [],
+    pieceIdx: -1,
+    controller: null,
+    startedAt: 0,
+    firstStepMs: 0
+  };
+  var RATES = [1, 1.25, 1.5, 0.75];
+  try {
+    S.muted = localStorage.getItem('kino-ovoz') === 'off';
+    var r = parseFloat(localStorage.getItem('kino-tezlik'));
+    if (RATES.indexOf(r) > -1) S.rate = r;
+  } catch (e) {}
+
+  function stepReady(i) {
+    var n = S.lesson.steps.length;
+    return i >= 0 && i < n - (S.generating ? 1 : 0) && !!S.lesson.steps[i].say;
+  }
+  function readyCount() { var n = 0; while (stepReady(n)) n++; return n; }
+
+  // =====================================================================
+  //  5. Chizish
+  // =====================================================================
+  var AR = /([؀-ۿݐ-ݿﭐ-﷿ﹰ-﻿]+(?:[\s،؛؟.,·:]*[؀-ۿݐ-ݿﭐ-﷿ﹰ-﻿]+)*)/g;
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function withAr(s) { return esc(s).replace(AR, '<span class="ar" lang="ar" dir="rtl">$1</span>'); }
+
+  var doska = $('doska');
+
+  function renderBoard(revealAll) {
+    var L = S.lesson, step = L.steps[S.idx];
+    $('d-ar').textContent = L.ar;
+    $('d-uz').textContent = L.uz;
+    $('topic-line').textContent = L.uz ? L.uz + (L.ar ? ' · ' + L.ar : '') : 'Kino-dars';
+    var waiting = !stepReady(S.idx);
+    $('d-wait').hidden = !(S.generating && waiting);
+    $('d-step').innerHTML = step && step.title ? '<span class="num">' + (S.idx + 1) + '.</span> ' + withAr(step.title) : '';
+    var ol = $('d-lines');
+    ol.innerHTML = '';
+    if (!step) return;
+    step.board.forEach(function (b, i) {
+      var li = document.createElement('li');
+      li.dataset.i = i;
+      if (b.type === 'ex') {
+        li.className = 'ln ex';
+        li.innerHTML = '<button type="button" class="ln-ar" lang="ar" dir="rtl" aria-label="Talaffuzini eshitish">' + esc(b.ar) + '</button>'
+          + '<span class="ln-tl">' + esc(b.tl) + '</span><span class="ln-uz">' + withAr(b.uz) + '</span>';
+      } else {
+        li.className = 'ln rule';
+        li.innerHTML = withAr(b.text);
+      }
+      if (revealAll) li.classList.add('shown');
+      ol.appendChild(li);
+    });
+  }
+
+  function revealUpTo(fraction) {
+    var lines = $('d-lines').children, n = lines.length;
+    var upto = Math.max(1, Math.ceil(fraction * n));
+    for (var i = 0; i < n; i++) if (i < upto) lines[i].classList.add('shown');
+  }
+
+  function renderBubble() {
+    var b = $('bubble'), step = S.lesson.steps[S.idx];
+    b.classList.remove('is-thinking');
+    if (!stepReady(S.idx)) {
+      b.classList.add('is-thinking');
+      b.textContent = S.generating ? "O'ylayapman… dars tayyorlanmoqda, birinchi qadam bir necha soniyada chiqadi." : '';
+      return;
+    }
+    S.pieces = Ovoz.pieces(step.say);
+    b.innerHTML = S.pieces.map(function (p, i) {
+      return '<span class="pc' + (p.kind === 'ar' ? ' ar' : '') + (i === S.pieceIdx ? ' now' : '') + '"'
+        + (p.kind === 'ar' ? ' lang="ar" dir="rtl"' : '') + '>' + esc(p.text) + '</span>';
+    }).join(' ');
+  }
+
+  function highlight(k) {
+    S.pieceIdx = k;
+    var spans = $('bubble').children;
+    for (var i = 0; i < spans.length; i++) spans[i].classList.toggle('now', i === k);
+    var cur = spans[k];
+    if (cur) {
+      var b = $('bubble');
+      var top = cur.offsetTop - b.offsetTop;
+      if (top < b.scrollTop || top > b.scrollTop + b.clientHeight - 30) b.scrollTop = Math.max(0, top - 24);
+    }
+    var n = S.pieces.length || 1;
+    revealUpTo((k + 1) / n);
+    renderProgress((k + 1) / n);
+  }
+
+  function renderProgress(partial) {
+    var segs = $('segs'), L = S.lesson;
+    var total = L.steps.length + (S.generating && stepReady(L.steps.length - 1) ? 1 : 0);
+    if (S.generating && total === 0) total = 1;
+    total = Math.max(total, 1);
+    if (segs.children.length !== total) {
+      segs.innerHTML = '';
+      for (var i = 0; i < total; i++) {
+        var s = document.createElement('button');
+        s.type = 'button'; s.className = 'seg'; s.dataset.i = i;
+        s.innerHTML = '<i></i>';
+        segs.appendChild(s);
+      }
+    }
+    Array.prototype.forEach.call(segs.children, function (s, i) {
+      var ready = stepReady(i);
+      s.classList.toggle('done', i < S.idx);
+      s.classList.toggle('pending', !ready);
+      s.disabled = !ready;
+      s.setAttribute('aria-label', (i + 1) + '-qadam' + (L.steps[i] && L.steps[i].title ? ': ' + L.steps[i].title : ''));
+      var bar = s.firstChild;
+      if (i === S.idx && !s.classList.contains('done')) bar.style.width = Math.round((partial || 0) * 100) + '%';
+      else bar.style.width = '';
+    });
+    $('count').textContent = (S.idx + 1) + ' / ' + (S.generating ? L.steps.length + '…' : L.steps.length);
+  }
+
+  function renderControls() {
+    var play = $('b-play');
+    play.setAttribute('aria-pressed', String(S.playing));
+    play.setAttribute('aria-label', S.playing ? "To'xtatish" : 'Darsni boshlash');
+    $('b-next').disabled = !stepReady(S.idx + 1);
+    $('b-replay').disabled = !stepReady(S.idx);
+    var mute = $('b-mute');
+    mute.setAttribute('aria-pressed', String(S.muted));
+    mute.setAttribute('aria-label', S.muted ? 'Ovozni yoqish' : "Ovozni o'chirish");
+    $('b-speed').textContent = S.rate + '×';
+    document.querySelectorAll('#quick .chip, #topics .chip').forEach(function (c) { c.disabled = S.generating; });
+    $('b-send').disabled = S.generating || !$('q').value.trim();
+  }
+
+  function renderScript() {
+    var ol = $('script-list');
+    ol.innerHTML = '';
+    S.lesson.steps.forEach(function (st, i) {
+      if (!stepReady(i)) return;
+      var li = document.createElement('li');
+      if (i === S.idx) li.className = 'is-current';
+      li.innerHTML = '<button type="button" data-i="' + i + '"><h3>' + (i + 1) + '. ' + withAr(st.title) + '</h3><p>' + withAr(st.say) + '</p></button>';
+      ol.appendChild(li);
+    });
+  }
+
+  function renderAll(revealAll) {
+    doska.classList.toggle('is-live', S.playing && !revealAll);
+    renderBoard(revealAll);
+    renderBubble();
+    renderProgress(0);
+    renderControls();
+    renderScript();
+  }
+
+  var note = $('note');
+  function setNote(text, kind) {
+    note.textContent = text || '';
+    note.className = 'note' + (kind ? ' is-' + kind : '');
+  }
+
+  // =====================================================================
+  //  6. Pleyer
+  // =====================================================================
+  function clearTimers() { S.timers.forEach(clearTimeout); S.timers = []; }
+  function talking(on) { $('mascot').classList.toggle('is-talking', on); }
+
+  function haltAudio() {
+    S.run++;
+    clearTimers();
+    Ovoz.stop();
+    talking(false);
+  }
+
+  function playStep(i) {
+    haltAudio();
+    S.idx = i;
+    S.pieceIdx = -1;
+    S.waitFor = -1;
+    var my = S.run;
+    renderAll(!S.playing);
+    if (!S.playing) return;
+    if (!stepReady(i)) { S.waitFor = i; return; }
+
+    var step = S.lesson.steps[i];
+    var useTimer = S.muted || !Ovoz.status().tts;
+    talking(!S.muted);
+
+    if (!useTimer) {
+      var ok = Ovoz.speak(step.say, {
+        rate: S.rate,
+        onPiece: function (k) { if (my === S.run) highlight(k); },
+        onEnd: function () { if (my === S.run) stepEnded(); },
+        onError: function (code, msg) {
+          if (my !== S.run) return;
+          setNote(msg + ' Dars matn bilan davom etadi.', 'warn');
+          runTimer(my, S.pieceIdx + 1);
+        }
+      });
+      if (!ok) runTimer(my, 0);
+      // Ba'zi brauzerlar onstart'ni bermaydi — birinchi bo'lakni darhol belgilaymiz
+      highlight(0);
+    } else {
+      runTimer(my, 0);
+    }
+  }
+
+  // Ovozsiz rejim: subtitr o'qish tezligida o'zi siljiydi
+  function runTimer(my, from) {
+    talking(false);
+    var n = S.pieces.length, t = 0;
+    for (var k = from; k < n; k++) {
+      (function (k, delay) {
+        S.timers.push(setTimeout(function () { if (my === S.run) highlight(k); }, delay));
+      })(k, t);
+      t += Math.max(1100, S.pieces[k].text.length * 62) / S.rate;
+    }
+    S.timers.push(setTimeout(function () { if (my === S.run) stepEnded(); }, t + 300));
+  }
+
+  function stepEnded() {
+    talking(false);
+    revealUpTo(1);
+    renderProgress(1);
+    if (!S.playing) return;
+    var next = S.idx + 1;
+    if (stepReady(next)) {
+      var my = S.run;
+      S.timers.push(setTimeout(function () { if (my === S.run && S.playing) playStep(next); }, 700));
+    } else if (S.generating) {
+      S.waitFor = next;
+      $('bubble').classList.add('is-thinking');
+      setNote('Keyingi qadam yozilmoqda…');
+    } else {
+      S.playing = false;
+      renderControls();
+      setNote("Dars tugadi. Savol bering yoki «Soddaroq»/«Batafsilroq» tugmasini bosing.", 'ok');
+    }
+  }
+
+  function setPlaying(on) {
+    S.playing = on;
+    if (on) { Ovoz.unlock(); playStep(S.idx); }
+    else { S.waitFor = -1; haltAudio(); renderAll(true); }
+  }
+
+  $('b-play').addEventListener('click', function () {
+    if (!S.playing && !stepReady(S.idx) && !S.generating) S.idx = 0;
+    if (!S.playing && S.idx === S.lesson.steps.length - 1 && note.classList.contains('is-ok')) S.idx = 0;
+    setPlaying(!S.playing);
+  });
+  $('b-replay').addEventListener('click', function () { Ovoz.unlock(); S.playing = true; playStep(S.idx); });
+  $('b-next').addEventListener('click', function () { if (stepReady(S.idx + 1)) { Ovoz.unlock(); playStep(S.idx + 1); } });
+  $('b-mute').addEventListener('click', function () {
+    S.muted = !S.muted;
+    try { localStorage.setItem('kino-ovoz', S.muted ? 'off' : 'on'); } catch (e) {}
+    if (S.playing) playStep(S.idx); else renderControls();
+  });
+  $('b-speed').addEventListener('click', function () {
+    S.rate = RATES[(RATES.indexOf(S.rate) + 1) % RATES.length];
+    try { localStorage.setItem('kino-tezlik', String(S.rate)); } catch (e) {}
+    if (S.playing) playStep(S.idx); else renderControls();
+  });
+  $('b-list').addEventListener('click', function () {
+    var d = $('script');
+    d.open = true;
+    d.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  $('segs').addEventListener('click', function (e) {
+    var s = e.target.closest('.seg');
+    if (s && !s.disabled) { Ovoz.unlock(); playStep(+s.dataset.i); }
+  });
+  $('script-list').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-i]');
+    if (!b) return;
+    Ovoz.unlock();
+    S.playing = true;
+    playStep(+b.dataset.i);
+    $('stage').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  // Doskadagi arabcha misolni bosib — alohida talaffuzini eshitish
+  $('d-lines').addEventListener('click', function (e) {
+    var b = e.target.closest('.ln-ar');
+    if (!b) return;
+    var wasPlaying = S.playing;
+    haltAudio();
+    S.playing = false;
+    renderControls();
+    Ovoz.unlock();
+    Ovoz.speak(b.textContent, { rate: S.rate });
+    if (wasPlaying) setNote("Dars to'xtatildi — davom ettirish uchun ▶ ni bosing.");
+  });
+
+  var fs = $('fs');
+  if (document.fullscreenEnabled && $('stage').requestFullscreen) {
+    fs.hidden = false;
+    fs.addEventListener('click', function () {
+      if (document.fullscreenElement) document.exitFullscreen().catch(function () {});
+      else $('stage').requestFullscreen().catch(function () {});
+    });
+  }
+
+  // =====================================================================
+  //  7. AI: darsni oqim bilan olish — birinchi qadam tayyor bo'lishi bilan boshlanadi
+  // =====================================================================
+  var samplePromise = (window.claude && window.claude.use) ? window.claude.use('sample') : Promise.resolve(null);
+
+  function cacheKey(prompt) {
+    var h = 0;
+    for (var i = 0; i < prompt.length; i++) h = (h * 31 + prompt.charCodeAt(i)) | 0;
+    return 'kino-dars:' + h;
+  }
+
+  async function ask(task) {
+    if (S.generating) return;
+    var sample = await samplePromise;
+    var key = cacheKey(task);
+    var cached = null;
+    try { cached = localStorage.getItem(key); } catch (e) {}
+
+    haltAudio();
+    Ovoz.unlock();
+
+    if (cached) {
+      S.lesson = parseLesson(cached);
+      S.generating = false;
+      S.playing = true;
+      setNote('Tarixdan ochildi — darhol boshlandi.', 'ok');
+      playStep(0);
+      return;
+    }
+    if (!sample) {
+      setNote("Bu sahifa AI serveriga ulanmagan, shuning uchun yangi dars tuzib bo'lmaydi. Namuna dars ishlaydi; saytda bu yerga Muallim AI API'si ulanadi (README'ga qarang).", 'warn');
+      return;
+    }
+
+    S.controller = new AbortController();
+    S.generating = true;
+    S.lesson = { ar: '', uz: '', steps: [] };
+    S.idx = 0;
+    S.playing = true;
+    S.waitFor = 0;
+    S.startedAt = performance.now();
+    S.firstStepMs = 0;
+    lastReady = 0;
+    setNote('Dars tayyorlanmoqda…');
+    renderAll(false);
+    $('stage').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    var full = '';
+    try {
+      var res = await sample(SYSTEM + '\n\n' + task, {
+        cache: false,
+        signal: S.controller.signal,
+        onText: function (p) { full = p.text; onStream(full); }
+      });
+      full = (res && res.text) || full;
+      S.generating = false;
+      S.lesson = parseLesson(full);
+      if (!S.lesson.steps.length) throw { code: 'format' };
+      try { localStorage.setItem(key, full); } catch (e) {}
+      var secs = ((performance.now() - S.startedAt) / 1000).toFixed(1);
+      setNote('Dars tayyor: ' + S.lesson.steps.length + ' qadam. Birinchi qadam ' + (S.firstStepMs / 1000).toFixed(1) + ' soniyada boshlandi, to\'liq dars ' + secs + ' soniyada yozildi.', 'ok');
+      if (S.waitFor > -1 && stepReady(S.waitFor)) playStep(S.waitFor);
+      else { renderProgress(); renderControls(); renderScript(); }
+    } catch (err) {
+      S.generating = false;
+      var msg = err && err.code === 'rate_limited' ? "Hozir so'rovlar ko'p. Bir daqiqadan keyin qayta urinib ko'ring."
+        : err && err.code === 'not_granted' ? "AI'dan foydalanishga ruxsat berilmadi."
+        : err && err.code === 'cancelled' ? ''
+        : err && err.code === 'format' ? "AI javobini dars ko'rinishiga keltirib bo'lmadi. Qayta urinib ko'ring."
+        : "Dars tayyorlashda xatolik bo'ldi. Qayta urinib ko'ring.";
+      if (!S.lesson.steps.length) { S.lesson = parseLesson(NAMUNA); S.idx = 0; S.playing = false; }
+      if (msg) setNote(msg, 'error');
+      renderAll(true);
+    }
+  }
+
+  var lastReady = 0;
+  function onStream(text) {
+    var before = readyCount();
+    S.lesson = parseLesson(text);
+    var now = readyCount();
+    if (S.lesson.ar || S.lesson.uz) { $('d-ar').textContent = S.lesson.ar; $('d-uz').textContent = S.lesson.uz; $('topic-line').textContent = S.lesson.uz || 'Kino-dars'; }
+    if (now === before && now === lastReady) return;
+    lastReady = now;
+    if (now > 0 && !S.firstStepMs) {
+      S.firstStepMs = performance.now() - S.startedAt;
+      setNote('Birinchi qadam ' + (S.firstStepMs / 1000).toFixed(1) + ' soniyada tayyor — qolganlari ustoz gapirayotganda yoziladi.');
+    }
+    if (S.waitFor > -1 && stepReady(S.waitFor)) playStep(S.waitFor);
+    else { renderProgress(); renderControls(); renderScript(); }
+  }
+
+  function currentTopic() {
+    var L = S.lesson;
+    return (L.uz || '') + (L.ar ? ' (' + L.ar + ')' : '');
+  }
+
+  document.querySelectorAll('#quick .chip').forEach(function (c) {
+    c.addEventListener('click', function () { ask(MODES[c.dataset.mode](currentTopic())); });
+  });
+  document.querySelectorAll('#topics .chip').forEach(function (c) {
+    c.addEventListener('click', function () { ask("O'quvchining savoli: " + c.dataset.topic + " mavzusini tushuntiring."); });
+  });
+
+  // =====================================================================
+  //  8. Savol: yozib yoki ovoz bilan
+  // =====================================================================
+  var q = $('q');
+  function autosize() {
+    q.style.height = 'auto';
+    q.style.height = Math.min(q.scrollHeight, 128) + 'px';
+    renderControls();
+  }
+  q.addEventListener('input', autosize);
+  q.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !e.shiftKey && !e.isComposing && matchMedia('(hover: hover)').matches) {
+      e.preventDefault();
+      $('ask').requestSubmit();
+    }
+  });
+  $('ask').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var text = q.value.trim();
+    if (!text || S.generating) return;
+    q.value = ''; autosize();
+    var t = currentTopic();
+    ask((t ? 'Avvalgi dars mavzusi: ' + t + '.\n' : '') + "O'quvchining savoli: " + text);
+  });
+
+  var listening = null;
+  var mic = $('b-mic');
+  function setListening(on) {
+    mic.classList.toggle('is-listening', on);
+    mic.setAttribute('aria-pressed', String(on));
+    mic.setAttribute('aria-label', on ? "Tinglashni to'xtatish" : "Ovoz bilan so'rash");
+    q.placeholder = on ? 'Tinglayapman… gapiring' : "Yana so'rang…";
+  }
+  mic.addEventListener('click', function () {
+    Ovoz.unlock();
+    if (listening) { listening.stop(); return; }
+    if (S.playing) { S.playing = false; haltAudio(); renderAll(true); }
+    setNote('');
+    var before = q.value ? q.value.replace(/\s*$/, ' ') : '';
+    setListening(true);
+    listening = Ovoz.listen({
+      lang: 'uz-UZ',
+      onInterim: function (t) { q.value = before + t; autosize(); },
+      onResult: function (t) { q.value = before + t; autosize(); if (!S.generating) $('ask').requestSubmit(); },
+      onError: function (code, msg) {
+        var framed = false;
+        try { framed = window.self !== window.top; } catch (e) { framed = true; }
+        if ((code === 'not-allowed' || code === 'service-not-allowed') && framed) {
+          msg = "Bu namuna sahifada mikrofon yopiq: u boshqa sayt ichida ochilgan va mikrofonga ruxsat yo'q. muallim.com.uz saytida (HTTPS, Chrome yoki Safari) mikrofon ishlaydi.";
+        }
+        setNote(msg, 'error');
+      },
+      onEnd: function () { listening = null; setListening(false); }
+    });
+  });
+
+  // =====================================================================
+  //  9. Boshlang'ich holat: namuna dars, 1-qadam, ▶ kutmoqda
+  // =====================================================================
+  renderAll(true);
+  var st = Ovoz.status();
+  if (!st.tts) setNote("Bu brauzer ovozli o'qishni qo'llamaydi — dars subtitr bilan ko'rsatiladi.", 'warn');
+  else setNote("▶ ni bosing — ustoz darsni ovoz chiqarib tushuntiradi. Doskadagi arabcha misolni bosib, talaffuzini alohida eshitishingiz mumkin.");
+  // Ovozlar kech yuklansa, yo'q ovozlar haqida bir marta ogohlantirish
+  setTimeout(function () {
+    var s = Ovoz.status();
+    if (!s.tts || !s.voicesLoaded) return;
+    var miss = [];
+    if (!s.uzbek) miss.push(s.uzbekFallback && s.uzbekFallback.indexOf('tr') === 0 ? "o'zbekcha ovoz yo'q (turkcha ishlatiladi)" : "o'zbekcha ovoz yo'q");
+    if (!s.arabic) miss.push("arabcha ovoz yo'q");
+    if (miss.length && !S.playing) setNote('Qurilmada ' + miss.join(', ') + ". Telefon sozlamalaridagi «Matnni nutqqa aylantirish» bo'limida til paketini o'rnatsangiz, talaffuz yaxshilanadi.", 'warn');
+  }, 1500);
+})();
+</script>
+</body>
+</html>

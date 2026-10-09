@@ -8,7 +8,9 @@ Muallim platformasi uchun namuna sahifalar va ovoz kutubxonasi.
 | --- | --- |
 | `index.html` | Login'dan oldingi kirish (landing) sahifasi namunasi |
 | `demo/soz-tarjimasi.html` | O'qish matni: so'z bosilganda ovozli talaffuz, tarjima va qisqa sharh (telefonda ham ishlaydi) |
+| `demo/kino-dars.html` | **Kino-dars**: doska + ovozli ustoz + subtitr + qadamlar pleyeri; AI darsni oqim bilan yozadi, 1-qadam darhol boshlanadi |
 | `demo/muallim-ai.html` | Muallim AI chati: javoblarni ovoz chiqarib o'qish va savolni ovoz bilan aytish |
+| `ai/muallim-ai-prompt.md` | Batafsil dars uchun ko'rsatma (system prompt) va javob vaqtini qisqartirish bo'yicha tavsiyalar |
 | `assets/js/muallim-ovoz.js` | Ovoz kutubxonasi — saytga ulash uchun |
 
 ## Muallim AI'ga ovoz ulash
@@ -42,7 +44,11 @@ t.stop();
 MuallimOvoz.status(); // { tts, stt, arabic, uzbek, uzbekFallback, voicesLoaded }
 ```
 
-To'liq ishlatilish namunasi: `demo/muallim-ai.html`. Namunada AI serveriga ulanish
+Kino-dars uchun: `MuallimOvoz.speak(matn, { onPiece: function (i, bolak) { ... } })` har bir
+bo'lak o'qila boshlaganda chaqiriladi — subtitrni belgilash va doskaga qator chiqarish uchun.
+`MuallimOvoz.pieces(matn)` xuddi shu bo'laklar ro'yxatini qaytaradi.
+
+To'liq ishlatilish namunasi: `demo/kino-dars.html` va `demo/muallim-ai.html`. Namunada AI serveriga ulanish
 `ask()` funksiyasida — saytda u yerga Muallim AI API'si chaqiriladi.
 
 ### Cheklovlar

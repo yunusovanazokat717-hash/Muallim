@@ -64,7 +64,7 @@
       .replace(/[*_`#>|~]+/g, ' ')
       .replace(/^\s*[-•]\s+/gm, '')
       .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, '')
-      .replace(/[«»"“”]/g, '')
+      .replace(/[ʿʾ→←]/g, '')
       .replace(/[ \t]+/g, ' ')
       .trim();
   }
@@ -77,8 +77,12 @@
       var kind = ARABIC.test(ch) ? 'ar' : (LETTER.test(ch) ? (CYRILLIC.test(ch) ? 'uz-cyrl' : 'uz') : null);
       if (!cur) cur = { kind: kind || 'uz', text: '' };
       if (kind && kind !== cur.kind && /\S/.test(cur.text) && hasLetter(cur.text)) {
+        // Ochiluvchi qavs va qo'shtirnoq keyingi bo'lakka tegishli: «(fil-bayti)»
+        var open = cur.text.match(/[(\[«“"]+\s*$/);
+        var carry = open ? open[0] : '';
+        if (carry) cur.text = cur.text.slice(0, -carry.length);
         runs.push(cur);
-        cur = { kind: kind, text: '' };
+        cur = { kind: kind, text: carry };
       } else if (kind && !hasLetter(cur.text)) {
         cur.kind = kind;
       }
@@ -113,6 +117,19 @@
     if (synth) synth.cancel();
   }
 
+  // Matnni o'qish rejasiga aylantirish: [{ text, kind }] — subtitr va ovoz uchun bir xil
+  function pieces(text) {
+    var out = [];
+    segment(clean(text)).forEach(function (r) {
+      chunk(r.text).forEach(function (piece) {
+        if (hasLetter(piece)) out.push({ text: piece, kind: r.kind });
+      });
+    });
+    return out;
+  }
+
+  // opts: { rate, onStart, onPiece(index, piece), onEnd, onError }
+  // Qaytaradi: o'qiladigan bo'laklar ro'yxati (pieces bilan bir xil) yoki false
   function speak(text, opts) {
     opts = opts || {};
     if (!synth || !Utterance) {
@@ -121,18 +138,14 @@
     }
     stop();
     var my = token;
-    var runs = segment(clean(text));
-    var queue = [];
-    runs.forEach(function (r) {
-      var v = findVoice(VOICE_ORDER[r.kind]);
-      chunk(r.text).forEach(function (piece) {
-        if (!hasLetter(piece)) return;
-        var u = new Utterance(piece);
-        u.lang = v ? v.lang : DEFAULT_LANG[r.kind];
-        if (v) u.voice = v;
-        u.rate = (r.kind === 'ar' ? 0.8 : 1) * (opts.rate || 1);
-        queue.push(u);
-      });
+    var plan = pieces(text);
+    var queue = plan.map(function (p) {
+      var v = findVoice(VOICE_ORDER[p.kind]);
+      var u = new Utterance(p.text);
+      u.lang = v ? v.lang : DEFAULT_LANG[p.kind];
+      if (v) u.voice = v;
+      u.rate = (p.kind === 'ar' ? 0.8 : 1) * (opts.rate || 1);
+      return u;
     });
     if (!queue.length) return false;
 
@@ -141,6 +154,7 @@
       u.onstart = function () {
         if (my !== token) return;
         if (!started) { started = true; if (opts.onStart) opts.onStart(); }
+        if (opts.onPiece) opts.onPiece(i, plan[i]);
       };
       u.onend = function () {
         if (my === token && i === queue.length - 1 && opts.onEnd) opts.onEnd();
@@ -157,7 +171,7 @@
       if (my !== token) return;
       queue.forEach(function (u) { synth.speak(u); });
     }, 30);
-    return true;
+    return plan;
   }
 
   // iOS Safari ovozni faqat foydalanuvchi bosgan paytda "ochadi".
@@ -235,6 +249,7 @@
 
   global.MuallimOvoz = {
     speak: speak,
+    pieces: pieces,
     stop: stop,
     unlock: unlock,
     listen: listen,
