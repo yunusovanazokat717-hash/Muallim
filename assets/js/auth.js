@@ -96,13 +96,21 @@
     btn.classList.toggle('is-busy', on);
   }
 
-  function say(text) {
+  // Ustoz: gapiradi va kayfiyatini o'zgartiradi (main.js dagi MuallimUstoz)
+  var U = null;
+  function say(text, mood) {
     var b = $('#auth-bubble');
     if (!b) return;
     b.classList.remove('is-new');
     void b.offsetWidth; // animatsiyani qayta boshlash
     b.textContent = text;
     b.classList.add('is-new');
+    if (U) {
+      U.mood(mood || 'tabassum');
+      U.talk(true);
+      clearTimeout(say.t);
+      say.t = setTimeout(function () { U.talk(false); }, Math.min(2400, 400 + text.length * 35));
+    }
   }
 
   // Parol qanchalik kuchli: 0..4
@@ -278,21 +286,21 @@
       else setError(login, '');
       if (!pw.value) ok = setError(pw, 'Parolni kiriting.') && ok;
       else setError(pw, '');
-      if (!ok) { $('[aria-invalid=true]', form).focus(); say("Bir joyini to'g'rilash kerak — qizil yozuvga qarang."); return; }
+      if (!ok) { $('[aria-invalid=true]', form).focus(); say("Bir joyini to'g'rilash kerak — qizil yozuvga qarang.", 'xavotir'); return; }
 
       busy(btn, true, 'Kirilmoqda…');
-      say('Tekshiryapman…');
+      say('Tekshiryapman…', 'oylaydi');
       var body = { password: pw.value, remember: $('#login-remember') ? $('#login-remember').checked : false };
       if (isPhone(v)) body.phone = '+998' + phoneDigits(v); else body.email = v;
       post('/auth/login', body).then(function () {
-        say("Xush kelibsiz! Darsga o'tyapmiz…");
+        say("Xush kelibsiz! Darsga o'tyapmiz…", 'kuladi');
         formMessage(form, DEMO ? "Namuna rejimi: ma'lumot hech qayerga yuborilmadi. Saytda shu yerda darslar sahifasi ochiladi." : 'Muvaffaqiyatli kirdingiz.', 'ok');
         busy(btn, false);
         if (!DEMO) location.href = AFTER_LOGIN;
       }, function (err) {
         busy(btn, false);
         formMessage(form, err.message, 'error');
-        say('Hechqisi yo\'q, yana bir bor urinib ko\'ring.');
+        say('Hechqisi yo\'q, yana bir bor urinib ko\'ring.', 'xavotir');
         pw.select();
       });
     });
@@ -317,7 +325,7 @@
       ok = setError(phone, !isPhone(phone.value) ? "Telefon raqamini to'liq kiriting: +998 (90) 123-45-67." : '') && ok;
       ok = setError(pw, pw.value.length < 8 ? "Parol kamida 8 belgidan iborat bo'lsin." : '') && ok;
       ok = setError(agree, !agree.checked ? 'Davom etish uchun shartlarga rozilik bering.' : '') && ok;
-      if (!ok) { $('[aria-invalid=true]', f1).focus(); say("Bir-ikki joyini to'g'rilaymiz — qizil yozuvga qarang."); return; }
+      if (!ok) { $('[aria-invalid=true]', f1).focus(); say("Bir-ikki joyini to'g'rilaymiz — qizil yozuvga qarang.", 'xavotir'); return; }
 
       data.name = name.value.trim();
       data.phone = '+998' + phoneDigits(phone.value);
@@ -329,7 +337,7 @@
         $('#reg-phone-shown').textContent = formatPhone(data.phone);
         S.show(2);
         timer.start();
-        say(data.name.split(' ')[0] + ', telefoningizga 6 xonali kod yubordik.');
+        say(data.name.split(' ')[0] + ', telefoningizga 6 xonali kod yubordik.', 'korsatadi');
       }, function (err) { busy(btn, false); formMessage(f1, err.message, 'error'); });
     });
 
@@ -346,12 +354,12 @@
         verifying = false;
         formMessage(f2, '');
         S.show(3);
-        say('Ajoyib! Oxirgi savol: arab tilini qanchalik bilasiz?');
+        say('Ajoyib! Oxirgi savol: arab tilini qanchalik bilasiz?', 'oylaydi');
       }, function (err) {
         verifying = false;
         otp.error();
         formMessage(f2, err.message, 'error');
-        say('Kodni yana bir tekshirib ko\'ring.');
+        say('Kodni yana bir tekshirib ko\'ring.', 'hayron');
         setTimeout(otp.clear, 600);
       });
     }
@@ -361,7 +369,7 @@
       if (v.length < 6) { otp.error(); formMessage(f2, "Kodning 6 ta raqamini ham kiriting.", 'error'); return; }
       verify(v);
     });
-    $('#reg-back').addEventListener('click', function () { S.show(1); say("Ma'lumotlarni tuzatib, qayta yuboring."); });
+    $('#reg-back').addEventListener('click', function () { S.show(1); say("Ma'lumotlarni tuzatib, qayta yuboring.", 'tabassum'); });
     var timer = resendTimer($('#reg-resend'), function () { return post('/auth/send-code', { phone: data.phone, purpose: 'register' }); });
 
     // 3-qadam: daraja va maqsad
@@ -379,14 +387,14 @@
         $('#reg-done-rec').textContent = rec;
         S.show(4);
         var sw = $('.auth-switch', root); if (sw) sw.hidden = true;
-        say('Tabriklayman! Birinchi darsga tayyormisiz?');
+        say('Tabriklayman! Birinchi darsga tayyormisiz?', 'kuladi');
         celebrate();
       }, function (err) { busy(btn, false); formMessage(f3, err.message, 'error'); });
     });
     $$('input[name=level]', f3).forEach(function (r) {
       r.addEventListener('change', function () {
         formMessage(f3, '');
-        say({ zero: "Zo'r! Alifbodan boshlaymiz — qadamma-qadam.", alphabet: 'Yaxshi! Oddiy jumlalarni o\'qishdan boshlaymiz.', reader: 'Barakalla! Grammatika va lug\'atni chuqurlashtiramiz.' }[r.value]);
+        say({ zero: "Zo'r! Alifbodan boshlaymiz — qadamma-qadam.", alphabet: 'Yaxshi! Oddiy jumlalarni o\'qishdan boshlaymiz.', reader: 'Barakalla! Grammatika va lug\'atni chuqurlashtiramiz.' }[r.value], 'kozqisadi');
       });
     });
 
@@ -436,7 +444,7 @@
         $('#reset-phone-shown').textContent = formatPhone(phone);
         S.show(2);
         timer.start();
-        say('Kodni va yangi parolni kiriting.');
+        say('Kodni va yangi parolni kiriting.', 'korsatadi');
       }, function (err) { busy(btn, false); formMessage(f1, err.message, 'error'); });
     });
 
@@ -459,7 +467,7 @@
       post('/auth/reset-password', { phone: phone, code: code, password: pw.value }).then(function () {
         busy(btn, false);
         S.show(3);
-        say('Tayyor! Endi yangi parol bilan kiring.');
+        say('Tayyor! Endi yangi parol bilan kiring.', 'kuladi');
       }, function (err) {
         busy(btn, false);
         otp.error();
@@ -469,6 +477,12 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
+    var img = $('#auth-ustoz');
+    if (img && window.MuallimUstoz) {
+      U = window.MuallimUstoz(img);
+      U.idle();
+      setTimeout(function () { if (img.dataset.now === 'salom') U.mood('tabassum'); }, 2600);
+    }
     wireCommon();
     initLogin();
     initRegister();

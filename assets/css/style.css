@@ -5,17 +5,24 @@
    ========================================================== */
 
 :root {
-  --bg: #0b1324;
-  --bg-2: #0f1b31;
-  --surface: #13213a;
-  --surface-2: #182a48;
-  --line: #22324f;
-  --text: #e6ecf7;
-  --muted: #9aa8bf;
+  --bg: #0a1222;
+  --bg-2: #0d1830;
+  --surface: #111f38;
+  --surface-2: #162a4a;
+  --line: #22365a;
+  --text: #eaf0fa;
+  --muted: #9fb0c9;
   --primary: #3b82f6;
   --primary-hover: #60a5fa;
-  --primary-soft: #172c52;
-  --gold: #f2b84b;
+  --primary-soft: #15294d;
+  --gold: #e3b04b;
+  --gold-2: #f6d27a;
+  --turq: #2ec4b6;
+  --lapis: #1e40af;
+  --naqsh-girih: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg fill='none' stroke='%23e3b04b' stroke-width='1'%3E%3Cpolygon points='24,8 27.64,15.22 35.31,12.69 32.78,20.36 40,24 32.78,27.64 35.31,35.31 27.64,32.78 24,40 20.36,32.78 12.69,35.31 15.22,27.64 8,24 15.22,20.36 12.69,12.69 20.36,15.22'/%3E%3Cpath d='M24 0V8M24 40V48M0 24H8M40 24H48M0 0L12.7 12.7M48 0L35.3 12.7M0 48L12.7 35.3M48 48L35.3 35.3'/%3E%3Ccircle cx='24' cy='24' r='3'/%3E%3C/g%3E%3C/svg%3E");
+  --naqsh-tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%23163b8c'/%3E%3Cpolygon points='20,6 23.25,12.15 29.9,10.1 27.85,16.75 34,20 27.85,23.25 29.9,29.9 23.25,27.85 20,34 16.75,27.85 10.1,29.9 12.15,23.25 6,20 12.15,16.75 10.1,10.1 16.75,12.15' fill='%232ec4b6' stroke='%23e3b04b' stroke-width='1.2'/%3E%3Ccircle cx='20' cy='20' r='3' fill='%23f8f4ea'/%3E%3Cpath d='M0 0L6 6M40 0L34 6M0 40L6 34M40 40L34 34' stroke='%23e3b04b' stroke-width='1.2'/%3E%3Ccircle cx='0' cy='0' r='3.5' fill='%23f8f4ea'/%3E%3Ccircle cx='40' cy='0' r='3.5' fill='%23f8f4ea'/%3E%3Ccircle cx='0' cy='40' r='3.5' fill='%23f8f4ea'/%3E%3Ccircle cx='40' cy='40' r='3.5' fill='%23f8f4ea'/%3E%3C/svg%3E");
+  --naqsh-band: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='16' viewBox='0 0 32 16'%3E%3Cg fill='none' stroke='%23e3b04b' stroke-width='1.2'%3E%3Cpath d='M0 8C8 0 8 16 16 8S24 0 32 8'/%3E%3Cpath d='M0 8C8 16 8 0 16 8S24 16 32 8' opacity='.55'/%3E%3C/g%3E%3Ccircle cx='16' cy='8' r='1.6' fill='%232ec4b6'/%3E%3C/svg%3E");
+  --star8: polygon(50% 0%, 64.16% 15.82%, 85.36% 14.64%, 84.18% 35.84%, 100% 50%, 84.18% 64.16%, 85.36% 85.36%, 64.16% 84.18%, 50% 100%, 35.84% 84.18%, 14.64% 85.36%, 15.82% 64.16%, 0% 50%, 15.82% 35.84%, 14.64% 14.64%, 35.84% 15.82%);
   --paper: #fbf8f0;
   --paper-grid: #e6e0cf;
   --chalk: #1e4fd8;
@@ -35,33 +42,39 @@
 
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
-    --bg: #f7f4ec;
-    --bg-2: #efe9db;
-    --surface: #ffffff;
-    --surface-2: #f6f3ea;
-    --line: #e2ddcf;
+    --bg: #f8f4ea;
+    --bg-2: #f0e8d6;
+    --surface: #fffdf8;
+    --surface-2: #f6efe0;
+    --line: #e4d9c2;
     --text: #172033;
     --muted: #5b6578;
-    --primary: #2563eb;
-    --primary-hover: #1d4ed8;
-    --primary-soft: #e6edff;
-    --gold: #b7791f;
+    --primary: #1d4ed8;
+    --primary-hover: #1e40af;
+    --primary-soft: #e3eaff;
+    --gold: #a8761a;
+    --gold-2: #c9952e;
+    --turq: #0f8f86;
+    --lapis: #1e3a8a;
     --shadow: 0 14px 40px rgba(23, 32, 51, .10);
     color-scheme: light;
   }
 }
 :root[data-theme="light"] {
-  --bg: #f7f4ec;
-  --bg-2: #efe9db;
-  --surface: #ffffff;
-  --surface-2: #f6f3ea;
-  --line: #e2ddcf;
+  --bg: #f8f4ea;
+  --bg-2: #f0e8d6;
+  --surface: #fffdf8;
+  --surface-2: #f6efe0;
+  --line: #e4d9c2;
   --text: #172033;
   --muted: #5b6578;
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --primary-soft: #e6edff;
-  --gold: #b7791f;
+  --primary: #1d4ed8;
+  --primary-hover: #1e40af;
+  --primary-soft: #e3eaff;
+  --gold: #a8761a;
+  --gold-2: #c9952e;
+  --turq: #0f8f86;
+  --lapis: #1e3a8a;
   --shadow: 0 14px 40px rgba(23, 32, 51, .10);
   color-scheme: light;
 }
@@ -734,6 +747,258 @@ form#login-form { display: grid; gap: 16px; }
   to { transform: translate(var(--x), 520px) rotate(var(--r)); opacity: 0; }
 }
 
+/* ==========================================================
+   SHARQONA QATLAM: brend, naqshlar, ustoz, peshtoq va animatsiyalar
+   ========================================================== */
+
+/* ---- Brend: ustoz belgisi + yozuv ---- */
+.brand { gap: 12px; }
+.brand-mark {
+  position: relative; flex: none; width: 46px; height: 46px; border-radius: 50%;
+  display: grid; place-items: center; overflow: hidden;
+  background: radial-gradient(circle at 50% 30%, #2f5fd6, var(--lapis));
+  box-shadow: 0 0 0 2px var(--gold), 0 0 0 5px color-mix(in srgb, var(--gold) 18%, transparent), 0 6px 16px rgba(0, 0, 0, .3);
+  animation: mark-in 1s .1s cubic-bezier(.3, 1.5, .5, 1) both;
+}
+.brand-mark img { width: 42px; height: 42px; margin-top: 8px; transition: transform .45s cubic-bezier(.3, 1.6, .5, 1); }
+.brand:hover .brand-mark img { transform: rotate(-10deg) scale(1.08); }
+.brand-word { display: grid; line-height: 1; font-size: 1.32rem; }
+.brand-word small { font-family: var(--font-ar); font-size: .95rem; font-weight: 700; color: var(--gold); margin-top: 3px; text-align: left; }
+@keyframes mark-in { from { transform: rotateY(180deg) scale(.4); opacity: 0; } }
+
+/* ---- Sakkiz qirrali yulduz ---- */
+.star8 { display: inline-block; width: 12px; height: 12px; background: currentColor; clip-path: var(--star8); vertical-align: -1px; margin-right: 8px; animation: spin 10s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.eyebrow {
+  background: color-mix(in srgb, var(--gold) 12%, transparent);
+  color: var(--gold-2);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 45%, transparent);
+}
+:root[data-theme="light"] .eyebrow { color: var(--gold); }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .eyebrow { color: var(--gold); } }
+
+/* ---- Naqshli ajratgich: chiziq — yulduz — chiziq ---- */
+.naqsh-divider { display: flex; align-items: center; justify-content: center; gap: 10px; max-width: 260px; margin: 6px auto 16px; color: var(--gold); }
+.naqsh-divider span { flex: 1; height: 2px; border-radius: 2px; background: linear-gradient(90deg, transparent, var(--gold)); transform-origin: right; transition: transform 1s .25s cubic-bezier(.2, .8, .2, 1); }
+.naqsh-divider span:last-child { background: linear-gradient(270deg, transparent, var(--gold)); transform-origin: left; }
+.naqsh-divider .star8 { width: 16px; height: 16px; margin: 0; }
+.js .will-reveal:not(.in) .naqsh-divider span { transform: scaleX(0); }
+
+/* ---- Hoshiya (bordyur tasmasi) ---- */
+.hoshiya { height: 16px; background-image: var(--naqsh-band); background-size: 32px 16px; opacity: .75; animation: band-move 24s linear infinite; }
+@keyframes band-move { to { background-position: 320px 0; } }
+.hero .hoshiya { position: absolute; left: 0; right: 0; bottom: 0; }
+
+/* ---- Hero foni: girih panjarasi + yaltirash ---- */
+.hero { padding-bottom: 88px; }
+.hero-girih {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: var(--naqsh-girih); background-size: 56px 56px;
+  opacity: .08;
+  -webkit-mask-image: radial-gradient(ellipse 70% 80% at 72% 40%, #000 10%, transparent 75%);
+          mask-image: radial-gradient(ellipse 70% 80% at 72% 40%, #000 10%, transparent 75%);
+}
+.hero-girih--shine {
+  opacity: .5;
+  -webkit-mask-image: linear-gradient(115deg, transparent 42%, #000 50%, transparent 58%);
+          mask-image: linear-gradient(115deg, transparent 42%, #000 50%, transparent 58%);
+  -webkit-mask-size: 300% 100%; mask-size: 300% 100%;
+  animation: girih-shine 9s ease-in-out infinite;
+}
+@keyframes girih-shine { 0% { -webkit-mask-position: 110% 0; mask-position: 110% 0; } 60%, 100% { -webkit-mask-position: -10% 0; mask-position: -10% 0; } }
+.letters span { color: var(--gold); }
+@keyframes float {
+  0% { transform: translateY(0) rotate(-8deg); opacity: 0; }
+  10% { opacity: .16; }
+  90% { opacity: .16; }
+  100% { transform: translateY(-720px) rotate(8deg); opacity: 0; }
+}
+
+/* Sarlavhadagi urg'u: tilla, yaltiraydi */
+.hero h1 .hl {
+  background: linear-gradient(90deg, var(--gold), var(--gold-2), var(--gold));
+  background-size: 200% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: hl-shine 5s linear infinite;
+}
+.hero h1 .hl::after { background: var(--gold); opacity: .45; }
+@keyframes hl-shine { to { background-position: -200% 0; } }
+
+/* ---- Sahna: rozetka, peshtoq, doska, ustoz ---- */
+.hero-stage { padding-top: 26px; animation: none; }
+.stage-rosette { position: absolute; z-index: 0; width: 120%; left: -10%; top: -14%; aspect-ratio: 1; pointer-events: none; opacity: .5; }
+.rosette { width: 100%; height: 100%; overflow: visible; }
+.rosette * { fill: none; stroke: var(--gold); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.rosette .d { stroke-dasharray: 1; animation: ros-draw 2.6s cubic-bezier(.4, .1, .2, 1) both; }
+.rosette .d2 { stroke-dasharray: .004 .008; animation: none; opacity: .7; }
+.rosette .d3 { animation-delay: .6s; }
+.rosette .d4 { animation-delay: 1s; }
+.rosette .ros-petals { transform-box: view-box; transform-origin: 50% 50%; animation: petals 1.6s .5s cubic-bezier(.3, 1.3, .5, 1) both; }
+.rosette .ros-leaves use { fill: color-mix(in srgb, var(--gold) 22%, transparent); }
+.rosette .ros-leaves { transform-box: view-box; transform-origin: 50% 50%; animation: petals 1.4s 1.1s cubic-bezier(.3, 1.3, .5, 1) both; }
+.rosette .ros-spin { transform-box: view-box; transform-origin: 50% 50%; animation: spin 140s linear infinite; }
+@keyframes ros-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes petals { from { transform: scale(.2) rotate(-60deg); opacity: 0; } }
+
+.portal {
+  position: relative; z-index: 1;
+  padding: 16px;
+  border-radius: 50% 50% 26px 26px / 30% 30% 26px 26px;
+  background-color: #163b8c;
+  background-image: var(--naqsh-tile); background-size: 32px 32px;
+  box-shadow: 0 0 0 3px var(--gold), 0 0 0 8px var(--bg), 0 0 0 10px color-mix(in srgb, var(--gold) 70%, transparent), 0 30px 60px rgba(0, 0, 0, .45);
+  animation: portal-in 1.2s .15s cubic-bezier(.2, .8, .2, 1) backwards; /* tugagach kesish olib tashlanadi — soya to'liq ko'rinadi */
+}
+.portal::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(110deg, transparent 38%, rgba(255, 240, 200, .28) 50%, transparent 62%);
+  background-size: 260% 100%;
+  animation: sheen 7s 1.5s ease-in-out infinite;
+}
+@keyframes portal-in { from { clip-path: inset(100% -40px -40px -40px); } to { clip-path: inset(-40px -40px -40px -40px); } }
+@keyframes sheen { 0% { background-position: 120% 0; } 45%, 100% { background-position: -40% 0; } }
+.portal .board {
+  position: relative; z-index: 1;
+  border-radius: 50% 50% 14px 14px / 28% 28% 14px 14px;
+  padding: 64px 26px 28px;
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--gold) 60%, transparent), inset 0 10px 30px rgba(0, 0, 0, .08);
+}
+.portal .board-label { text-align: center; color: var(--chalk); }
+
+.ustoz-img { display: block; height: auto; user-select: none; -webkit-user-drag: none; filter: drop-shadow(0 10px 14px rgba(0, 0, 0, .35)); }
+.hero .ustoz-row { position: relative; z-index: 2; margin: -88px 0 0 -46px; align-items: flex-end; gap: 0; }
+.hero .ustoz-img { width: 250px; flex: none; margin-right: -64px; }
+.ustoz-enter { animation: ustoz-in 1.1s .9s cubic-bezier(.3, 1.5, .5, 1) both; }
+.ustoz-img.is-bob { animation: bob 4.5s ease-in-out infinite; }
+@keyframes ustoz-in { from { transform: translateY(60px) scale(.5) rotate(-14deg); opacity: 0; } }
+@keyframes bob { 50% { transform: translateY(-6px) rotate(-1.5deg); } }
+.hero .bubble { margin: 0 0 54px; animation-delay: 1.5s; }
+.bubble::before {
+  content: ""; position: absolute; left: -8px; bottom: 14px; width: 16px; height: 16px;
+  background: inherit; transform: rotate(45deg); border-radius: 3px;
+}
+.bubble .caret { display: inline-block; width: 2px; height: 1em; margin-left: 2px; background: var(--gold-2); vertical-align: -2px; animation: caret .8s steps(1) infinite; }
+@keyframes caret { 50% { opacity: 0; } }
+@media (max-width: 520px) {
+  .hero .ustoz-row { margin: -64px 0 0 -14px; }
+  .hero .ustoz-img { width: 190px; margin-right: -54px; }
+  .hero .bubble { margin-bottom: 40px; font-size: .92rem; }
+  .portal .board { padding: 48px 18px 22px; }
+}
+
+/* ---- Tugmalar: yaltirash ---- */
+.btn-shine { position: relative; overflow: hidden; isolation: isolate; }
+.btn-shine::after {
+  content: ""; position: absolute; inset: -2px; z-index: -1; pointer-events: none;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .45) 50%, transparent 70%);
+  background-size: 250% 100%; background-position: 130% 0;
+  animation: btn-shine 5s 2s ease-in-out infinite;
+}
+.btn-shine:hover::after { animation-duration: 1.2s; animation-delay: 0s; }
+@keyframes btn-shine { 0% { background-position: 130% 0; } 30%, 100% { background-position: -30% 0; } }
+
+/* ---- Bo'limlar ---- */
+.section { position: relative; }
+.section-alt { background-color: var(--bg-2); }
+.section-alt::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: var(--naqsh-girih); background-size: 64px 64px; opacity: .035;
+}
+.section > .container { position: relative; }
+.section-head h2 { margin-bottom: 4px; }
+
+/* Imkoniyat kartalari: burchak naqshi, yulduz belgi, 3D egilish */
+.feature { position: relative; overflow: hidden; transform-style: preserve-3d; }
+.feature::before {
+  content: ""; position: absolute; right: -30px; bottom: -30px; width: 150px; height: 150px; pointer-events: none;
+  background-image: var(--naqsh-girih); background-size: 38px 38px; opacity: .12;
+  -webkit-mask-image: radial-gradient(circle at 100% 100%, #000 20%, transparent 70%);
+          mask-image: radial-gradient(circle at 100% 100%, #000 20%, transparent 70%);
+  transition: opacity .4s, transform .8s;
+}
+.feature:hover::before { opacity: .3; transform: rotate(45deg) scale(1.15); }
+.feature:hover { border-color: color-mix(in srgb, var(--gold) 55%, var(--line)); }
+.feature-icon {
+  width: 60px; height: 60px; border-radius: 0; clip-path: var(--star8);
+  background: linear-gradient(135deg, var(--turq), var(--lapis)); color: #fff;
+  transition: transform .7s cubic-bezier(.3, 1.4, .5, 1);
+}
+.feature-icon svg { transition: transform .7s cubic-bezier(.3, 1.4, .5, 1); }
+.feature:hover .feature-icon { transform: rotate(45deg); }
+.feature:hover .feature-icon svg { transform: rotate(-45deg); }
+.tilt { will-change: transform; }
+
+/* Yo'l: yulduzli raqamlar */
+.path::before { background: linear-gradient(var(--gold), var(--turq)); }
+.path-num {
+  width: 52px; height: 52px; margin-left: -22px; border-radius: 0; box-shadow: none;
+  clip-path: var(--star8);
+  background: linear-gradient(135deg, var(--gold-2), var(--gold)); color: #241a06;
+}
+.js .will-reveal.in .path-num { animation: star-pop .9s .15s cubic-bezier(.3, 1.6, .5, 1) both; }
+@keyframes star-pop { from { transform: rotate(-135deg) scale(.3); } }
+.audience { position: relative; overflow: hidden; }
+.audience::after {
+  content: ""; position: absolute; top: 14px; right: 14px; width: 18px; height: 18px;
+  background: var(--gold); clip-path: var(--star8); opacity: .7;
+}
+
+/* Kino-dars: koshinli ramka */
+.kino-frame {
+  padding: 12px; border-radius: 34px;
+  background-color: #163b8c; background-image: var(--naqsh-tile); background-size: 28px 28px;
+  box-shadow: 0 0 0 2px var(--gold), var(--shadow);
+}
+.kino-frame .kino-screen { box-shadow: 0 0 0 2px color-mix(in srgb, var(--gold) 70%, transparent); }
+.ustoz-img.ustoz-sm { width: 150px; margin: 0 -40px -6px -18px; flex: none; }
+
+/* Savollar: o'ylayotgan ustoz */
+.faq-head { position: relative; }
+.faq-ustoz { width: 200px; margin: -20px auto -6px; animation: bob 5s ease-in-out infinite; }
+
+/* CTA: lojuvard koshin, rozetka, kulayotgan ustoz */
+.cta-inner {
+  position: relative; overflow: hidden; isolation: isolate;
+  background: linear-gradient(135deg, #1e4fd8, #0f2a6b);
+  box-shadow: 0 0 0 2px var(--gold), 0 24px 50px rgba(0, 0, 0, .35);
+}
+.cta-inner::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background-image: var(--naqsh-girih); background-size: 48px 48px; opacity: .14;
+}
+.cta-rosette { position: absolute; z-index: -1; width: 380px; right: -110px; top: -120px; opacity: .45; pointer-events: none; }
+.cta-rosette .rosette * { stroke: #f6d27a; }
+.cta-ustoz { width: 190px; flex: none; margin: -10px -40px -36px -20px; animation: bob 4s ease-in-out infinite; }
+.cta-ar { color: #f6d27a; }
+
+/* Footer */
+.site-footer { padding-top: 0; }
+.site-footer .hoshiya { margin-bottom: 48px; }
+.site-footer .brand-word { color: #fff; }
+
+/* Aylantirish ko'rsatkichi (tilla chiziq) */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 60; pointer-events: none;
+  background: linear-gradient(90deg, var(--turq), var(--gold));
+  transform-origin: left; transform: scaleX(0);
+}
+
+/* Paydo bo'lish: biroz 3D */
+.js .reveal.will-reveal { transform: translateY(26px) rotateX(8deg); transform-origin: 50% 100%; }
+
+/* Kirish sahifalari: peshtoqdagi doska va rasmdagi ustoz */
+.portal-mini { padding: 12px; animation-delay: 0s; }
+.portal-mini .board { padding: 46px 20px 64px; text-align: right; }
+.auth-side .ustoz-row { position: relative; z-index: 2; display: flex; align-items: flex-end; margin: -64px 0 0 -30px; }
+.auth-side .ustoz-img { width: 220px; flex: none; margin-right: -58px; animation: ustoz-in 1s .5s cubic-bezier(.3, 1.5, .5, 1) both; }
+.auth-side .bubble { margin-bottom: 44px; }
+@media (max-width: 899px) {
+  .portal-mini .board { padding: 34px 16px 52px; }
+  .auth-side .ustoz-row { margin: -46px 0 0 -12px; }
+  .auth-side .ustoz-img { width: 160px; margin-right: -46px; }
+  .auth-side .bubble { margin-bottom: 30px; font-size: .92rem; }
+}
+
 /* ---------- Harakatni kamaytirish ---------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -741,5 +1006,7 @@ form#login-form { display: grid; gap: 16px; }
   .letters { display: none; }
   .chalk-line path { stroke-dashoffset: 0; }
   .js .reveal.will-reveal { opacity: 1; transform: none; }
+  .js .will-reveal:not(.in) .naqsh-divider span { transform: none; }
+  .hero-girih--shine, .scroll-progress { display: none; }
   .done-badge svg { stroke-dashoffset: 0; }
 }

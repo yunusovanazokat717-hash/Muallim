@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Muallim — arab tilini o'zbek tilida o'rganing</title>
-  <meta name="description" content="Muallim — arab tilini noldan, o'zbek tilida o'rganish platformasi: interaktiv o'qish matnlari, so'z tarjimasi va talaffuzi, kino-darslar va ovozli Muallim AI ustoz.">
-  <meta name="theme-color" content="#0b1324">
-  <meta property="og:title" content="Muallim — arab tilini o'zbek tilida o'rganing">
+  <title>Muallim — arab tilini noldan tushunib o'rganing</title>
+  <meta name="description" content="Muallim — arab tilini noldan, o'zbek tilida tushunib o'rganish platformasi: interaktiv o'qish matnlari, so'z tarjimasi va talaffuzi, kino-darslar va ovozli Muallim AI ustoz.">
+  <meta name="theme-color" content="#0a1222">
+  <meta property="og:title" content="Muallim — arab tilini noldan tushunib o'rganing">
   <meta property="og:description" content="So'zni bosing — tarjimasi va talaffuzi chiqadi. Ustoz doskada tushuntiradi, Muallim AI savollaringizga ovoz bilan javob beradi.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="uz_UZ">
@@ -14,15 +14,15 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/img/favicon-64.png" type="image/png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
+  <link rel="preload" as="image" href="assets/img/ustoz/salom.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Caveat:wght@500;700&family=Onest:wght@400;500;600;700;800&display=swap">
   <link rel="stylesheet" href="assets/css/style.css">
   <script>
-    // JS borligini va saqlangan mavzuni sahifa chizilishidan oldin qo'llash (miltillamasin)
     document.documentElement.classList.add('js');
     try {
       var t = localStorage.getItem('muallim-theme');
@@ -38,8 +38,8 @@
   <header class="site-header" id="top">
     <div class="container header-inner">
       <a class="brand" href="#top" aria-label="Muallim — bosh sahifa">
-        <img src="assets/img/logo.svg" alt="" width="36" height="36">
-        <span>Muallim</span>
+        <span class="brand-mark"><img src="assets/img/ustoz/logo.png" alt="" width="44" height="44"></span>
+        <span class="brand-word">Muallim<small lang="ar" dir="rtl">مُعَلِّم</small></span>
       </a>
 
       <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false">
@@ -61,7 +61,7 @@
             <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
           </button>
           <a class="btn btn-ghost" href="login.html">Kirish</a>
-          <a class="btn btn-primary" href="register.html">Bepul boshlash</a>
+          <a class="btn btn-primary btn-shine" href="register.html">Bepul boshlash</a>
         </div>
       </nav>
     </div>
@@ -70,80 +70,84 @@
   <main id="main">
     <!-- ============ HERO ============ -->
     <section class="hero">
+      <div class="hero-girih" aria-hidden="true"></div>
+      <div class="hero-girih hero-girih--shine" aria-hidden="true"></div>
       <div class="letters" aria-hidden="true">
-        <span style="--x:6%;--d:0s;--s:26s">ا</span><span style="--x:18%;--d:-6s;--s:31s">ب</span>
-        <span style="--x:31%;--d:-12s;--s:24s">ت</span><span style="--x:47%;--d:-3s;--s:29s">ج</span>
-        <span style="--x:62%;--d:-15s;--s:27s">د</span><span style="--x:74%;--d:-9s;--s:33s">ر</span>
-        <span style="--x:86%;--d:-19s;--s:25s">س</span><span style="--x:94%;--d:-5s;--s:30s">ع</span>
+        <span style="--x:5%;--d:0s;--s:26s">ا</span><span style="--x:17%;--d:-6s;--s:31s">ب</span>
+        <span style="--x:29%;--d:-12s;--s:24s">ت</span><span style="--x:44%;--d:-3s;--s:29s">ج</span>
+        <span style="--x:58%;--d:-15s;--s:27s">د</span><span style="--x:71%;--d:-9s;--s:33s">ر</span>
+        <span style="--x:84%;--d:-19s;--s:25s">س</span><span style="--x:95%;--d:-5s;--s:30s">ع</span>
       </div>
 
       <div class="container hero-inner">
         <div class="hero-text">
-          <p class="eyebrow">Arab tili — o'zbek tilida</p>
-          <h1>Arabchani <span class="hl">tushunib</span> o'qishni noldan o'rganing</h1>
+          <p class="eyebrow"><i class="star8" aria-hidden="true"></i>Arab tili — o'zbek tilida</p>
+          <h1>Arab tilini noldan <span class="hl">tushunib</span> o'rganing</h1>
           <p class="lead">
             Har bir so'zni bosing — tarjimasi, talaffuzi va qisqa sharhi chiqadi.
             Ustoz doskada ovoz chiqarib tushuntiradi, savollaringizga esa Muallim AI javob beradi.
           </p>
           <div class="hero-actions">
-            <a class="btn btn-primary btn-lg" href="register.html">Bepul boshlash</a>
+            <a class="btn btn-primary btn-lg btn-shine" href="register.html">Bepul boshlash</a>
             <a class="btn btn-outline btn-lg" href="#sinab-koring">Darsni sinab ko'rish</a>
           </div>
           <p class="hero-login">Hisobingiz bormi? <a href="login.html">Kirish</a></p>
         </div>
 
-        <!-- Sahna: ustoz doskaga yozadi -->
-        <div class="hero-stage">
-          <div class="board">
-            <p class="board-label">1-dars</p>
-            <div class="board-row r1">
-              <p class="board-ar" lang="ar" dir="rtl">
-                <button class="hw" type="button" data-tr="bu" data-tl="hāzā">هَذَا</button>
-                <button class="hw" type="button" data-tr="kitob" data-tl="kitābun">كِتَابٌ</button>
-              </p>
-              <p class="board-tl">hāzā kitābun</p>
-              <p class="board-uz">Bu — kitob.</p>
+        <!-- Sahna: peshtoq ichida doska, orqada aylanuvchi rozetka, oldida ustoz -->
+        <div class="hero-stage" id="hero-stage">
+          <div class="stage-rosette" data-depth="18"><svg class="rosette" viewBox="-100 -100 200 200" aria-hidden="true">
+  <defs><path id="rp" d="M0,-96 C11,-80 13,-62 0,-44 C-13,-62 -11,-80 0,-96Z"/><path id="rl" d="M0,-44 C7,-36 7,-28 0,-20 C-7,-28 -7,-36 0,-44Z"/></defs>
+  <g class="ros-spin">
+    <circle class="d" pathLength="1" r="98"/>
+    <circle class="d d2" pathLength="1" r="90" stroke-dasharray="2 4"/>
+    <polygon class="d" pathLength="1" points="0,-88 44,76.21 -76.21,-44 88,0 -76.21,44 44,-76.21 0,88 -44,-76.21 76.21,44 -88,0 76.21,-44 -44,76.21"/>
+    <g class="ros-petals"><use href="#rp" transform="rotate(0)"/><use href="#rp" transform="rotate(30)"/><use href="#rp" transform="rotate(60)"/><use href="#rp" transform="rotate(90)"/><use href="#rp" transform="rotate(120)"/><use href="#rp" transform="rotate(150)"/><use href="#rp" transform="rotate(180)"/><use href="#rp" transform="rotate(210)"/><use href="#rp" transform="rotate(240)"/><use href="#rp" transform="rotate(270)"/><use href="#rp" transform="rotate(300)"/><use href="#rp" transform="rotate(330)"/></g>
+    <polygon class="d d3" pathLength="1" points="0,-44 7.76,-28.98 22,-38.11 21.21,-21.21 38.11,-22 28.98,-7.76 44,0 28.98,7.76 38.11,22 21.21,21.21 22,38.11 7.76,28.98 0,44 -7.76,28.98 -22,38.11 -21.21,21.21 -38.11,22 -28.98,7.76 -44,0 -28.98,-7.76 -38.11,-22 -21.21,-21.21 -22,-38.11 -7.76,-28.98"/>
+    <g class="ros-leaves"><use href="#rl" transform="rotate(15)"/><use href="#rl" transform="rotate(45)"/><use href="#rl" transform="rotate(75)"/><use href="#rl" transform="rotate(105)"/><use href="#rl" transform="rotate(135)"/><use href="#rl" transform="rotate(165)"/><use href="#rl" transform="rotate(195)"/><use href="#rl" transform="rotate(225)"/><use href="#rl" transform="rotate(255)"/><use href="#rl" transform="rotate(285)"/><use href="#rl" transform="rotate(315)"/><use href="#rl" transform="rotate(345)"/></g>
+    <polygon class="d d4" pathLength="1" points="0,-20 3.44,-8.31 14.14,-14.14 8.31,-3.44 20,0 8.31,3.44 14.14,14.14 3.44,8.31 0,20 -3.44,8.31 -14.14,14.14 -8.31,3.44 -20,0 -8.31,-3.44 -14.14,-14.14 -3.44,-8.31"/>
+    <circle class="d d4" pathLength="1" r="6"/>
+  </g>
+</svg></div>
+          <div class="portal" data-depth="8">
+            <div class="board">
+              <p class="board-label">1-dars</p>
+              <div class="board-row r1">
+                <p class="board-ar" lang="ar" dir="rtl">
+                  <button class="hw" type="button" data-tr="bu" data-tl="hāzā">هَذَا</button>
+                  <button class="hw" type="button" data-tr="kitob" data-tl="kitābun">كِتَابٌ</button>
+                </p>
+                <p class="board-tl">hāzā kitābun</p>
+                <p class="board-uz">Bu — kitob.</p>
+              </div>
+              <div class="board-row r2">
+                <p class="board-ar" lang="ar" dir="rtl">
+                  <button class="hw" type="button" data-tr="bu (ayol jinsi)" data-tl="hāzihi">هَذِهِ</button>
+                  <button class="hw" type="button" data-tr="chizg'ich" data-tl="misṭaratun">مِسْطَرَةٌ</button>
+                </p>
+                <p class="board-tl">hāzihi misṭaratun</p>
+                <p class="board-uz">Bu — chizg'ich.</p>
+              </div>
+              <svg class="chalk-line" viewBox="0 0 300 20" aria-hidden="true"><path d="M6 12c40-8 90-9 140-4s100 6 148-3"/></svg>
             </div>
-            <div class="board-row r2">
-              <p class="board-ar" lang="ar" dir="rtl">
-                <button class="hw" type="button" data-tr="bu (ayol jinsi)" data-tl="hāzihi">هَذِهِ</button>
-                <button class="hw" type="button" data-tr="chizg'ich" data-tl="misṭaratun">مِسْطَرَةٌ</button>
-              </p>
-              <p class="board-tl">hāzihi misṭaratun</p>
-              <p class="board-uz">Bu — chizg'ich.</p>
-            </div>
-            <svg class="chalk-line" viewBox="0 0 300 20" aria-hidden="true"><path d="M6 12c40-8 90-9 140-4s100 6 148-3"/></svg>
           </div>
 
-          <div class="ustoz-row">
-            <svg class="ustoz" viewBox="0 0 96 96" aria-hidden="true">
-              <g class="ustoz-head">
-                <circle cx="48" cy="50" r="38" fill="#f1f5f9" stroke="#1c2433" stroke-width="2.4"/>
-                <path d="M19 40c0-18 13-28 29-28s29 10 29 28z" fill="#1c2433"/>
-                <path d="M24 32h48M28 24h40M34 17h28" stroke="#f1f5f9" stroke-width="2" stroke-dasharray="4 3"/>
-                <path d="M19 40h58" stroke="#1c2433" stroke-width="3.5"/>
-                <g class="ustoz-eyes">
-                  <ellipse cx="36" cy="52" rx="3.8" ry="4.8" fill="#1c2433"/>
-                  <ellipse cx="60" cy="52" rx="3.8" ry="4.8" fill="#1c2433"/>
-                </g>
-                <path d="M28 45q7-4 14 0M54 45q7-4 14 0" stroke="#1c2433" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-                <path d="M20 58c1 18 12 29 28 29s27-11 28-29c-6 6-16 9-28 9s-22-3-28-9z" fill="#e2e8f0" stroke="#1c2433" stroke-width="2"/>
-                <path d="M32 61q16 8 32 0" stroke="#1c2433" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-                <ellipse class="ustoz-mouth" cx="48" cy="68" rx="6" ry="3.4" fill="#1c2433"/>
-              </g>
-            </svg>
+          <div class="ustoz-row" data-depth="-6">
+            <img class="ustoz-img ustoz-enter" id="hero-ustoz" data-mood="salom" src="assets/img/ustoz/salom.png" alt="" width="230" height="156">
             <p class="bubble" id="hero-bubble" aria-live="polite">Assalomu alaykum! Doskadagi so'zni bosing — talaffuzini eshitasiz.</p>
           </div>
         </div>
       </div>
+      <div class="hoshiya" aria-hidden="true"></div>
     </section>
 
     <!-- ============ SINAB KO'RING ============ -->
     <section class="section try" id="sinab-koring" aria-labelledby="try-title">
       <div class="container">
         <header class="section-head reveal">
-          <p class="eyebrow">Ro'yxatdan o'tmasdan sinab ko'ring</p>
+          <p class="eyebrow"><i class="star8" aria-hidden="true"></i>Ro'yxatdan o'tmasdan sinab ko'ring</p>
           <h2 id="try-title">Birinchi darsdan parcha</h2>
+          <div class="naqsh-divider" aria-hidden="true"><span></span><i class="star8"></i><span></span></div>
           <p>Istalgan so'zni bosing. Harakatlarni yashirib, o'zingizni sinab ham ko'rishingiz mumkin.</p>
         </header>
 
@@ -184,40 +188,41 @@
     </section>
 
     <!-- ============ IMKONIYATLAR ============ -->
-    <section class="section" id="imkoniyatlar" aria-labelledby="imk-title">
+    <section class="section section-alt" id="imkoniyatlar" aria-labelledby="imk-title">
       <div class="container">
         <header class="section-head reveal">
-          <p class="eyebrow">Imkoniyatlar</p>
+          <p class="eyebrow"><i class="star8" aria-hidden="true"></i>Imkoniyatlar</p>
           <h2 id="imk-title">Darsda sizga nimalar yordam beradi</h2>
+          <div class="naqsh-divider" aria-hidden="true"><span></span><i class="star8"></i><span></span></div>
         </header>
 
         <ul class="feature-grid">
-          <li class="feature reveal">
+          <li class="feature reveal tilt">
             <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H4zM8 20h8M12 16v4"/><path d="M8 9h5M8 12h8"/></svg></span>
             <h3>Kino-dars</h3>
             <p>Ustoz mavzuni doskaga yozib, ovoz chiqarib tushuntiradi. Subtitr, qadamlar va tezlikni boshqarish bor.</p>
           </li>
-          <li class="feature reveal">
+          <li class="feature reveal tilt">
             <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M9 11h.01M12 11h.01M15 11h.01"/></svg></span>
             <h3>Muallim AI</h3>
             <p>Tushunmagan joyingizni so'rang — yozib yoki ovoz bilan. Javobni batafsil, misollar bilan oladi.</p>
           </li>
-          <li class="feature reveal">
+          <li class="feature reveal tilt">
             <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M4 19V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2zM4 19a2 2 0 0 1 2-2h12"/><path d="M9 8h5"/></svg></span>
             <h3>Interaktiv o'qish</h3>
             <p>Har bir so'zni bosing: tarjimasi, o'qilishi va qisqa grammatik sharhi chiqadi.</p>
           </li>
-          <li class="feature reveal">
+          <li class="feature reveal tilt">
             <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/></svg></span>
             <h3>Talaffuz</h3>
             <p>So'z va jumlalarni ovozda eshiting. Arabcha qism arabcha, izoh esa o'zbekcha o'qiladi.</p>
           </li>
-          <li class="feature reveal">
+          <li class="feature reveal tilt">
             <span class="feature-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m3 16 5-5 4 4 3-3 6 6"/><circle cx="15.5" cy="8.5" r="1.5"/></svg></span>
             <h3>Rasmli lug'at</h3>
             <p>Yangi so'zlar rasm bilan beriladi — qalam, doska, daftar — va tezroq yodda qoladi.</p>
           </li>
-          <li class="feature reveal">
+          <li class="feature reveal tilt">
             <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
             <h3>Harakatsiz o'qish mashqi</h3>
             <p>«Harakat» tugmasi bilan unlilarni yashiring va matnni harakatsiz o'qishga o'rganing.</p>
@@ -230,7 +235,7 @@
     <section class="section kino" id="kino-dars" aria-labelledby="kino-title">
       <div class="container kino-inner">
         <div class="kino-text reveal">
-          <p class="eyebrow">Kino-dars</p>
+          <p class="eyebrow"><i class="star8" aria-hidden="true"></i>Kino-dars</p>
           <h2 id="kino-title">Ustoz mavzuni doskada, ovoz chiqarib tushuntiradi</h2>
           <p>Har bir mavzu qadamlarga bo'lingan: ustoz gapiradi, doskaga misollar yoziladi, pastda subtitr chiqadi.
             Tushunmagan joyni qayta eshitasiz, tezlikni o'zgartirasiz yoki «Soddaroq tushuntir» deysiz.</p>
@@ -241,31 +246,25 @@
           </ul>
         </div>
 
-        <div class="kino-screen reveal" id="kino">
-          <div class="kino-board">
-            <p class="kino-topic"><span lang="ar" dir="rtl">حُرُوفُ الْجَرِّ</span> · Jarr harflari</p>
-            <p class="kino-step" id="kino-step"></p>
-            <ul class="kino-lines" id="kino-lines"></ul>
-          </div>
-          <div class="kino-tutor">
-            <svg class="ustoz ustoz-sm" id="kino-ustoz" viewBox="0 0 96 96" aria-hidden="true"><g class="ustoz-head">
-              <circle cx="48" cy="50" r="38" fill="#f1f5f9" stroke="#1c2433" stroke-width="2.4"/>
-              <path d="M19 40c0-18 13-28 29-28s29 10 29 28z" fill="#1c2433"/>
-              <path d="M24 32h48M28 24h40M34 17h28" stroke="#f1f5f9" stroke-width="2" stroke-dasharray="4 3"/>
-              <path d="M19 40h58" stroke="#1c2433" stroke-width="3.5"/>
-              <g class="ustoz-eyes"><ellipse cx="36" cy="52" rx="3.8" ry="4.8" fill="#1c2433"/><ellipse cx="60" cy="52" rx="3.8" ry="4.8" fill="#1c2433"/></g>
-              <path d="M20 58c1 18 12 29 28 29s27-11 28-29c-6 6-16 9-28 9s-22-3-28-9z" fill="#e2e8f0" stroke="#1c2433" stroke-width="2"/>
-              <ellipse class="ustoz-mouth" cx="48" cy="68" rx="6" ry="3.4" fill="#1c2433"/>
-            </g></svg>
-            <p class="kino-sub" id="kino-sub" aria-live="polite"></p>
-          </div>
-          <div class="kino-bar">
-            <button class="kino-play" id="kino-play" type="button" aria-pressed="false" aria-label="Ovoz bilan tinglash">
-              <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
-              <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="4.5" width="4" height="15" rx="1.2"/><rect x="14" y="4.5" width="4" height="15" rx="1.2"/></svg>
-            </button>
-            <div class="kino-segs" id="kino-segs"></div>
-            <span class="kino-count" id="kino-count">1 / 3</span>
+        <div class="kino-frame reveal">
+          <div class="kino-screen" id="kino">
+            <div class="kino-board">
+              <p class="kino-topic"><span lang="ar" dir="rtl">حُرُوفُ الْجَرِّ</span> · Jarr harflari</p>
+              <p class="kino-step" id="kino-step"></p>
+              <ul class="kino-lines" id="kino-lines"></ul>
+            </div>
+            <div class="kino-tutor">
+              <img class="ustoz-img ustoz-sm" id="kino-ustoz" data-mood="tabassum" src="assets/img/ustoz/tabassum.png" alt="" width="230" height="156" loading="lazy">
+              <p class="kino-sub" id="kino-sub" aria-live="polite"></p>
+            </div>
+            <div class="kino-bar">
+              <button class="kino-play" id="kino-play" type="button" aria-pressed="false" aria-label="Ovoz bilan tinglash">
+                <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+                <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="4.5" width="4" height="15" rx="1.2"/><rect x="14" y="4.5" width="4" height="15" rx="1.2"/></svg>
+              </button>
+              <div class="kino-segs" id="kino-segs"></div>
+              <span class="kino-count" id="kino-count">1 / 3</span>
+            </div>
           </div>
         </div>
       </div>
@@ -275,8 +274,9 @@
     <section class="section section-alt" id="usul" aria-labelledby="usul-title">
       <div class="container">
         <header class="section-head reveal">
-          <p class="eyebrow">Qanday o'rganamiz</p>
+          <p class="eyebrow"><i class="star8" aria-hidden="true"></i>Qanday o'rganamiz</p>
           <h2 id="usul-title">Har bir dars to'rt bosqichdan iborat</h2>
+          <div class="naqsh-divider" aria-hidden="true"><span></span><i class="star8"></i><span></span></div>
         </header>
 
         <ol class="path">
@@ -320,19 +320,20 @@
     <section class="section" id="kimlar-uchun" aria-labelledby="ku-title">
       <div class="container">
         <header class="section-head reveal">
-          <p class="eyebrow">Kimlar uchun</p>
+          <p class="eyebrow"><i class="star8" aria-hidden="true"></i>Kimlar uchun</p>
           <h2 id="ku-title">Arab tilini o'rganmoqchi bo'lgan har bir kishi uchun</h2>
+          <div class="naqsh-divider" aria-hidden="true"><span></span><i class="star8"></i><span></span></div>
         </header>
         <ul class="audience-grid">
-          <li class="audience reveal">
+          <li class="audience reveal tilt">
             <h3>Noldan boshlovchilar</h3>
             <p>Alifbo va harakatlardan boshlab, oddiy jumlalarni tushunib o'qishgacha bosqichma-bosqich.</p>
           </li>
-          <li class="audience reveal">
+          <li class="audience reveal tilt">
             <h3>Mustaqil o'rganuvchilar</h3>
             <p>O'z tezligingizda, telefoningizdan. Tushunmagan joyni ustoz va Muallim AI qayta tushuntiradi.</p>
           </li>
-          <li class="audience reveal">
+          <li class="audience reveal tilt">
             <h3>O'qituvchilar</h3>
             <p>Darsda kino-dars va interaktiv matnlarni ko'rsatish, o'quvchilarga uyga vazifa sifatida berish uchun.</p>
           </li>
@@ -343,9 +344,11 @@
     <!-- ============ SAVOLLAR ============ -->
     <section class="section section-alt" id="savollar" aria-labelledby="sv-title">
       <div class="container narrow">
-        <header class="section-head reveal">
-          <p class="eyebrow">Savollar</p>
+        <header class="section-head faq-head reveal">
+          <img class="ustoz-img faq-ustoz" data-mood="oylaydi" src="assets/img/ustoz/oylaydi.png" alt="" width="230" height="156" loading="lazy">
+          <p class="eyebrow"><i class="star8" aria-hidden="true"></i>Savollar</p>
           <h2 id="sv-title">Ko'p beriladigan savollar</h2>
+          <div class="naqsh-divider" aria-hidden="true"><span></span><i class="star8"></i><span></span></div>
         </header>
         <div class="faq reveal">
           <details>
@@ -375,20 +378,26 @@
     <!-- ============ YAKUNIY CHAQIRIQ ============ -->
     <section class="cta">
       <div class="container cta-inner reveal">
-        <svg class="cta-ustoz" viewBox="0 0 96 96" aria-hidden="true">
-          <circle cx="48" cy="50" r="38" fill="#f1f5f9" stroke="#1c2433" stroke-width="2.4"/>
-          <path d="M19 40c0-18 13-28 29-28s29 10 29 28z" fill="#1c2433"/>
-          <path d="M24 32h48M28 24h40M34 17h28" stroke="#f1f5f9" stroke-width="2" stroke-dasharray="4 3"/>
-          <ellipse cx="36" cy="52" rx="3.8" ry="4.8" fill="#1c2433"/><ellipse cx="60" cy="52" rx="3.8" ry="4.8" fill="#1c2433"/>
-          <path d="M20 58c1 18 12 29 28 29s27-11 28-29c-6 6-16 9-28 9s-22-3-28-9z" fill="#e2e8f0" stroke="#1c2433" stroke-width="2"/>
-          <path d="M34 63q14 9 28 0" stroke="#1c2433" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-        </svg>
+        <div class="cta-rosette" aria-hidden="true"><svg class="rosette" viewBox="-100 -100 200 200" aria-hidden="true">
+  <defs><path id="rp2" d="M0,-96 C11,-80 13,-62 0,-44 C-13,-62 -11,-80 0,-96Z"/><path id="rl2" d="M0,-44 C7,-36 7,-28 0,-20 C-7,-28 -7,-36 0,-44Z"/></defs>
+  <g class="ros-spin">
+    <circle class="d" pathLength="1" r="98"/>
+    <circle class="d d2" pathLength="1" r="90" stroke-dasharray="2 4"/>
+    <polygon class="d" pathLength="1" points="0,-88 44,76.21 -76.21,-44 88,0 -76.21,44 44,-76.21 0,88 -44,-76.21 76.21,44 -88,0 76.21,-44 -44,76.21"/>
+    <g class="ros-petals"><use href="#rp2" transform="rotate(0)"/><use href="#rp2" transform="rotate(30)"/><use href="#rp2" transform="rotate(60)"/><use href="#rp2" transform="rotate(90)"/><use href="#rp2" transform="rotate(120)"/><use href="#rp2" transform="rotate(150)"/><use href="#rp2" transform="rotate(180)"/><use href="#rp2" transform="rotate(210)"/><use href="#rp2" transform="rotate(240)"/><use href="#rp2" transform="rotate(270)"/><use href="#rp2" transform="rotate(300)"/><use href="#rp2" transform="rotate(330)"/></g>
+    <polygon class="d d3" pathLength="1" points="0,-44 7.76,-28.98 22,-38.11 21.21,-21.21 38.11,-22 28.98,-7.76 44,0 28.98,7.76 38.11,22 21.21,21.21 22,38.11 7.76,28.98 0,44 -7.76,28.98 -22,38.11 -21.21,21.21 -38.11,22 -28.98,7.76 -44,0 -28.98,-7.76 -38.11,-22 -21.21,-21.21 -22,-38.11 -7.76,-28.98"/>
+    <g class="ros-leaves"><use href="#rl2" transform="rotate(15)"/><use href="#rl2" transform="rotate(45)"/><use href="#rl2" transform="rotate(75)"/><use href="#rl2" transform="rotate(105)"/><use href="#rl2" transform="rotate(135)"/><use href="#rl2" transform="rotate(165)"/><use href="#rl2" transform="rotate(195)"/><use href="#rl2" transform="rotate(225)"/><use href="#rl2" transform="rotate(255)"/><use href="#rl2" transform="rotate(285)"/><use href="#rl2" transform="rotate(315)"/><use href="#rl2" transform="rotate(345)"/></g>
+    <polygon class="d d4" pathLength="1" points="0,-20 3.44,-8.31 14.14,-14.14 8.31,-3.44 20,0 8.31,3.44 14.14,14.14 3.44,8.31 0,20 -3.44,8.31 -14.14,14.14 -8.31,3.44 -20,0 -8.31,-3.44 -14.14,-14.14 -3.44,-8.31"/>
+    <circle class="d d4" pathLength="1" r="6"/>
+  </g>
+</svg></div>
+        <img class="ustoz-img cta-ustoz" data-mood="kuladi" src="assets/img/ustoz/kuladi.png" alt="" width="230" height="156" loading="lazy">
         <div class="cta-text">
           <h2>Birinchi darsni bugun boshlang</h2>
           <p class="cta-ar"><span lang="ar" dir="rtl">هَيَّا نَتَعَلَّمْ</span> — «Keling, o'rganamiz!»</p>
         </div>
         <div class="cta-actions">
-          <a class="btn btn-light btn-lg" href="register.html">Bepul boshlash</a>
+          <a class="btn btn-light btn-lg btn-shine" href="register.html">Bepul boshlash</a>
           <a class="btn btn-on-dark btn-lg" href="login.html">Kirish</a>
         </div>
       </div>
@@ -396,13 +405,14 @@
   </main>
 
   <footer class="site-footer">
+    <div class="hoshiya" aria-hidden="true"></div>
     <div class="container footer-inner">
       <div class="footer-brand">
         <a class="brand" href="#top">
-          <img src="assets/img/logo.svg" alt="" width="32" height="32">
-          <span>Muallim</span>
+          <span class="brand-mark"><img src="assets/img/ustoz/logo.png" alt="" width="40" height="40" loading="lazy"></span>
+          <span class="brand-word">Muallim<small lang="ar" dir="rtl">مُعَلِّم</small></span>
         </a>
-        <p>Arab tilini o'zbek tilida o'rganish platformasi.</p>
+        <p>Arab tilini noldan, o'zbek tilida tushunib o'rganish platformasi.</p>
       </div>
       <nav class="footer-nav" aria-label="Pastki menyu">
         <h2 class="footer-title">Platforma</h2>

@@ -11,6 +11,7 @@ Muallim platformasi uchun namuna sahifalar va ovoz kutubxonasi.
 | `register.html` | Ro'yxatdan o'tish: ma'lumotlar → SMS kod (6 katak, qayta yuborish taymeri) → daraja va maqsad → tabrik |
 | `parol-tiklash.html` | Parolni tiklash: telefon → kod va yangi parol → tayyor |
 | `assets/js/auth.js` | Shu uch sahifaning mantiqi; serverga ulash joyi faylning boshida |
+| `assets/img/ustoz/*.png` | Ustoz personajining 9 qiyofasi (shaffof fon): `tabassum`, `gapiradi`, `salom`, `kuladi`, `oylaydi`, `korsatadi`, `xavotir`, `kozqisadi`, `hayron`; `logo.png` — brend belgisi |
 | `site.webmanifest`, `assets/img/*.png` | Telefon ekraniga qo'shish ikonkalari va ulashish rasmi (`og-image.png`, 1200×630) |
 | `docs/kirish-sahifasi-tahlili.md` | Kirish sahifasi tahlili: kamchiliklar, qo'shilgan animatsiyalar, sizdan kerakli ma'lumotlar |
 | `demo/soz-tarjimasi.html` | O'qish matni: so'z bosilganda ovozli talaffuz, tarjima va qisqa sharh (telefonda ham ishlaydi) |
@@ -18,6 +19,21 @@ Muallim platformasi uchun namuna sahifalar va ovoz kutubxonasi.
 | `demo/muallim-ai.html` | Muallim AI chati: javoblarni ovoz chiqarib o'qish va savolni ovoz bilan aytish |
 | `ai/muallim-ai-prompt.md` | Batafsil dars uchun ko'rsatma (system prompt) va javob vaqtini qisqartirish bo'yicha tavsiyalar |
 | `assets/js/muallim-ovoz.js` | Ovoz kutubxonasi — saytga ulash uchun |
+
+## Ustoz personaji
+
+`main.js` dagi `MuallimUstoz(img)` rasmni jonlantiradi:
+
+```js
+var u = MuallimUstoz(document.querySelector('img.ustoz-img'));
+u.mood('kuladi');          // doimiy kayfiyat
+u.mood('hayron', 1200);    // 1,2 soniyaga, keyin avvalgisiga qaytadi
+u.talk(true);              // gapirish: og'iz ochilib-yopiladi
+u.idle();                  // vaqti-vaqti bilan ko'z qisadi
+```
+
+Asl logotip fayli kelganda: `assets/img/ustoz/logo.png` ni almashtiring (yoki sahifalardagi
+`.brand-mark img` manzilini o'zgartiring), ikonkalarni (`assets/img/*.png`) ham yangilang.
 
 ## Kirish sahifalarini serverga ulash
 

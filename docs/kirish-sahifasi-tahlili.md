@@ -51,6 +51,20 @@ Hammasi `prefers-reduced-motion` sozlamasida o'chadi (harakatdan bezovta bo'ladi
 - Animatsiyalar: qadamlar orasida silliq o'tish, xato bo'lganda maydon «silkinadi», SMS kod kataklari,
   parol kuchi o'lchagichi, tabrikda rangli qog'ozlar.
 
+## 3b. Uchinchi bosqich: ustoz personaji va sharqona uslub
+
+- **Ustoz** — siz bergan rasmdagi personaj: 9 qiyofa alohida kesildi, foni shaffof. Gapirganda og'zi ochilib-yopiladi,
+  vaqti-vaqti bilan ko'z qisadi, vaziyatga qarab kayfiyati o'zgaradi (xato — xavotir, kod yuborildi — ko'rsatadi,
+  noto'g'ri kod — hayron, muvaffaqiyat — kuladi).
+- **Sarlavha:** «Arab tilini noldan tushunib o'rganing».
+- **Sharqona naqsh:** lojuvard–firuza–tilla koshin palitrasi; doska koshinli **peshtoq** ichida; orqada o'zini chizib,
+  sekin aylanuvchi 12 qirrali **rozetka**; girih panjarasi fonda yaltirab o'tadi; bo'limlar orasida naqshli
+  ajratgich va harakatlanuvchi hoshiya tasmasi; belgilar 8 qirrali yulduz shaklida.
+- **Animatsiyalar:** peshtoq pastdan ko'tariladi, doskaga o'ngdan chapga yoziladi, ustoz sakrab chiqib salomlashadi va
+  ko'pikka harfma-harf yozadi; sichqoncha bo'yicha chuqurlik (parallaks); kartalar 3D egiladi; tugmalarda tilla
+  yaltirash; yuqorida o'qish ko'rsatkichi; bo'limlar 3D bilan paydo bo'ladi. Harakat kamaytirilgan qurilmada o'chadi.
+- **Logotip:** asl logotip fayli berilmagani uchun hozircha ustozning kulib turgan qiyofasi brend belgisi qilib qo'yildi.
+
 ## 4. Sizdan kerak bo'lgan ma'lumotlar (o'zgartirish yoki qo'shish uchun)
 
 Bular sahifaga to'qib yozilmadi — haqiqiy ma'lumot bilan to'ldirilishi kerak:
@@ -66,7 +80,7 @@ Bular sahifaga to'qib yozilmadi — haqiqiy ma'lumot bilan to'ldirilishi kerak:
 9. **Ilova.** Android/iOS ilovasi bo'lsa — do'kon havolalari.
 10. **Domen.** `muallim.com.uz` va `emuallim.com.uz` — qaysi biri asosiy? Ijtimoiy tarmoq ulashish rasmi (`og:image`, 1200×630) ham kerak.
 11. **Auditoriya.** «Kimlar uchun» bo'limidagi uchta guruh taxmin — maqsadli auditoriyangizni tasdiqlang (masalan, maktab o'quvchilari, kattalar, Qur'on o'qishni o'rganuvchilar).
-12. **Logotip.** Hozirgi `logo.svg` — vaqtinchalik. Haqiqiy logotip va maskot fayllari (SVG) kerak.
+12. **Logotip.** Asl logotip faylini (SVG yoki katta PNG) yuboring — hozir o'rnida ustoz belgisi turibdi. Maskotni yuqori sifatda (SVG yoki 1000px+ PNG) bersangiz, katta ekranlarda ham tiniq chiqadi.
 
 ## 5. Qo'shimcha tavsiyalar (keyingi bosqich)
 
