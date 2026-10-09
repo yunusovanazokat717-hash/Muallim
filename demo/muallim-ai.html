@@ -3,23 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Caveat:wght@500;700&family=Onest:wght@400;500;600;700;800&display=swap">
 <title>Muallim AI</title>
 <style>
   /* Bir ustunli chat: sarlavha, xabarlar lentasi, pastda yozish paneli. Saytning qorong'i ko'rinishiga bog'langan. */
   :root {
-    --bg: #0b1324;
+    --bg: #0a1222;
     --panel: #111c31;
     --bubble-ai: #15233b;
     --bubble-me: #1f6feb;
     --line: #1f2e4a;
     --text: #e3eaf6;
     --muted: #8796b0;
-    --accent: #2dd4bf;
-    --accent-ink: #062a26;
+    --accent: #e3b04b;
+    --accent-ink: #1b1405;
     --warn: #fbbf24;
     --danger: #f87171;
-    --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    --font-ar: "Noto Naskh Arabic", "Geeza Pro", "Traditional Arabic", serif;
+    --font: "Onest", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-ar: "Amiri", "Noto Naskh Arabic", "Geeza Pro", "Traditional Arabic", serif;
     color-scheme: dark;
   }
   * { box-sizing: border-box; }
@@ -45,8 +48,9 @@
     background: var(--panel);
     border-bottom: 1px solid var(--line);
   }
-  .avatar { width: 44px; height: 44px; flex: none; border-radius: 50%; background: #f1f5f9; display: grid; place-items: center; overflow: hidden; }
-  .avatar svg { width: 44px; height: 44px; }
+  .avatar { width: 46px; height: 46px; flex: none; border-radius: 50%; display: grid; place-items: center; overflow: hidden;
+            background: radial-gradient(circle at 50% 30%, #2f5fd6, #1e40af); box-shadow: 0 0 0 2px #e3b04b, 0 0 0 5px rgba(227,176,75,.18); }
+  .avatar img { width: 42px; height: auto; margin-top: 8px; }
   .who { flex: 1; min-width: 0; }
   .who h1 { margin: 0; font-size: 1.05rem; line-height: 1.2; }
   .who p { margin: 2px 0 0; color: var(--muted); font-size: .82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -159,15 +163,7 @@
 </head>
 <body>
   <header class="top">
-    <span class="avatar" aria-hidden="true">
-      <svg viewBox="0 0 44 44">
-        <path d="M9 19c0-8 6-13 13-13s13 5 13 13z" fill="#1e293b"/>
-        <path d="M11 16h22M13 12h18" stroke="#e2e8f0" stroke-width="1.4" stroke-dasharray="2 2"/>
-        <circle cx="17" cy="24" r="1.8" fill="#0f172a"/><circle cx="27" cy="24" r="1.8" fill="#0f172a"/>
-        <path d="M12 29c2 9 18 9 20 0-3 2-6 3-10 3s-7-1-10-3z" fill="#cbd5e1"/>
-        <path d="M18 30c2 1.4 6 1.4 8 0" stroke="#0f172a" stroke-width="1.4" fill="none" stroke-linecap="round"/>
-      </svg>
-    </span>
+    <span class="avatar" aria-hidden="true"><img id="ai-ustoz" src="../assets/img/ustoz/tabassum.png" alt=""></span>
     <div class="who">
       <h1>Muallim AI</h1>
       <p id="state">Ovozli yordamchi</p>
@@ -196,9 +192,21 @@
 
   <script src="../assets/js/muallim-ovoz.js"></script>
   <script>
+  
+  // Ustoz gapirganda og'zi ochilib-yopiladi (rasmdagi ikki qiyofa almashadi)
+  function ustozTalk(img, on) {
+    if (!img) return;
+    clearInterval(img._t);
+    var base = img.getAttribute('src').replace(/[^/]+\.png$/, '');
+    if (!on || window.matchMedia('(prefers-reduced-motion: reduce)').matches) { img.src = base + 'tabassum.png'; return; }
+    var o = false;
+    img._t = setInterval(function () { o = !o; img.src = base + (o ? 'gapiradi' : 'tabassum') + '.png'; }, 170);
+  }
+  
   (function () {
     'use strict';
     var Ovoz = window.MuallimOvoz;
+    var aiUstoz = document.getElementById('ai-ustoz');
     var log = document.getElementById('log');
     var form = document.getElementById('composer');
     var input = document.getElementById('input');
@@ -287,6 +295,7 @@
         playingBtn.setAttribute('aria-label', 'Javobni tinglash');
       }
       playingBtn = null;
+      ustozTalk(aiUstoz, false);
       setState();
     }
 
@@ -296,6 +305,7 @@
       btn.classList.add('is-playing');
       btn.setAttribute('aria-label', "O'qishni to'xtatish");
       setState('Gapiryapti…');
+      ustozTalk(aiUstoz, true);
       var ok = Ovoz.speak(text, {
         onEnd: function () { if (playingBtn === btn) stopSpeaking(); },
         onError: function (code, msg) { setNote(msg, true); }

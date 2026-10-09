@@ -6,7 +6,7 @@
 <title>Muallim kino-dars</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Caveat:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Caveat:wght@500;700&family=Onest:wght@400;500;600;700;800&display=swap">
 <style>
   /* Kino-dars: yuqorida katakli doska (sahna), ostida ustoz va subtitr, pastda pleyer va savol paneli, eng pastda darsning to'liq matni. */
   :root {
@@ -27,7 +27,7 @@
     --ok: #15803d;
     --warn: #b45309;
     --danger: #dc2626;
-    --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font: "Onest", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     --font-ar: "Amiri", "Noto Naskh Arabic", "Geeza Pro", "Traditional Arabic", serif;
     --font-hand: "Caveat", "Segoe Print", "Comic Sans MS", cursive;
     color-scheme: light;
@@ -53,7 +53,9 @@
     background: var(--surface);
     border-bottom: 1px solid var(--line);
   }
-  .top .avatar { width: 46px; height: 46px; flex: none; }
+  .top .avatar { width: 46px; height: 46px; flex: none; border-radius: 50%; display: grid; place-items: center; overflow: hidden;
+    background: radial-gradient(circle at 50% 30%, #2f5fd6, #1e40af); box-shadow: 0 0 0 2px #e3b04b, 0 0 0 5px rgba(227,176,75,.18); }
+  .top .avatar img { width: 42px; height: auto; margin-top: 8px; }
   .who { flex: 1; min-width: 0; }
   .who h1 { margin: 0; font-size: 1.15rem; line-height: 1.2; }
   .who p { margin: 2px 0 0; color: var(--ink-soft); font-size: .88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -129,8 +131,9 @@
   .fs-btn { position: absolute; top: 12px; right: 12px; width: 40px; height: 40px; border-radius: 10px; }
 
   /* ---------- Ustoz va subtitr ---------- */
+  .doska { border-top: 6px solid #e3b04b; }
   .tutor { display: flex; align-items: flex-end; gap: 10px; padding: 0 14px 14px; background: var(--paper); }
-  .mascot { width: 72px; height: 72px; flex: none; }
+  .mascot { width: 150px; height: auto; flex: none; margin: 0 -44px -4px -20px; filter: drop-shadow(0 8px 12px rgba(0,0,0,.25)); }
   .mascot .mouth { transform-origin: 50% 40%; transform-box: fill-box; }
   .mascot.is-talking .mouth { animation: talk .28s ease-in-out infinite alternate; }
   .mascot.is-talking .head { animation: bob 1.4s ease-in-out infinite; transform-origin: 50% 100%; transform-box: fill-box; }
@@ -279,7 +282,7 @@
 <body>
 <div class="wrap">
   <header class="top">
-    <svg class="avatar" viewBox="0 0 72 72" aria-hidden="true"><use href="#ustoz"/></svg>
+    <span class="avatar" aria-hidden="true"><img src="../assets/img/ustoz/logo.png" alt=""></span>
     <div class="who">
       <h1>Muallim AI</h1>
       <p id="topic-line">Kino-dars</p>
@@ -300,20 +303,7 @@
       </button>
     </div>
     <div class="tutor">
-      <svg class="mascot" id="mascot" viewBox="0 0 72 72" aria-hidden="true">
-      <g class="head">
-        <circle cx="36" cy="38" r="30" fill="#f1f5f9" stroke="#1c2433" stroke-width="2"/>
-        <path d="M14 30c0-14 10-21 22-21s22 7 22 21z" fill="#1c2433"/>
-        <path d="M18 24h36M21 18h30M26 13h20" stroke="#f1f5f9" stroke-width="1.6" stroke-dasharray="3 2.5"/>
-        <path d="M14 30h44" stroke="#1c2433" stroke-width="3"/>
-        <ellipse cx="27" cy="39" rx="3" ry="3.8" fill="#1c2433"/>
-        <ellipse cx="45" cy="39" rx="3" ry="3.8" fill="#1c2433"/>
-        <path d="M21 33.5q6-3 11 0M40 33.5q5-3 11 0" stroke="#1c2433" stroke-width="2" fill="none" stroke-linecap="round"/>
-        <path d="M15 44c1 14 9 22 21 22s20-8 21-22c-5 5-12 7-21 7s-16-2-21-7z" fill="#e2e8f0" stroke="#1c2433" stroke-width="1.6"/>
-        <path d="M24 46q12 6 24 0" stroke="#1c2433" stroke-width="2" fill="none" stroke-linecap="round"/>
-        <ellipse class="mouth" cx="36" cy="51" rx="5" ry="3" fill="#1c2433"/>
-      </g>
-      </svg>
+      <img class="mascot" id="mascot" src="../assets/img/ustoz/tabassum.png" alt="" width="230" height="156">
       <p class="bubble" id="bubble" aria-live="polite"></p>
     </div>
   </section>
@@ -374,28 +364,19 @@
   </details>
 </div>
 
-<!-- Ustoz (maskot) -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <g id="ustoz">
-      <g class="head">
-        <circle cx="36" cy="38" r="30" fill="#f1f5f9" stroke="#1c2433" stroke-width="2"/>
-        <path d="M14 30c0-14 10-21 22-21s22 7 22 21z" fill="#1c2433"/>
-        <path d="M18 24h36M21 18h30M26 13h20" stroke="#f1f5f9" stroke-width="1.6" stroke-dasharray="3 2.5"/>
-        <path d="M14 30h44" stroke="#1c2433" stroke-width="3"/>
-        <ellipse cx="27" cy="39" rx="3" ry="3.8" fill="#1c2433"/>
-        <ellipse cx="45" cy="39" rx="3" ry="3.8" fill="#1c2433"/>
-        <path d="M21 33.5q6-3 11 0M40 33.5q5-3 11 0" stroke="#1c2433" stroke-width="2" fill="none" stroke-linecap="round"/>
-        <path d="M15 44c1 14 9 22 21 22s20-8 21-22c-5 5-12 7-21 7s-16-2-21-7z" fill="#e2e8f0" stroke="#1c2433" stroke-width="1.6"/>
-        <path d="M24 46q12 6 24 0" stroke="#1c2433" stroke-width="2" fill="none" stroke-linecap="round"/>
-        <ellipse class="mouth" cx="36" cy="51" rx="5" ry="3" fill="#1c2433"/>
-      </g>
-    </g>
-  </defs>
-</svg>
 
 <script src="../assets/js/muallim-ovoz.js"></script>
 <script>
+
+// Ustoz gapirganda og'zi ochilib-yopiladi (rasmdagi ikki qiyofa almashadi)
+function ustozTalk(img, on) {
+  if (!img) return;
+  clearInterval(img._t);
+  var base = img.getAttribute('src').replace(/[^/]+\.png$/, '');
+  if (!on || window.matchMedia('(prefers-reduced-motion: reduce)').matches) { img.src = base + 'tabassum.png'; return; }
+  var o = false;
+  img._t = setInterval(function () { o = !o; img.src = base + (o ? 'gapiradi' : 'tabassum') + '.png'; }, 170);
+}
 (function () {
   'use strict';
   var Ovoz = window.MuallimOvoz;
@@ -711,7 +692,7 @@
   //  6. Pleyer
   // =====================================================================
   function clearTimers() { S.timers.forEach(clearTimeout); S.timers = []; }
-  function talking(on) { $('mascot').classList.toggle('is-talking', on); }
+  function talking(on) { ustozTalk($('mascot'), on); }
 
   function haltAudio() {
     S.run++;
