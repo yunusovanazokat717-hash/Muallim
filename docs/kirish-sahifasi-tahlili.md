@@ -41,11 +41,21 @@ va'da qilgani uchun to'liq qayta yozildi.
 
 Hammasi `prefers-reduced-motion` sozlamasida o'chadi (harakatdan bezovta bo'ladiganlar uchun).
 
+## 3a. Ikkinchi bosqichda qo'shilganlar
+
+- **Kirish** (`login.html`), **ro'yxatdan o'tish** (`register.html`, 3 qadam + tabrik) va **parolni tiklash** (`parol-tiklash.html`) sahifalari.
+  Ustoz har qadamda gapiradi («Kodni yuborganmiz», «Tabriklayman!»), xatolar maydon ostida o'zbekcha yoziladi.
+- Ro'yxatdan o'tishda **daraja tanlash** (noldan / alifboni bilaman / o'qiy olaman) — shunga qarab birinchi dars tavsiya qilinadi.
+- **Kino-dars namoyishi** bosh sahifada: 3 qadam o'zi aylanadi, ▶ bosilsa ustoz ovoz bilan tushuntiradi.
+- **Ulashish rasmi** (Telegram/Facebook'da havola tashlanganda chiqadi), telefon ekraniga qo'shish ikonkalari, manifest.
+- Animatsiyalar: qadamlar orasida silliq o'tish, xato bo'lganda maydon «silkinadi», SMS kod kataklari,
+  parol kuchi o'lchagichi, tabrikda rangli qog'ozlar.
+
 ## 4. Sizdan kerak bo'lgan ma'lumotlar (o'zgartirish yoki qo'shish uchun)
 
 Bular sahifaga to'qib yozilmadi — haqiqiy ma'lumot bilan to'ldirilishi kerak:
 
-1. **Login va ro'yxatdan o'tish manzillari.** Hozir `login.html` va `register.html` — saytdagi haqiqiy yo'llar kerak.
+1. **Server (API) manzillari.** Kirish/ro'yxatdan o'tish sahifalari tayyor, faqat backend so'rovlarini ulash qoldi — README'dagi jadvalga qarang. Kirgandan keyin ochiladigan sahifa manzili ham kerak.
 2. **Narx/tarif.** «Ro'yxatdan o'tish bepul» deb yozildi. Bepul darslar soni, obuna narxi, sinov muddati bo'lsa — FAQ va CTA'ga qo'shish kerak.
 3. **Kurs dasturi.** Nechta dars, qaysi bosqichlar (alifbo → o'qish → grammatika …), daraja (boshlang'ich/o'rta). Shundan «Dastur» bo'limi qilinadi — eng ko'p ishonch beradigan bo'lim.
 4. **Raqamlar.** O'quvchilar soni, darslar soni, so'zlar soni — faqat haqiqiylari (to'qima raqamlar qo'yilmadi).

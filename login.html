@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Kirish — Muallim</title>
+  <meta name="description" content="Muallim hisobingizga kiring va arab tili darslarini davom ettiring.">
+  <meta name="theme-color" content="#0b1324">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Caveat:wght@500;700&family=Onest:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    document.documentElement.classList.add('js');
+    try { var t = localStorage.getItem('muallim-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/auth.js" defer></script>
+</head>
+<body class="auth-page">
+  <a class="skip-link" href="#main">Asosiy mazmunga o'tish</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Muallim — bosh sahifa">
+        <img src="assets/img/logo.svg" alt="" width="36" height="36">
+        <span>Muallim</span>
+      </a>
+      <div class="nav-actions">
+        <button class="theme-toggle" type="button" aria-label="Yorug' yoki tungi rejim">
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
+        </button>
+        <a class="btn btn-ghost" href="register.html">Ro'yxatdan o'tish</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="auth-main container" id="main">
+    <aside class="auth-side" aria-hidden="true">
+      <div class="board board-mini">
+        <p class="board-ar" lang="ar" dir="rtl">أَهْلًا وَسَهْلًا</p>
+        <p class="board-tl">ahlan wa sahlan</p>
+        <p class="board-uz">Xush kelibsiz!</p>
+      </div>
+      <div class="ustoz-row">
+        <svg class="ustoz" viewBox="0 0 96 96"><g class="ustoz-head">
+          <circle cx="48" cy="50" r="38" fill="#f1f5f9" stroke="#1c2433" stroke-width="2.4"/>
+          <path d="M19 40c0-18 13-28 29-28s29 10 29 28z" fill="#1c2433"/>
+          <path d="M24 32h48M28 24h40M34 17h28" stroke="#f1f5f9" stroke-width="2" stroke-dasharray="4 3"/>
+          <path d="M19 40h58" stroke="#1c2433" stroke-width="3.5"/>
+          <g class="ustoz-eyes"><ellipse cx="36" cy="52" rx="3.8" ry="4.8" fill="#1c2433"/><ellipse cx="60" cy="52" rx="3.8" ry="4.8" fill="#1c2433"/></g>
+          <path d="M28 45q7-4 14 0M54 45q7-4 14 0" stroke="#1c2433" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          <path d="M20 58c1 18 12 29 28 29s27-11 28-29c-6 6-16 9-28 9s-22-3-28-9z" fill="#e2e8f0" stroke="#1c2433" stroke-width="2"/>
+          <path d="M32 61q16 8 32 0" stroke="#1c2433" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        </g></svg>
+        <p class="bubble" id="auth-bubble" aria-live="polite">Qaytganingizdan xursandman! Darsni qolgan joyidan davom ettiramiz.</p>
+      </div>
+    </aside>
+
+    <section class="auth-card" aria-labelledby="login-title">
+      <p class="demo-banner" hidden>Namuna rejimi: server ulanmagan, kiritilgan ma'lumot hech qayerga yuborilmaydi.</p>
+      <h1 id="login-title">Hisobingizga kiring</h1>
+      <p class="auth-lead">Telefon raqamingiz (yoki email) va parolingizni kiriting.</p>
+
+      <form id="login-form" novalidate>
+        <div class="field">
+          <label for="login-id">Telefon raqami yoki email</label>
+          <input id="login-id" name="login" type="text" data-login autocomplete="username" inputmode="tel"
+                 placeholder="+998 (90) 123-45-67" aria-describedby="login-id-err" required>
+          <p class="field-error" id="login-id-err"></p>
+        </div>
+
+        <div class="field">
+          <div class="label-row">
+            <label for="login-pw">Parol</label>
+            <a class="small-link" href="parol-tiklash.html">Parolni unutdingizmi?</a>
+          </div>
+          <div class="pw-wrap">
+            <input id="login-pw" name="password" type="password" autocomplete="current-password" aria-describedby="login-pw-err" required>
+            <button class="pw-toggle" type="button" aria-pressed="false" aria-label="Parolni ko'rsatish">
+              <svg class="eye-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg class="eye-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18M10.6 5.1A10 10 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4.1M6.5 6.6C3.7 8.4 2 12 2 12s3.6 7 10 7a9.6 9.6 0 0 0 4.6-1.2M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
+            </button>
+          </div>
+          <p class="field-error" id="login-pw-err"></p>
+        </div>
+
+        <label class="check">
+          <input id="login-remember" type="checkbox" checked>
+          <span>Meni shu qurilmada eslab qol</span>
+        </label>
+
+        <p class="form-msg" role="alert"></p>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Kirish</button>
+      </form>
+
+      <p class="auth-switch">Hisobingiz yo'qmi? <a href="register.html">Bepul ro'yxatdan o'ting</a></p>
+    </section>
+  </main>
+</body>
+</html>

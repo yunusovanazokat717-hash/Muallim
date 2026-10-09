@@ -7,12 +7,40 @@ Muallim platformasi uchun namuna sahifalar va ovoz kutubxonasi.
 | Fayl | Nima |
 | --- | --- |
 | `index.html` | Login'dan oldingi kirish (landing) sahifasi: doska va ustoz animatsiyasi, «Birinchi darsdan parcha» demo |
+| `login.html` | Kirish: telefon (+998 niqobi) yoki email, parolni ko'rsatish, xatolar o'zbekcha |
+| `register.html` | Ro'yxatdan o'tish: ma'lumotlar → SMS kod (6 katak, qayta yuborish taymeri) → daraja va maqsad → tabrik |
+| `parol-tiklash.html` | Parolni tiklash: telefon → kod va yangi parol → tayyor |
+| `assets/js/auth.js` | Shu uch sahifaning mantiqi; serverga ulash joyi faylning boshida |
+| `site.webmanifest`, `assets/img/*.png` | Telefon ekraniga qo'shish ikonkalari va ulashish rasmi (`og-image.png`, 1200×630) |
 | `docs/kirish-sahifasi-tahlili.md` | Kirish sahifasi tahlili: kamchiliklar, qo'shilgan animatsiyalar, sizdan kerakli ma'lumotlar |
 | `demo/soz-tarjimasi.html` | O'qish matni: so'z bosilganda ovozli talaffuz, tarjima va qisqa sharh (telefonda ham ishlaydi) |
 | `demo/kino-dars.html` | **Kino-dars**: doska + ovozli ustoz + subtitr + qadamlar pleyeri; AI darsni oqim bilan yozadi, 1-qadam darhol boshlanadi |
 | `demo/muallim-ai.html` | Muallim AI chati: javoblarni ovoz chiqarib o'qish va savolni ovoz bilan aytish |
 | `ai/muallim-ai-prompt.md` | Batafsil dars uchun ko'rsatma (system prompt) va javob vaqtini qisqartirish bo'yicha tavsiyalar |
 | `assets/js/muallim-ovoz.js` | Ovoz kutubxonasi — saytga ulash uchun |
+
+## Kirish sahifalarini serverga ulash
+
+`login.html`, `register.html`, `parol-tiklash.html` da `auth.js` dan oldin API manzilini bering:
+
+```html
+<script>
+  window.MUALLIM_API_BASE = 'https://muallim.com.uz/api';
+  window.MUALLIM_AFTER_LOGIN = '/darslar';   // kirgandan keyin ochiladigan sahifa
+</script>
+```
+
+| So'rov (POST, JSON) | Yuboriladi | Kutiladi |
+| --- | --- | --- |
+| `/auth/login` | `phone` yoki `email`, `password`, `remember` | 200 — kirildi; 401 — noto'g'ri |
+| `/auth/send-code` | `phone`, `purpose` (`register` / `reset`) | 200 — SMS yuborildi; 429 — ko'p urinish |
+| `/auth/verify-code` | `phone`, `code` | 200 — kod to'g'ri |
+| `/auth/register` | `name`, `phone`, `password`, `code` | 200 — hisob ochildi; 409 — raqam band |
+| `/auth/profile` | `level` (`zero` / `alphabet` / `reader`), `goals[]` | 200 |
+| `/auth/reset-password` | `phone`, `code`, `password` | 200 — parol yangilandi |
+
+Xato bo'lsa javobda `{ "message": "..." }` bering — u foydalanuvchiga ko'rsatiladi.
+Manzil berilmasa sahifalar **namuna rejimida** ishlaydi: hech narsa yuborilmaydi, SMS kod — `123456`.
 
 ## Muallim AI'ga ovoz ulash
 

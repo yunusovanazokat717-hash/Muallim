@@ -9,7 +9,14 @@
   <meta property="og:title" content="Muallim — arab tilini o'zbek tilida o'rganing">
   <meta property="og:description" content="So'zni bosing — tarjimasi va talaffuzi chiqadi. Ustoz doskada tushuntiradi, Muallim AI savollaringizga ovoz bilan javob beradi.">
   <meta property="og:type" content="website">
+  <meta property="og:locale" content="uz_UZ">
+  <meta property="og:image" content="assets/img/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Caveat:wght@500;700&family=Onest:wght@400;500;600;700;800&display=swap">
@@ -44,6 +51,7 @@
         <ul class="nav-links">
           <li><a href="#sinab-koring">Sinab ko'ring</a></li>
           <li><a href="#imkoniyatlar">Imkoniyatlar</a></li>
+          <li><a href="#kino-dars">Kino-dars</a></li>
           <li><a href="#usul">Qanday o'rganamiz</a></li>
           <li><a href="#savollar">Savollar</a></li>
         </ul>
@@ -218,6 +226,51 @@
       </div>
     </section>
 
+    <!-- ============ KINO-DARS ============ -->
+    <section class="section kino" id="kino-dars" aria-labelledby="kino-title">
+      <div class="container kino-inner">
+        <div class="kino-text reveal">
+          <p class="eyebrow">Kino-dars</p>
+          <h2 id="kino-title">Ustoz mavzuni doskada, ovoz chiqarib tushuntiradi</h2>
+          <p>Har bir mavzu qadamlarga bo'lingan: ustoz gapiradi, doskaga misollar yoziladi, pastda subtitr chiqadi.
+            Tushunmagan joyni qayta eshitasiz, tezlikni o'zgartirasiz yoki «Soddaroq tushuntir» deysiz.</p>
+          <ul class="ticks">
+            <li>Ovoz + subtitr + doska — bir vaqtda</li>
+            <li>Har bir misolni bosib, alohida tinglash</li>
+            <li>Savolingizga Muallim AI yangi dars tuzib beradi</li>
+          </ul>
+        </div>
+
+        <div class="kino-screen reveal" id="kino">
+          <div class="kino-board">
+            <p class="kino-topic"><span lang="ar" dir="rtl">حُرُوفُ الْجَرِّ</span> · Jarr harflari</p>
+            <p class="kino-step" id="kino-step"></p>
+            <ul class="kino-lines" id="kino-lines"></ul>
+          </div>
+          <div class="kino-tutor">
+            <svg class="ustoz ustoz-sm" id="kino-ustoz" viewBox="0 0 96 96" aria-hidden="true"><g class="ustoz-head">
+              <circle cx="48" cy="50" r="38" fill="#f1f5f9" stroke="#1c2433" stroke-width="2.4"/>
+              <path d="M19 40c0-18 13-28 29-28s29 10 29 28z" fill="#1c2433"/>
+              <path d="M24 32h48M28 24h40M34 17h28" stroke="#f1f5f9" stroke-width="2" stroke-dasharray="4 3"/>
+              <path d="M19 40h58" stroke="#1c2433" stroke-width="3.5"/>
+              <g class="ustoz-eyes"><ellipse cx="36" cy="52" rx="3.8" ry="4.8" fill="#1c2433"/><ellipse cx="60" cy="52" rx="3.8" ry="4.8" fill="#1c2433"/></g>
+              <path d="M20 58c1 18 12 29 28 29s27-11 28-29c-6 6-16 9-28 9s-22-3-28-9z" fill="#e2e8f0" stroke="#1c2433" stroke-width="2"/>
+              <ellipse class="ustoz-mouth" cx="48" cy="68" rx="6" ry="3.4" fill="#1c2433"/>
+            </g></svg>
+            <p class="kino-sub" id="kino-sub" aria-live="polite"></p>
+          </div>
+          <div class="kino-bar">
+            <button class="kino-play" id="kino-play" type="button" aria-pressed="false" aria-label="Ovoz bilan tinglash">
+              <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+              <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="4.5" width="4" height="15" rx="1.2"/><rect x="14" y="4.5" width="4" height="15" rx="1.2"/></svg>
+            </button>
+            <div class="kino-segs" id="kino-segs"></div>
+            <span class="kino-count" id="kino-count">1 / 3</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ QANDAY O'RGANAMIZ ============ -->
     <section class="section section-alt" id="usul" aria-labelledby="usul-title">
       <div class="container">
@@ -356,6 +409,7 @@
         <ul>
           <li><a href="#sinab-koring">Sinab ko'ring</a></li>
           <li><a href="#imkoniyatlar">Imkoniyatlar</a></li>
+          <li><a href="#kino-dars">Kino-dars</a></li>
           <li><a href="#usul">Qanday o'rganamiz</a></li>
           <li><a href="#savollar">Savollar</a></li>
         </ul>

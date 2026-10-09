@@ -21,6 +21,109 @@
 
   var Ovoz = function () { return window.MuallimOvoz || null; };
 
+  // Kino-dars namoyishi: 3 qadam. O'zi ovozsiz aylanadi; ▶ bosilsa ustoz ovoz chiqarib tushuntiradi.
+  var KINO = [
+    {
+      title: '1. Jarr harfi nima?',
+      lines: [['فِي الْبَيْتِ', 'fil-bayti', 'uyda'], ['مِنَ الْبَيْتِ', 'minal-bayti', 'uydan']],
+      say: "Jarr harfi ismdan oldin keladi va o'zbekchadagi «-da», «-dan», «-ga» qo'shimchalari vazifasini bajaradi. Masalan, فِي الْبَيْتِ — «uyda»."
+    },
+    {
+      title: '2. Asosiy qoida: kasra',
+      lines: [['الْبَيْتُ', 'al-baytu', 'uy'], ['فِي الْبَيْتِ', 'fil-bayti', 'uyda']],
+      say: "Jarr harfidan keyingi ismning oxiri kasra bilan o'qiladi: الْبَيْتُ — al-baytu, lekin فِي الْبَيْتِ — fil-bayti."
+    },
+    {
+      title: '3. Misol: uydan maktabga',
+      lines: [['مِنَ الْبَيْتِ إِلَى الْمَدْرَسَةِ', 'minal-bayti ilal-madrasati', 'uydan maktabga']],
+      say: "Ikkita jarr harfi bir jumlada: مِنْ — «-dan», إِلَى — «-ga». مِنَ الْبَيْتِ إِلَى الْمَدْرَسَةِ — «uydan maktabga»."
+    }
+  ];
+
+  function initKino() {
+    var box = document.getElementById('kino');
+    if (!box) return;
+    var stepEl = document.getElementById('kino-step');
+    var linesEl = document.getElementById('kino-lines');
+    var sub = document.getElementById('kino-sub');
+    var segs = document.getElementById('kino-segs');
+    var count = document.getElementById('kino-count');
+    var play = document.getElementById('kino-play');
+    var ustoz = document.getElementById('kino-ustoz');
+    var idx = 0, timer = null, playing = false, visible = false, run = 0;
+
+    KINO.forEach(function (_, i) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'kino-seg';
+      b.setAttribute('aria-label', (i + 1) + '-qadam');
+      b.innerHTML = '<i></i>';
+      b.addEventListener('click', function () { show(i, playing); });
+      segs.appendChild(b);
+    });
+
+    function esc(s) { return s.replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; }); }
+    function arWrap(s) { return esc(s).replace(/([\u0600-\u06FF]+(?:\s[\u0600-\u06FF]+)*)/g, '<span lang="ar" dir="rtl">$1</span>'); }
+
+    function show(i, speak) {
+      run++;
+      var my = run;
+      clearTimeout(timer);
+      var O = Ovoz(); if (O) O.stop();
+      ustoz.classList.remove('is-talking');
+      idx = i;
+      var st = KINO[i];
+      stepEl.textContent = st.title;
+      linesEl.innerHTML = st.lines.map(function (l, k) {
+        return '<li style="--k:' + k + '"><span class="kl-ar" lang="ar" dir="rtl">' + esc(l[0]) + '</span><span class="kl-tl">' + esc(l[1]) + '</span><span class="kl-uz">' + esc(l[2]) + '</span></li>';
+      }).join('');
+      sub.innerHTML = arWrap(st.say);
+      box.classList.remove('is-anim'); void box.offsetWidth; box.classList.add('is-anim');
+      Array.prototype.forEach.call(segs.children, function (s, k) {
+        s.classList.toggle('done', k < i);
+        s.classList.toggle('now', k === i);
+      });
+      count.textContent = (i + 1) + ' / ' + KINO.length;
+
+      var next = function () { if (my === run) show((i + 1) % KINO.length, playing); };
+      if (speak && O) {
+        O.unlock();
+        var ok = O.speak(st.say, {
+          onStart: function () { if (my === run) ustoz.classList.add('is-talking'); },
+          onEnd: function () { if (my !== run) return; ustoz.classList.remove('is-talking'); if (i + 1 < KINO.length) timer = setTimeout(next, 900); else stop(); }
+        });
+        if (!ok) { stop(); }
+      } else if (!reduceMotion && visible && !playing) {
+        timer = setTimeout(next, 6500);   // ovozsiz avtomatik aylanish
+      }
+    }
+
+    function stop() {
+      playing = false;
+      play.setAttribute('aria-pressed', 'false');
+      play.setAttribute('aria-label', 'Ovoz bilan tinglash');
+      ustoz.classList.remove('is-talking');
+      var O = Ovoz(); if (O) O.stop();
+    }
+
+    play.addEventListener('click', function () {
+      if (playing) { stop(); run++; clearTimeout(timer); return; }
+      playing = true;
+      play.setAttribute('aria-pressed', 'true');
+      play.setAttribute('aria-label', "To'xtatish");
+      show(idx, true);
+    });
+
+    // Faqat ekranda ko'rinib turganda aylanadi
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (en) {
+        visible = en[0].isIntersecting;
+        if (visible && !playing) show(idx, false);
+        else if (!visible) { clearTimeout(timer); if (playing) { stop(); run++; } }
+      }, { threshold: 0.35 }).observe(box);
+    }
+    show(0, false);
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     // ---------------- Mavzu (yorug'/qorong'i) ----------------
     var themeBtn = document.querySelector('.theme-toggle');
@@ -213,6 +316,9 @@
         if (active) place();
       });
     }
+
+    // ---------------- Kino-dars namoyishi ----------------
+    initKino();
 
     // ---------------- Joriy yil ----------------
     var year = document.querySelector('[data-year]');
